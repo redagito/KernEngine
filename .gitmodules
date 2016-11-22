@@ -1,0 +1,12 @@
+[submodule "Foundation/Lib/external/cryptopp"]
+	path = Foundation/Lib/external/cryptopp
+	url = https://github.com/weidai11/cryptopp.git
+[submodule "Foundation/Lib/external/jsoncpp"]
+	path = Foundation/Lib/external/jsoncpp
+	url = https://github.com/open-source-parsers/jsoncpp.git
+[submodule "Foundation/Lib/external/glm"]
+	path = Foundation/Lib/external/glm
+	url = https://github.com/g-truc/glm.git
+[submodule "Foundation/Lib/external/tinyxml2"]
+	path = Foundation/Lib/external/tinyxml2
+	url = https://github.com/leethomason/tinyxml2.git
