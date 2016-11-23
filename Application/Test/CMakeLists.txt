@@ -19,7 +19,7 @@ set_property(TARGET ${PROJECT_NAME} PROPERTY CXX_STANDARD 11)
 set(CXX_STANDARD_REQUIRED ON)
 
 # Application
-#target_link_libraries (${PROJECT_NAME} LINK_PUBLIC FoundationLib)
+target_link_libraries (${PROJECT_NAME} LINK_PUBLIC ApplicationLib)
 
 # Boost
 target_link_libraries(${PROJECT_NAME} LINK_PUBLIC ${Boost_LIBRARIES})
