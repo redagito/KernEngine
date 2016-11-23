@@ -2,7 +2,7 @@
 
 #include <memory>
 
-#include "IResourceManager.h"
-#include "IResourceListener.h"
+#include "graphics/resource/IResourceManager.h"
+#include "graphics/resource/IResourceListener.h"
 
 IResourceManager *createResourceManager();

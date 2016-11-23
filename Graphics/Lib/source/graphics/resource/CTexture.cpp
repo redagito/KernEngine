@@ -1,11 +1,13 @@
-#include "CTexture.h"
+#include "graphics/graphics/resource/CTexture.h"
 
 #include <cassert>
 #include <string>
 
-#include "graphics/renderer/debug/RendererDebug.h"
 #include <lodepng.h>
+
 #include <foundation/debug/Log.h>
+
+#include "graphics/graphics/renderer/debug/RendererDebug.h"
 
 CTexture::CTexture()
     : m_valid(false), m_textureId(0), m_width(0), m_height(0), m_format(0)

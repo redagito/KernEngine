@@ -1,4 +1,4 @@
-#include "SSceneDirectionalLight.h"
+#include "graphics/graphics/scene/SSceneDirectionalLight.h"
 
 SSceneDirectionalLight::SSceneDirectionalLight() {}
 

@@ -2,8 +2,8 @@
 
 #include <string>
 
-#include "resource/ResourceConfig.h"
-#include "SImage.h"
+#include "graphics/resource/ResourceConfig.h"
+#include "graphics/resource/core/SImage.h"
 
 bool load(const std::string &file, EColorFormat format, SImage &image);
 bool loadPng(const std::string &file, EColorFormat format, SImage &image);

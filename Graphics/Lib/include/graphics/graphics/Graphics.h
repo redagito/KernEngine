@@ -3,5 +3,5 @@
 /**
 * \brief Graphics system master include.
 */
-#include "IGraphicsSystem.h"
-#include "IScene.h"
+#include "graphics/graphics/IGraphicsSystem.h"
+#include "graphics/graphics/IScene.h"

@@ -2,8 +2,8 @@
 
 #include <vector>
 
-#include "graphics/renderer/core/RendererCoreConfig.h"
-#include "resource/ResourceConfig.h"
+#include "graphics/graphics/renderer/core/RendererCoreConfig.h"
+#include "graphics/resource/ResourceConfig.h"
 
 /**
  * \brief Texture class.

@@ -1,4 +1,4 @@
-#include "SModel.h"
+#include "graphics/resource/core/SModel.h"
 
 SModel::SModel() {}
 

@@ -1,17 +1,16 @@
-#include "CScene.h"
-
-#include "CSceneQuery.h"
-#include "SSceneObject.h"
-#include "SScenePointLight.h"
-#include "SSceneDirectionalLight.h"
-
-#include "collision/CFrustum.h"
-
-#include "graphics/IGraphicsResourceManager.h"
-#include "graphics/ICamera.h"
-#include "graphics/resource/CMesh.h"
+#include "graphics/graphics/scene/CScene.h"
 
 #include <foundation/debug/Log.h>
+
+#include "graphics/collision/CFrustum.h"
+
+#include "graphics/graphics/IGraphicsResourceManager.h"
+#include "graphics/graphics/ICamera.h"
+#include "graphics/graphics/resource/CMesh.h"
+#include "graphics/graphics/scene/CSceneQuery.h"
+#include "graphics/graphics/scene/SSceneObject.h"
+#include "graphics/graphics/scene/SScenePointLight.h"
+#include "graphics/graphics/scene/SSceneDirectionalLight.h"
 
 bool CScene::getViewFrustumCulling() { return s_useViewFrustumCulling; }
 

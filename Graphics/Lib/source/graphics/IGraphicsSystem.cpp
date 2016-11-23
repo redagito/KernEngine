@@ -1,3 +1,3 @@
-#include "IGraphicsSystem.h"
+#include "graphics/graphics/IGraphicsSystem.h"
 
 IGraphicsSystem::~IGraphicsSystem() {}

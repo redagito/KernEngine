@@ -1,13 +1,13 @@
 #pragma once
 
-#include "game/IGameState.h"
-#include "animation/CAnimationWorld.h"
-#include "graphics/IScene.h"
-#include "graphics/IGraphicsSystem.h"
-#include "graphics/ICamera.h"
-#include "resource/IResourceManager.h"
-#include "input/IInputProvider.h"
-#include "game/CGameSystem.h"
+#include "graphics/game/IGameState.h"
+#include "graphics/animation/CAnimationWorld.h"
+#include "graphics/graphics/IScene.h"
+#include "graphics/graphics/IGraphicsSystem.h"
+#include "graphics/graphics/ICamera.h"
+#include "graphics/resource/IResourceManager.h"
+#include "graphics/input/IInputProvider.h"
+#include "graphics/game/CGameSystem.h"
 
 /**
 * \brief Lose state, similar to demo state with static camera.

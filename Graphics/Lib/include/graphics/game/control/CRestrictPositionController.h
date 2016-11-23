@@ -2,9 +2,9 @@
 
 #include <glm/glm.hpp>
 
-#include "game/IController.h"
-#include "game/Message.h"
-#include "input/IInputProvider.h"
+#include "graphics/game/IController.h"
+#include "graphics/game/Message.h"
+#include "graphics/input/IInputProvider.h"
 
 /**
 * \brief Restricts object position in space.

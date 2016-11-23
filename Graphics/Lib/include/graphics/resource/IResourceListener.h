@@ -1,6 +1,6 @@
 #pragma once
 
-#include "ResourceConfig.h"
+#include "graphics/resource/ResourceConfig.h"
 
 class IResourceManager;
 

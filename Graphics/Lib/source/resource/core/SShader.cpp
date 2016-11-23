@@ -1,4 +1,4 @@
-#include "SShader.h"
+#include "graphics/resource/core/SShader.h"
 
 SShader::SShader()
     : m_vertex(-1), m_tessCtrl(-1), m_tessEval(-1), m_geometry(-1),

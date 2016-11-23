@@ -1,7 +1,7 @@
-#include "CSceneQuery.h"
+#include "graphics/graphics/scene/CSceneQuery.h"
 
-#include "graphics/scene/CScene.h"
-#include "graphics/ICamera.h"
+#include "graphics/graphics/scene/CScene.h"
+#include "graphics/graphics/ICamera.h"
 
 CSceneQuery::CSceneQuery(unsigned int objectStorage, unsigned int lightStorage)
 {

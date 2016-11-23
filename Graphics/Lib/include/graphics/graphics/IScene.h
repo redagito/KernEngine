@@ -5,8 +5,8 @@
 #include <glm/glm.hpp>
 #include <glm/ext.hpp>
 
-#include "SceneConfig.h"
-#include "resource/ResourceConfig.h"
+#include "graphics/graphics/SceneConfig.h"
+#include "graphics/resource/ResourceConfig.h"
 
 class ICamera;
 class ISceneQuery;

@@ -3,7 +3,7 @@
 #include <vector>
 #include <functional>
 
-#include "ResourceConfig.h"
+#include "graphics/resource/ResourceConfig.h"
 
 class IResourceListener; /**< Listener class. */
 

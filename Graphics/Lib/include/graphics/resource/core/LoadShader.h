@@ -2,7 +2,7 @@
 
 #include <string>
 
-#include "SShader.h"
+#include "graphics/resource/core/SShader.h"
 
 class CResourceManager;
 

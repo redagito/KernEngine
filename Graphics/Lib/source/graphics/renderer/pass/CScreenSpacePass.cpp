@@ -1,17 +1,17 @@
-#include "CScreenSpacePass.h"
-
-// Resource management
-#include "resource/IResourceManager.h"
-
-// Graphics API
-#include "graphics/IGraphicsResourceManager.h"
-#include "graphics/resource/CTexture.h"
-#include "graphics/resource/CShaderProgram.h"
-#include "graphics/renderer/CFrameBuffer.h"
-#include "graphics/renderer/core/RendererCoreConfig.h"
+#include "graphics/graphics/renderer/pass/CScreenSpacePass.h"
 
 // Debugging
 #include <foundation/debug/Log.h>
+
+// Resource management
+#include "graphics/resource/IResourceManager.h"
+
+// Graphics API
+#include "graphics/graphics/IGraphicsResourceManager.h"
+#include "graphics/graphics/resource/CTexture.h"
+#include "graphics/graphics/resource/CShaderProgram.h"
+#include "graphics/graphics/renderer/CFrameBuffer.h"
+#include "graphics/graphics/renderer/core/RendererCoreConfig.h"
 
 CScreenSpacePass::CScreenSpacePass()
 {

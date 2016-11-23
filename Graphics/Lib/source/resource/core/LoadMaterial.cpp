@@ -1,10 +1,11 @@
-#include "LoadMaterial.h"
+#include "graphics/resource/core/LoadMaterial.h"
 
-#include "CResourceManager.h"
 #include <foundation/debug/Log.h>
-#include "io/CIniFile.h"
-#include "io/JsonUtil.h"
-#include "io/JsonDeserialize.h"
+#include <foundation/io/CIniFile.h>
+#include <foundation/io/JsonUtil.h>
+#include <foundation/io/JsonDeserialize.h>
+
+#include "graphics/resource/core/CResourceManager.h"
 
 bool load(const std::string &file, CResourceManager &manager,
           SMaterial &material)

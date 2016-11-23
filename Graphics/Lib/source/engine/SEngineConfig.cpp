@@ -1,8 +1,8 @@
-#include "engine/SEngineConfig.h"
+#include "graphics/engine/SEngineConfig.h"
 
-#include "util/StringUtil.h"
-#include "io/CIniFile.h"
-#include "io/JsonUtil.h"
+#include <foundation/util/StringUtil.h>
+#include <foundation/io/CIniFile.h>
+#include <foundation/io/JsonUtil.h>
 #include <foundation/debug/Log.h>
 
 bool load(const std::string& configFile, SEngineConfig& config)

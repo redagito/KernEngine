@@ -1,9 +1,9 @@
+#include "graphics/game/control/CWeaponController.h"
+
 #include <glm/glm.hpp>
 
-#include "CWeaponController.h"
-
-#include "game/CGameObject.h"
-#include "CLinearMovementController.h"
+#include "graphics/game/CGameObject.h"
+#include "graphics/game/control/CLinearMovementController.h"
 
 #include <GLFW/glfw3.h>
 

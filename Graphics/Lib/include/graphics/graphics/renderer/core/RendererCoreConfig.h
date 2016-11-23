@@ -7,7 +7,7 @@
 #else
 #define GLFW_INCLUDE_GLCOREARB
 #define flextInit
-#include "GLFW/glfw3.h"
+#include <GLFW/glfw3.h>
 #endif
 
 /**

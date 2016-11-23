@@ -1,3 +1,3 @@
-#include "IControllableCamera.h"
+#include "graphics/graphics/camera/IControllableCamera.h"
 
 IControllableCamera::~IControllableCamera() {}

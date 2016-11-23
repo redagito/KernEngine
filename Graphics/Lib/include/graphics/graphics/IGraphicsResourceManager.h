@@ -1,6 +1,6 @@
 #pragma once
 
-#include "resource/ResourceConfig.h"
+#include "graphics/resource/ResourceConfig.h"
 
 class CMesh;
 class CMaterial;

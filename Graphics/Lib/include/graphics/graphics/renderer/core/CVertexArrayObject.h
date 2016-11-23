@@ -1,6 +1,6 @@
 #pragma once
 
-#include "RendererCoreConfig.h"
+#include "graphics/graphics/renderer/core/RendererCoreConfig.h"
 
 /**
 * \brief Represents an OpenGl vertex array object.

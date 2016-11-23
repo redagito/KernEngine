@@ -2,7 +2,7 @@
 
 #include <vector>
 
-#include "graphics/ISceneQuery.h"
+#include "graphics/graphics/ISceneQuery.h"
 
 /**
  * \brief Scene query implementation.

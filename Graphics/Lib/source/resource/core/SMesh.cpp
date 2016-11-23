@@ -1,4 +1,4 @@
-#include "SMesh.h"
+#include "graphics/resource/core/SMesh.h"
 
 SMesh::SMesh(std::vector<float> vertices, std::vector<unsigned int> indices,
              std::vector<float> normals, std::vector<float> uvs,

@@ -1,8 +1,8 @@
-#include "RendererDebug.h"
+#include "graphics/graphics/renderer/debug/RendererDebug.h"
 
 #include <sstream>
 
-#include "graphics/renderer/core/RendererCoreConfig.h"
+#include "graphics/graphics/renderer/core/RendererCoreConfig.h"
 
 bool hasGLError(std::string &errorText)
 {

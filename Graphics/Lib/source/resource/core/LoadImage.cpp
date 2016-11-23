@@ -1,11 +1,10 @@
+#include "graphics/resource/core/LoadImage.h"
+
 #include <vector>
 
 #include <lodepng.h>
-#include <jpeglib.h>
 
-#include "LoadImage.h"
-#include "util/StringUtil.h"
-
+#include <foundation/util/StringUtil.h>
 #include <foundation/debug/Log.h>
 
 bool load(const std::string &file, EColorFormat format, SImage &image)

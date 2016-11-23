@@ -1,3 +1,3 @@
-#include "IGameState.h"
+#include "graphics/game/IGameState.h"
 
 IGameState::~IGameState() { return; }

@@ -1,8 +1,8 @@
+#include "graphics/graphics/renderer/Draw.h"
+
 #include <cassert>
 
-#include "Draw.h"
-
-#include "graphics/resource/CMesh.h"
+#include "graphics/graphics/resource/CMesh.h"
 
 void draw(CMesh &mesh)
 {

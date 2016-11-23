@@ -1,15 +1,15 @@
 #pragma once
 
-#include "game/IController.h"
-#include "game/Message.h"
-#include "resource/IResourceManager.h"
-#include "input/IInputProvider.h"
-#include "game/CGameWorld.h"
-#include "graphics/IScene.h"
+#include "graphics/game/IController.h"
+#include "graphics/game/Message.h"
+#include "graphics/resource/IResourceManager.h"
+#include "graphics/input/IInputProvider.h"
+#include "graphics/game/CGameWorld.h"
+#include "graphics/graphics/IScene.h"
 
 // Collision
-#include "collision/CCollisionSystem.h"
-#include "collision/CCollidable.h"
+#include "graphics/collision/CCollisionSystem.h"
+#include "graphics/collision/CCollidable.h"
 
 /**
 * \brief Controls weapons, creates projectiles.

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "core/RendererCoreConfig.h"
+#include "graphics/graphics/renderer/core/RendererCoreConfig.h"
 
 /**
 * \brief Opengl sampler wrapper.

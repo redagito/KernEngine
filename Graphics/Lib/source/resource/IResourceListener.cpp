@@ -1,3 +1,3 @@
-#include "IResourceListener.h"
+#include "graphics/resource/IResourceListener.h"
 
 IResourceListener::~IResourceListener() { return; }

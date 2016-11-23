@@ -2,7 +2,7 @@
 
 #include <memory>
 
-#include "graphics/resource/CMesh.h"
+#include "graphics/graphics/resource/CMesh.h"
 
 class IResourceManager;
 class CTexture;

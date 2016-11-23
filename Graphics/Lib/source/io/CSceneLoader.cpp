@@ -1,22 +1,21 @@
-#include "CSceneLoader.h"
+#include "graphics/io/CSceneLoader.h"
 
 #include <fstream>
 
 #include <json/json.h>
 #include <glm/glm.hpp>
 
-#include "graphics/IScene.h"
-#include "resource/IResourceManager.h"
-
-#include "io/JsonUtil.h"
-#include "io/JsonDeserialize.h"
-
 #include <foundation/debug/Log.h>
+#include <foundation/io/JsonUtil.h>
+#include <foundation/io/JsonDeserialize.h>
 
-#include "animation/CAnimationWorld.h"
-#include "animation/CRotationController.h"
-#include "animation/CMovementController.h"
-#include "animation/CSineTranslationController.h"
+#include "graphics/graphics/IScene.h"
+#include "graphics/resource/IResourceManager.h"
+
+#include "graphics/animation/CAnimationWorld.h"
+#include "graphics/animation/CRotationController.h"
+#include "graphics/animation/CMovementController.h"
+#include "graphics/animation/CSineTranslationController.h"
 
 CSceneLoader::CSceneLoader(IResourceManager &resourceManager)
     : m_resourceManager(resourceManager)

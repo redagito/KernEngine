@@ -1,8 +1,8 @@
-#include "CRestrictPositionController.h"
-
-#include "game/CGameObject.h"
+#include "graphics/game/control/CRestrictPositionController.h"
 
 #include <glm/ext.hpp>
+
+#include "graphics/game/CGameObject.h"
 
 CRestrictPositionController::CRestrictPositionController(
     const glm::vec2 &minCoords, const glm::vec2 &maxCoords)

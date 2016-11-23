@@ -1,6 +1,6 @@
-#include "CRotationController.h"
+#include "graphics/animation/CRotationController.h"
 
-#include "graphics/IScene.h"
+#include "graphics/graphics/IScene.h"
 
 CRotationController::CRotationController(SceneObjectId id,
                                          AnimationObjectType type,

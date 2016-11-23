@@ -1,12 +1,13 @@
+#include "graphics/graphics/resource/CShaderProgram.h"
+
 #include <cassert>
 
 #include <glm/ext.hpp>
 
-#include "CShaderProgram.h"
-
-#include "CTexture.h"
-#include "graphics/renderer/debug/RendererDebug.h"
 #include <foundation/debug/Log.h>
+
+#include "graphics/graphics/resource/CTexture.h"
+#include "graphics/graphics/renderer/debug/RendererDebug.h"
 
 GLuint CShaderProgram::s_activeShaderProgram = 0;
 

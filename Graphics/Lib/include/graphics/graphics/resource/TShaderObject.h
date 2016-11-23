@@ -3,9 +3,10 @@
 #include <string>
 #include <vector>
 
-#include "graphics/renderer/core/RendererCoreConfig.h"
-#include "graphics/renderer/debug/RendererDebug.h"
 #include <foundation/debug/Log.h>
+
+#include "graphics/graphics/renderer/core/RendererCoreConfig.h"
+#include "graphics/graphics/renderer/debug/RendererDebug.h"
 
 /**
 * \brief Represents a compiled shader object.

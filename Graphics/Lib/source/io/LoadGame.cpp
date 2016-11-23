@@ -1,20 +1,19 @@
-#include <string>
+#include "graphics/io/LoadGame.h"
 
-#include "LoadGame.h"
+#include <string>
 
 #include <json/json.h>
 #include <glm/glm.hpp>
 
-#include "io/JsonUtil.h"
-#include "io/JsonDeserialize.h"
-
+#include <foundation/io/JsonUtil.h>
+#include <foundation/io/JsonDeserialize.h>
 #include <foundation/debug/Log.h>
 
-#include "resource/IResourceManager.h"
-#include "game/CGameSystem.h"
+#include "graphics/resource/IResourceManager.h"
 
-#include "game/state/CTitleState.h"
-#include "game/state/CGamePlayState.h"
+#include "graphics/game/CGameSystem.h"
+#include "graphics/game/state/CTitleState.h"
+#include "graphics/game/state/CGamePlayState.h"
 
 bool load(const std::string &file, IResourceManager &manager,
           CGameSystem &system)

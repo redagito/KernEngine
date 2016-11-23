@@ -2,8 +2,8 @@
 
 #include <glm/glm.hpp>
 
-#include "game/IController.h"
-#include "game/Message.h"
+#include "graphics/game/IController.h"
+#include "graphics/game/Message.h"
 
 class AGameState;
 

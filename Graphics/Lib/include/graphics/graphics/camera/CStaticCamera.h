@@ -2,7 +2,7 @@
 
 #include <glm/glm.hpp>
 
-#include "graphics/ICamera.h"
+#include "graphics/graphics/ICamera.h"
 
 /**
 * \brief Simple static camera for shadow map pass.

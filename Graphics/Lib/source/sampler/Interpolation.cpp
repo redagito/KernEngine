@@ -1,4 +1,4 @@
-#include "Interpolation.h"
+#include "graphics/sampler/Interpolation.h"
 
 #include <cassert>
 

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "SceneConfig.h"
+#include "graphics/graphics/SceneConfig.h"
 
 /**
  * \brief Scene query interface class.

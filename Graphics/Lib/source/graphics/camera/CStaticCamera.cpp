@@ -1,4 +1,4 @@
-#include "CStaticCamera.h"
+#include "graphics/graphics/camera/CStaticCamera.h"
 
 CStaticCamera::CStaticCamera(const glm::mat4 &view, const glm::mat4 &projection,
                              const glm::vec3 &position)

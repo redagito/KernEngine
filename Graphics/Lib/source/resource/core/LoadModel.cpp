@@ -1,8 +1,8 @@
-#include "LoadModel.h"
+#include "graphics/resource/core/LoadModel.h"
 
-#include "io/JsonUtil.h"
-#include "io/JsonDeserialize.h"
-#include "util/StringUtil.h"
+#include <foundation/io/JsonUtil.h>
+#include <foundation/io/JsonDeserialize.h>
+#include <foundation/util/StringUtil.h>
 #include <foundation/debug/Log.h>
 
 bool load(const std::string &file, CResourceManager &manager, SModel &model)

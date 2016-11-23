@@ -3,8 +3,8 @@
 #include <glm/glm.hpp>
 #include <glm/ext.hpp>
 
-#include "resource/ResourceConfig.h"
-#include "collision/CBoundingSphere.h"
+#include "graphics/resource/ResourceConfig.h"
+#include "graphics/collision/CBoundingSphere.h"
 
 /**
 * \brief Scene object data struct.

@@ -2,7 +2,7 @@
 
 #include <string>
 
-#include "SMesh.h"
+#include "graphics/resource/core/SMesh.h"
 
 bool load(const std::string &file, SMesh &mesh);
 bool loadMeshFromObj(const std::string &file, SMesh &mesh);

@@ -1,4 +1,4 @@
-#include "CSampler.h"
+#include "graphics/graphics/renderer/CSampler.h"
 
 CSampler::CSampler() { glGenSamplers(1, &m_samplerId); }
 

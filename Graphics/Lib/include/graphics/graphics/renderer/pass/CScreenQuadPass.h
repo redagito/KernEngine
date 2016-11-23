@@ -2,13 +2,13 @@
 
 #include <memory>
 
-#include "graphics/resource/CTexture.h"
-#include "graphics/resource/CMesh.h"
-#include "graphics/resource/CShaderProgram.h"
-#include "graphics/renderer/CFrameBuffer.h"
+#include "graphics/graphics/IGraphicsResourceManager.h"
+#include "graphics/graphics/resource/CTexture.h"
+#include "graphics/graphics/resource/CMesh.h"
+#include "graphics/graphics/resource/CShaderProgram.h"
+#include "graphics/graphics/renderer/CFrameBuffer.h"
 
-#include "resource/IResourceManager.h"
-#include "graphics/IGraphicsResourceManager.h"
+#include "graphics/resource/IResourceManager.h"
 
 /**
 * \brief Draws textured screen space quad.

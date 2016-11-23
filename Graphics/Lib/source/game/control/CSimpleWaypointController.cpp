@@ -1,13 +1,12 @@
-#include "CSimpleWaypointController.h"
-
-#include "game/CGameObject.h"
-#include "math/TransformUtils.h"
-
-#include "game/state/AGameState.h"
+#include "graphics/game/control/CSimpleWaypointController.h"
 
 #include <GLFW/glfw3.h>
-
 #include <glm/ext.hpp>
+
+#include <foundation/math/TransformUtils.h>
+
+#include "graphics/game/CGameObject.h"
+#include "graphics/game/state/AGameState.h"
 
 CSimpleWaypointController::CSimpleWaypointController(const glm::vec3 &end,
                                                      float speed,

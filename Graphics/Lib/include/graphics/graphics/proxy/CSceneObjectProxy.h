@@ -2,7 +2,7 @@
 
 #include <glm/glm.hpp>
 
-#include "graphics/IScene.h"
+#include "graphics/graphics/IScene.h"
 
 class CSceneObjectProxy
 {

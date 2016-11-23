@@ -1,0 +1,15 @@
+{
+    "scene_objects" :  [
+        {
+            "mesh" :  "data/mesh/cave1.obj",
+            "material" : "data/material/cave_1.ini",
+            "position" :  [ 0, 0, 0 ],
+            "rotation" :  [ 0, 0, 0 ],
+            "scale" :  [ 1, 1, 1 ]
+        }
+    ],
+    "ambient_light" : {
+        color : [ 1, 1, 1 ],
+        intensity : 0.1
+    }
+}

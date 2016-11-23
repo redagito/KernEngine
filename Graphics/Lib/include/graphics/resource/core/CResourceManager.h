@@ -6,13 +6,13 @@
 #include <list>
 #include <string>
 
-#include "resource/IResourceManager.h"
+#include "graphics/resource/IResourceManager.h"
 
-#include "SImage.h"
-#include "SMaterial.h"
-#include "SMesh.h"
-#include "SModel.h"
-#include "SShader.h"
+#include "graphics/resource/core/SImage.h"
+#include "graphics/resource/core/SMaterial.h"
+#include "graphics/resource/core/SMesh.h"
+#include "graphics/resource/core/SModel.h"
+#include "graphics/resource/core/SShader.h"
 
 /**
 * \brief Resource manager implementation.

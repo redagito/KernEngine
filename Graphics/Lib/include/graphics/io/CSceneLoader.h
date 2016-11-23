@@ -6,8 +6,8 @@
 
 #include <glm/glm.hpp>
 
-#include "animation/Animation.h"
-#include "graphics/SceneConfig.h"
+#include "graphics/animation/Animation.h"
+#include "graphics/graphics/SceneConfig.h"
 
 namespace Json
 {

@@ -1,11 +1,12 @@
+#include "graphics/game/state/CTitleState.h"
+
 #include <GLFW/glfw3.h>
 
-#include "CTitleState.h"
-
-#include "graphics/camera/CFirstPersonCamera.h"
-#include "io/CSceneLoader.h"
-
 #include <foundation/debug/Log.h>
+
+#include "graphics/graphics/camera/CFirstPersonCamera.h"
+#include "graphics/io/CSceneLoader.h"
+
 
 const std::string gameStr = "game";
 

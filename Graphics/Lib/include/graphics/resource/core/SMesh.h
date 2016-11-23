@@ -2,7 +2,7 @@
 
 #include <vector>
 
-#include "resource/ResourceConfig.h"
+#include "graphics/resource/ResourceConfig.h"
 
 /**
  * \brief Mesh data.

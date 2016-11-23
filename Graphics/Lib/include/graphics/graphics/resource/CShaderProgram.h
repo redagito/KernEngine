@@ -4,9 +4,8 @@
 
 #include <glm/glm.hpp>
 
-#include "graphics/renderer/core/RendererCoreConfig.h"
-
-#include "TShaderObject.h"
+#include "graphics/graphics/resource/TShaderObject.h"
+#include "graphics/graphics/renderer/core/RendererCoreConfig.h"
 
 class CTexture;
 

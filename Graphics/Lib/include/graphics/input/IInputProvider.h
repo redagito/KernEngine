@@ -1,6 +1,6 @@
 #pragma once
 
-#include "EKeyCode.h"
+#include "graphics/input/EKeyCode.h"
 
 class IInputListener;
 

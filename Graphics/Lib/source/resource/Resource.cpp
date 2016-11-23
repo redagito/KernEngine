@@ -1,5 +1,5 @@
-#include "Resource.h"
+#include "graphics/resource/Resource.h"
 
-#include "core/CResourceManager.h"
+#include "graphics/resource/core/CResourceManager.h"
 
 IResourceManager *createResourceManager() { return new CResourceManager; }

@@ -1,4 +1,4 @@
-#include "CSceneObjectProxy.h"
+#include "graphics/graphics/proxy/CSceneObjectProxy.h"
 
 const glm::vec3 nullVec(0.f);
 

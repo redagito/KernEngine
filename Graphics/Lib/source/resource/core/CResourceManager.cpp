@@ -1,26 +1,25 @@
-#include "graphics/resource/CResourceManager.h"
+#include "graphics/resource/core/CResourceManager.h"
 
 #include <fstream>
 #include <sstream>
 
 #include <lodepng.h>
-#include "tiny_obj_loader.h"
+#include <tiny_obj_loader.h>
 
-#include "resource/IResourceListener.h"
-
-#include "io/JsonUtil.h"
-#include "io/JsonDeserialize.h"
-#include "io/CIniFile.h"
-#include "io/CObjModelLoader.h"
-#include "io/CShaderPreprocessor.h"
-
-#include "LoadMaterial.h"
-#include "LoadShader.h"
-#include "LoadMesh.h"
-#include "LoadImage.h"
-#include "LoadModel.h"
-
+#include <foundation/io/JsonUtil.h>
+#include <foundation/io/JsonDeserialize.h>
+#include <foundation/io/CIniFile.h>
+#include <foundation/io/CObjModelLoader.h>
+#include <foundation/io/CShaderPreprocessor.h>
 #include <foundation/debug/Log.h>
+
+#include "graphics/resource/IResourceListener.h"
+#include "graphics/resource/core/LoadMaterial.h"
+#include "graphics/resource/core/LoadShader.h"
+#include "graphics/resource/core/LoadMesh.h"
+#include "graphics/resource/core/LoadImage.h"
+#include "graphics/resource/core/LoadModel.h"
+
 
 CResourceManager::CResourceManager() { return; }
 

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Message.h"
+#include "graphics/game/Message.h"
 
 class CGameObject; /**< Game object forward declare. */
 

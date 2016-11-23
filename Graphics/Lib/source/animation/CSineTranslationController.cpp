@@ -1,8 +1,8 @@
+#include "graphics/animation/CSineTranslationController.h"
+
 #include <cmath>
 
-#include "CSineTranslationController.h"
-
-#include "graphics/IScene.h"
+#include "graphics/graphics/IScene.h"
 
 CSineTranslationController::CSineTranslationController(
     SceneObjectId id, AnimationObjectType type, IScene &scene,

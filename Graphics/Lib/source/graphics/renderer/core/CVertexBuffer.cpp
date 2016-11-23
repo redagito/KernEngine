@@ -1,9 +1,10 @@
-#include "CVertexBuffer.h"
+#include "graphics/graphics/renderer/core/CVertexBuffer.h"
 
 #include <cassert>
 
-#include "graphics/renderer/debug/RendererDebug.h"
 #include <foundation/debug/Log.h>
+
+#include "graphics/graphics/renderer/debug/RendererDebug.h"
 
 CVertexBuffer::CVertexBuffer(const std::vector<float> &data, GLenum usage)
     : m_bufferId(0), m_valid(false), m_size((unsigned int)data.size()),

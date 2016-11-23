@@ -2,9 +2,9 @@
 
 #include <glm/glm.hpp>
 
-#include "Animation.h"
-#include "IAnimationController.h"
-#include "graphics/SceneConfig.h"
+#include "graphics/animation/Animation.h"
+#include "graphics/animation/IAnimationController.h"
+#include "graphics/graphics/SceneConfig.h"
 
 class IScene;
 

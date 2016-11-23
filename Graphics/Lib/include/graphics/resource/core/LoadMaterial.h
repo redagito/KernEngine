@@ -2,7 +2,7 @@
 
 #include <string>
 
-#include "SMaterial.h"
+#include "graphics/resource/core/SMaterial.h"
 
 class CResourceManager;
 

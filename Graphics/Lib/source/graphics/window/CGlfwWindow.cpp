@@ -1,11 +1,11 @@
 #include "graphics/graphics/window/CGlfwWindow.h"
 
 #include <cassert>
-
-#include <GLFW/glfw3.h>
 #include <foundation/debug/Log.h>
 
 #include "graphics/graphics/renderer/core/RendererCoreConfig.h"
+#include <GLFW/glfw3.h>
+
 
 std::unordered_map<GLFWwindow *, CGlfwWindow *>
     CGlfwWindow::s_windows; /**< Window mapping. */

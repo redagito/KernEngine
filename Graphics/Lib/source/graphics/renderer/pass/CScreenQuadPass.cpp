@@ -1,6 +1,6 @@
-#include "CScreenQuadPass.h"
+#include "graphics/graphics/renderer/pass/CScreenQuadPass.h"
 
-#include "graphics/renderer/core/RendererCoreConfig.h"
+#include "graphics/graphics/renderer/core/RendererCoreConfig.h"
 
 CScreenQuadPass::CScreenQuadPass()
 {

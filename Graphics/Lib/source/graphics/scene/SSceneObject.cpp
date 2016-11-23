@@ -1,6 +1,6 @@
-#include <algorithm>
+#include "graphics/graphics/scene/SSceneObject.h"
 
-#include "SSceneObject.h"
+#include <algorithm>
 
 SSceneObject::SSceneObject() { return; }
 
