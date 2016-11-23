@@ -1,0 +1,14 @@
+{
+	"mode" : "game",
+	"game" : {
+		"file" : "data/game/defenders_of_cthedra/game.json"
+	},
+	"renderer" : {
+		"type" : "deferred"
+	},
+	"window" : {
+		"width" : 800,
+		"height" : 600,
+		"title" : "Defenders of Cthedra - CG 2015"
+	}
+}

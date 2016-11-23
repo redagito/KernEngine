@@ -1,0 +1,4 @@
+{
+	"base" : "data/image/enemy_ship.png",
+	"normal" : "data/image/enemy_ship_normal.png"
+}

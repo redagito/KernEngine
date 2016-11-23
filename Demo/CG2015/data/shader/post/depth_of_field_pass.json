@@ -1,0 +1,9 @@
+{
+	"description" : "Creates depth of field effect from scene texture and blurred scene texture.",
+	"vertex" : {
+		"file" : "data/shader/source/post/depth_of_field_vertex.glsl"
+	},
+	"fragment" : {
+		"file" : "data/shader/source/post/depth_of_field_fragment.glsl"
+	}
+}

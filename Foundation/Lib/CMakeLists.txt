@@ -28,7 +28,6 @@ find_package(Boost 1.55 REQUIRED system program_options regex filesystem date_ti
 # SQLite3
 file(GLOB SQLITE3_SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/external/sqlite-amalgamation-3081101/sqlite3.c)
 set(THIRD_PARTY_SOURCES ${THIRD_PARTY_SOURCES} ${SQLITE3_SOURCES})
-include_directories(external/sqlite-amalgamation-3150100)
 
 
 # Foundation library source files
@@ -45,7 +44,7 @@ set(CXX_STANDARD_REQUIRED ON)
 # Private includes
 target_include_directories(${PROJECT_NAME} PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/source)
 
-# Public includes includes
+# Public includes
 target_include_directories(${PROJECT_NAME} PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)
 
 # Crypto++
@@ -70,6 +69,8 @@ target_include_directories(${PROJECT_NAME} PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/ex
 
 
 # SQLite3
+target_include_directories(${PROJECT_NAME} PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/external/sqlite-amalgamation-3150100)
+
 # Additional libraries for SQLite3 (g++/clang only)
 if (${CMAKE_CXX_COMPILER_ID} STREQUAL "GNU" OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
 	target_link_libraries(${PROJECT_NAME} LINK_PUBLIC dl pthread)

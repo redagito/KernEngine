@@ -10,3 +10,12 @@
 [submodule "Foundation/Lib/external/tinyxml2"]
 	path = Foundation/Lib/external/tinyxml2
 	url = https://github.com/leethomason/tinyxml2.git
+[submodule "Graphics/Lib/external/glfw"]
+	path = Graphics/Lib/external/glfw
+	url = https://github.com/glfw/glfw.git
+[submodule "Graphics/Lib/external/tinyobjloader"]
+	path = Graphics/Lib/external/tinyobjloader
+	url = https://github.com/syoyo/tinyobjloader.git
+[submodule "Graphics/Lib/external/lodepng"]
+	path = Graphics/Lib/external/lodepng
+	url = https://github.com/lvandeve/lodepng.git

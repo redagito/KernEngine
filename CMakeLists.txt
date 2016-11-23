@@ -15,3 +15,6 @@ add_subdirectory (Util)
 
 # Tools and applications
 add_subdirectory (Toolkit)
+
+# Demo
+add_subdirectory (Demo)

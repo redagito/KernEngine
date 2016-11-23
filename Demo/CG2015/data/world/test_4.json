@@ -1,0 +1,115 @@
+{
+    "scene_objects" :  [
+        {
+            "mesh" :  "data/mesh/cube.obj",
+            "material" : "data/material/silver.json",
+            "position" :  [ -4, 0, 0 ],
+            "rotation" :  [ 0 , 0, 0 ],
+            "scale" :  [ 1, 1, 1 ]
+        },
+        {
+            "mesh" :  "data/mesh/cube.obj",
+            "material" : "data/material/silver.json",
+            "position" :  [ 0, -4, 0 ],
+            "rotation" :  [ 0 , 0, 0 ],
+            "scale" :  [ 1, 1, 1 ]
+        },
+        {
+            "mesh" :  "data/mesh/cube.obj",
+            "material" : "data/material/silver.json",
+            "position" :  [ 0, 0, -4 ],
+            "rotation" :  [ 0 , 0, 0 ],
+            "scale" :  [ 1, 1, 1 ]
+        },
+        {
+            "mesh" :  "data/mesh/cube.obj",
+            "material" : "data/material/silver.json",
+            "position" :  [ -4, -4, 0 ],
+            "rotation" :  [ 0 , 0, 0 ],
+            "scale" :  [ 1, 1, 1 ]
+        },
+        {
+            "mesh" :  "data/mesh/cube.obj",
+            "material" : "data/material/silver.json",
+            "position" :  [ -4, 0, -4 ],
+            "rotation" :  [ 0 , 0, 0 ],
+            "scale" :  [ 1, 1, 1 ]
+        },
+        {
+            "mesh" :  "data/mesh/cube.obj",
+            "material" : "data/material/silver.json",
+            "position" :  [ 0, -4, -4 ],
+            "rotation" :  [ 0 , 0, 0 ],
+            "scale" :  [ 1, 1, 1 ]
+        },
+        {
+            "mesh" :  "data/mesh/cube.obj",
+            "material" : "data/material/silver.json",
+            "position" :  [ -4, -4, -4 ],
+            "rotation" :  [ 0 , 0, 0 ],
+            "scale" :  [ 1, 1, 1 ]
+        },
+        {
+            "mesh" :  "data/mesh/cube.obj",
+            "material" : "data/material/silver.json",
+            "position" :  [ 4, 0, 0 ],
+            "rotation" :  [ 0 , 0, 0 ],
+            "scale" :  [ 1, 1, 1 ]
+        },
+        {
+            "mesh" :  "data/mesh/cube.obj",
+            "material" : "data/material/silver.json",
+            "position" :  [ 0, 4, 0 ],
+            "rotation" :  [ 0 , 0, 0 ],
+            "scale" :  [ 1, 1, 1 ]
+        },
+        {
+            "mesh" :  "data/mesh/cube.obj",
+            "material" : "data/material/silver.json",
+            "position" :  [ 0, 0, 4 ],
+            "rotation" :  [ 0 , 0, 0 ],
+            "scale" :  [ 1, 1, 1 ]
+        },
+        {
+            "mesh" :  "data/mesh/cube.obj",
+            "material" : "data/material/silver.json",
+            "position" :  [ 4, 4, 0 ],
+            "rotation" :  [ 0 , 0, 0 ],
+            "scale" :  [ 1, 1, 1 ]
+        },
+        {
+            "mesh" :  "data/mesh/cube.obj",
+            "material" : "data/material/silver.json",
+            "position" :  [ 4, 0, 4 ],
+            "rotation" :  [ 0 , 0, 0 ],
+            "scale" :  [ 1, 1, 1 ]
+        },
+        {
+            "mesh" :  "data/mesh/cube.obj",
+            "material" : "data/material/silver.json",
+            "position" :  [ 0, 4, 4 ],
+            "rotation" :  [ 0 , 0, 0 ],
+            "scale" :  [ 1, 1, 1 ]
+        },
+        {
+            "mesh" :  "data/mesh/cube.obj",
+            "material" : "data/material/silver.json",
+            "position" :  [ 4, 4, 4 ],
+            "rotation" :  [ 0 , 0, 0 ],
+            "scale" :  [ 1, 1, 1 ]
+        }
+    ],
+    "ambient_light" : {
+        "color" :  [ 1, 1, 1 ],
+        "intensity" : 0.1
+    },
+	"point_lights" : [
+		{
+			"position" : [0, 0, 0],
+			"radius" : 100,
+			"color" : [1, 1, 1],
+			"intensity" : 10,
+			"casts_shadow" : true
+		}
+	]
+}

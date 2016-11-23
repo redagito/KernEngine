@@ -1,0 +1,9 @@
+{
+	"description" : "Creates godray texture for screen space effect.",
+	"vertex" : {
+		"file" : "data/shader/source/post/god_ray_1_vertex.glsl"
+	},
+	"fragment" : {
+		"file" : "data/shader/source/post/god_ray_1_fragment.glsl"
+	}
+}

@@ -1,0 +1,9 @@
+{
+	"description" : "Performs scene illumination by combining geometry buffer and light buffer.",
+	"vertex" : {
+		"file" : "data/shader/source/deferred/illumination_pass_vertex.glsl"
+	},
+	"fragment" : {
+		"file" : "data/shader/source/deferred/illumination_pass_fragment.glsl"
+	}
+}

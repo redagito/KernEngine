@@ -1,0 +1,9 @@
+{
+	"description" : "Performs illumination by a directional light source.",
+	"vertex" : {
+		"file" : "data/shader/source/deferred/directional_light_pass_vertex.glsl"
+	},
+	"fragment" : {
+		"file" : "data/shader/source/deferred/directional_light_pass_fragment.glsl"
+	}
+}

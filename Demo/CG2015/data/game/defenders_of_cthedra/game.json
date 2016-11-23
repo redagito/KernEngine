@@ -1,0 +1,18 @@
+{
+	"name" : "Defenders of Cthedra",
+	"states" : [
+		{
+			"name" : "startup",
+			"file" : "data/game/defenders_of_cthedra/state/startup.json"
+		},
+		{
+			"name" : "title",
+			"file" : "data/game/defenders_of_cthedra/state/title.json"
+		},
+		{
+			"name" : "game",
+			"file" : "data/game/defenders_of_cthedra/state/game.json"
+		}
+	],
+	"start" : "startup"
+}

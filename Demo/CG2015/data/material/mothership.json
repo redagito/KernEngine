@@ -1,0 +1,5 @@
+{
+	"base" : "data/image/mother_ship.png",
+	"normal" : "data/image/mother_ship_normal.png",
+	"glow" : "data/image/mother_ship_glow.png"
+}

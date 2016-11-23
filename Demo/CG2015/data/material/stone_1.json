@@ -1,0 +1,5 @@
+{
+	"base" : "data/image/stone_1_base.png",
+	"normal" : "data/image/stone_1_normal.png",
+	"specular" : "data/image/stone_1_specular.png"
+}

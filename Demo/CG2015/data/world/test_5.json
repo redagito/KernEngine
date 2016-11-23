@@ -1,0 +1,55 @@
+{
+    "scene_objects" :  [
+		{
+        	"mesh" : "data/mesh/skybox.obj",
+        	"material" : "data/material/skybox_2.json",
+        	"position": [ 0, 0, 0 ],
+        	"rotation" :  [ 0, 0, 0 ],
+            "scale" :  [ 500, 500, 500 ]
+        },
+		{
+            "mesh" :  "data/mesh/plane.obj",
+            "material" : "data/material/stone_lava.json",
+            "position" :  [ 0, 0, 0 ],
+            "rotation" :  [ 0 , 0, 0 ],
+            "scale" :  [ 100, 1, 100 ],
+			"animations" : [
+				{
+					"type" : "rotation",
+					"rotation" : [ 0, 0.02, 0 ]
+				}
+			]
+        },
+		{
+			"mesh" :  "data/mesh/mothership.obj",
+            "material" : "data/material/mothership.json",
+            "position" :  [ 0, 50, 0 ],
+            "rotation" :  [ 0 , 0, 0 ],
+            "scale" :  [ 30, 30, 30 ],
+			"animations" : [
+				{
+					"type" : "rotation",
+					"rotation" : [ 0, 0.05, 0 ]
+				}
+			]
+		}
+    ],
+    "ambient_light" : {
+        "color" :  [ 1, 1, 1 ],
+        "intensity" : 0.2
+    },
+    "directional_lights" : [
+        {
+            "direction" :  [ 1, -1, 0],
+            "color" :  [ 1, 1, 1 ],
+            "intensity" :  3,
+            "casts_shadow" : true
+        },
+		{
+            "direction" :  [ 1, 1, 0],
+            "color" :  [ 0.5, 0.75, 1 ],
+            "intensity" :  0.75,
+            "casts_shadow" : false
+        }
+    ]
+}

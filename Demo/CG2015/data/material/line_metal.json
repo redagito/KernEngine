@@ -1,0 +1,5 @@
+{
+	"base" : "data/image/line_metal_base.png",
+	"normal" : "data/image/line_metal_normal.png",
+	"glow" : "data/image/line_metal_spec.png"
+}

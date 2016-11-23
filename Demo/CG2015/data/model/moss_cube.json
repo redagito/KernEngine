@@ -1,0 +1,4 @@
+{
+	"mesh" : "data/mesh/cube.obj",
+	"material" : "data/material/moss_1.json"
+}

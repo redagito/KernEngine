@@ -1,0 +1,9 @@
+{
+	"description" : "Perform non-adaptive tone mapping operation.",
+	"vertex" : {
+		"file" : "data/shader/source/post/tonemap_vertex.glsl"
+	},
+	"fragment" : {
+		"file" : "data/shader/source/post/tonemap_fragment.glsl"
+	}
+}

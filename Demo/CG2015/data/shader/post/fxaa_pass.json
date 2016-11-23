@@ -1,0 +1,9 @@
+{
+	"description" : "Performs fast anti-aliasing (FXAA).",
+	"vertex" : {
+		"file" : "data/shader/source/post/fxaa_vertex.glsl"
+	},
+	"fragment" : {
+		"file" : "data/shader/source/post/fxaa_fragment.glsl"
+	}
+}

@@ -1,0 +1,4 @@
+{
+	"mesh" : "data/mesh/bullet.obj",
+	"material" : "data/material/white_glowing.json"
+}

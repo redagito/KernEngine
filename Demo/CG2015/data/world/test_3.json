@@ -1,0 +1,23 @@
+{
+    "scene_objects" :  [
+        {
+            "mesh" :  "data/mesh/ship_1.obj",
+            "material" : "data/material/silver.json",
+            "position" :  [ 0, -3, 0 ],
+            "rotation" :  [ 0 , 0, 0 ],
+            "scale" :  [ 1, 1, 1 ]
+        }
+    ],
+    "ambient_light" : {
+        "color" :  [ 1, 1, 1 ],
+        "intensity" : 0.1
+    },
+    "directional_lights" : [
+        {
+            "direction" :  [ 1, -1, 0],
+            "color" :  [ 1, 1, 1 ],
+            "intensity" :  1,
+            "casts_shadow" : true
+        }
+    ]
+}

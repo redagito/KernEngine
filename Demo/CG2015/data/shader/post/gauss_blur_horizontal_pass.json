@@ -1,0 +1,9 @@
+{
+	"description" : "Performs horizontal gauss blur on input texture.",
+	"vertex" : {
+		"file" : "data/shader/source/post/gauss_blur_horizontal_vertex.glsl"
+	},
+	"fragment" : {
+		"file" : "data/shader/source/post/gauss_blur_horizontal_fragment.glsl"
+	}
+}

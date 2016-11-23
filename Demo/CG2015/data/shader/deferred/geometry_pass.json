@@ -1,0 +1,9 @@
+{
+	"description" : "Fills geometry buffer with model data.",
+	"vertex" : {
+		"file" : "data/shader/source/deferred/geometry_pass_vertex.glsl"
+	},
+	"fragment" : {
+		"file" : "data/shader/source/deferred/geometry_pass_fragment.glsl"
+	}
+}

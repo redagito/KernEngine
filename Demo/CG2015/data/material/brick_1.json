@@ -1,0 +1,5 @@
+{
+	"base" : "data/image/brick_1_base.png",
+	"normal" : "data/image/brick_1_normal.png",
+	"specular" : "data/image/brick_1_specular.png"
+}

@@ -1,0 +1,9 @@
+{
+	"description" : "Creates fog effect.",
+	"vertex" : {
+		"file" : "data/shader/source/post/fog_vertex.glsl"
+	},
+	"fragment" : {
+		"file" : "data/shader/source/post/fog_fragment.glsl"
+	}
+}

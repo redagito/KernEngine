@@ -1,0 +1,64 @@
+{
+    "scene_objects" :  [
+        {
+            "mesh" :  "data/mesh/ship_2.obj",
+            "material" : "data/material/line_metal.json",
+            "position" :  [ 0, 0, 0 ],
+            "rotation" :  [ 0 , 0.2, 0 ],
+            "scale" :  [ 1, 1, 1 ],
+			"animations" : [
+				{
+					"type" : "sine_translation",
+					"translation" : [ 0, 1, 0 ],
+					"timescale" : 0.003
+				}
+			]
+        },
+		{
+            "mesh" :  "data/mesh/titleobj.obj",
+            "material" : "data/material/white.json",
+            "position" :  [ 0, 7, 0 ],
+            "rotation" :  [ 0 , -0.2, 0 ],
+            "scale" :  [ 1, 1, 1 ]
+        },
+		{
+            "mesh" :  "data/mesh/enter.obj",
+            "material" : "data/material/white.json",
+            "position" :  [ 0, 6, 0 ],
+            "rotation" :  [ 0 , -0.2, 0 ],
+            "scale" :  [ 0.7, 0.7, 1 ]
+        },
+		{
+        	"mesh" : "data/mesh/skybox.obj",
+        	"material" : "data/material/skybox_2.json",
+        	"position": [ 0, 0, 0 ],
+        	"rotation" :  [ 0, 0, 0 ],
+            "scale" :  [ 500, 500, 500 ]
+        },
+		{
+            "mesh" :  "data/mesh/platform_1.obj",
+            "material" : "data/material/stone_1.json",
+            "position" :  [ 0, -2, 0 ],
+            "rotation" :  [ 0 , 0, 0 ],
+            "scale" :  [ 1, 1, 1 ],
+			"animations" : [
+				{
+					"type" : "rotation",
+					"rotation" : [ 0, 0.02, 0 ]
+				}
+			]
+        }
+    ],
+    "ambient_light" : {
+        "color" :  [ 1, 1, 1 ],
+        "intensity" : 0.5
+    },
+    "directional_lights" : [
+        {
+            "direction" :  [ 1, -1, 0],
+            "color" :  [ 1, 1, 1 ],
+            "intensity" :  2,
+            "casts_shadow" : true
+        }
+    ]
+}

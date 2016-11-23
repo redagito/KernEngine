@@ -1,0 +1,60 @@
+{
+    "scene_objects" :  [
+        {
+            "mesh" :  "data/mesh/cube.obj",
+            "material" : "data/material/brick_1.json",
+            "position" :  [ 3, 0, 0 ],
+            "rotation" :  [ 0 , 0, 0 ],
+            "scale" :  [ 1, 1, 1 ]
+        },
+        {
+            "mesh" :  "data/mesh/cube.obj",
+            "material" : "data/material/brick_1.json",
+            "position" :  [ -3, 0, 0 ],
+            "rotation" :  [ 0 , 0, 0 ],
+            "scale" :  [ 1, 1, 1 ]
+        },
+        {
+            "mesh" :  "data/mesh/cube.obj",
+            "material" : "data/material/brick_1.json",
+            "position" :  [ 0, 0, 3 ],
+            "rotation" :  [ 0 , 0, 0 ],
+            "scale" :  [ 1, 1, 1 ]
+        },
+        {
+            "mesh" :  "data/mesh/cube.obj",
+            "material" : "data/material/brick_1.json",
+            "position" :  [ 0, 0, -3 ],
+            "rotation" :  [ 0 , 0, 0 ],
+            "scale" :  [ 1, 1, 1 ]
+        },
+        {
+            "mesh" :  "data/mesh/cube.obj",
+            "material" : "data/material/brick_1.json",
+            "position" :  [ 0, -3, 0 ],
+            "rotation" :  [ 0 , 0, 0 ],
+            "scale" :  [ 1, 1, 1 ]
+        }
+    ],
+    "point_lights" :  [
+        {
+            "position" :  [ 0, 0, 0 ],
+            "color" : [ 1, 1, 1 ],
+            "radius" :  3,
+            "intensity" : 3,
+            "casts_shadow" : true
+        }
+    ],
+    "ambient_light" : {
+        "color" :  [ 1, 1, 1 ],
+        "intensity" : 0.1
+    },
+    "directional_lights" : [
+        {
+            "direction" :  [ 0, -1.1, 0],
+            "color" :  [ 1, 1, 1 ],
+            "intensity" :  1,
+            "casts_shadow" : true
+        }
+    ]
+}

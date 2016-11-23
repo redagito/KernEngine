@@ -1,0 +1,5 @@
+{
+	"base" : "data/image/moss_1_base.png",
+	"normal" : "data/image/moss_1_normal.png",
+	"specular" : "data/image/moss_1_specular.png"
+}
