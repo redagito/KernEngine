@@ -29,7 +29,7 @@ bool load(const std::string &file, SMesh &mesh)
   std::string extension = getFileExtension(file);
   if (extension == "obj")
   {
-    return loadMeshFromObjFallback(file, mesh);
+    return loadMeshFromObj(file, mesh);
   }
   else
   {
@@ -43,11 +43,10 @@ bool loadMeshFromObj(const std::string &file, SMesh &mesh)
   // Wavefront OBJ file format loaded with tinyobj
   std::vector<tinyobj::shape_t> shapes;
   std::vector<tinyobj::material_t> materials;
-  tinyobj::attrib_t attrib;
 
-  // Load as obj
+  // Load as obj, always triangulate
   std::string err;
-  if (!tinyobj::LoadObj(&attrib, &shapes, &materials, &err, file.c_str()))
+  if (!tinyobj::LoadObj(shapes, materials, err, file.c_str()))
   {
     LOG_ERROR("%s.", err.c_str());
     return false;
@@ -62,15 +61,19 @@ bool loadMeshFromObj(const std::string &file, SMesh &mesh)
       LOG_DEBUG("Name: %s, Indices: %i",
                 shape.name.c_str(), shape.mesh.indices.size());
     }
-    return false;
+	LOG_WARNING("Only the first mesh will be loaded.");
   }
   if (shapes.empty())
   {
     LOG_ERROR("No mesh data loaded from file %s.", file.c_str());
     return false;
   }
+  
   mesh.m_type = EPrimitiveType::Triangle;
+  mesh.m_indices = shapes.at(0).mesh.indices;
+  mesh.m_vertices = shapes.at(0).mesh.positions;
+  mesh.m_normals = shapes.at(0).mesh.normals;
+  mesh.m_uvs = shapes.at(0).mesh.texcoords;
 
-  // Currently not working, needs rebuilding index buffer
-  return false;
+  return true;
 }

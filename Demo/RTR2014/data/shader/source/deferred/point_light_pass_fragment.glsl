@@ -64,7 +64,7 @@ void main(void)
 	// Lambertian factor based on surface normal
 	float lambert_factor = max(0.0, dot(surface_normal_world, light_direction));
 	
-    // applay shadow cube
+    // Apply shadow cube
     float d = texture(shadow_cube, -light_direction).r;
     float visibility = 1.0f;
     if (fragment_light_distance >= d + 0.001) {

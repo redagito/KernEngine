@@ -114,7 +114,7 @@ bool CEngine::init(const char *configFile)
 
   // Legacy stuff to keep demo mode working
   // TODO Should be removed
-  if (!m_engineConfig.m_sceneFile.empty())
+  if (!m_engineConfig.m_sceneFile.empty() && m_engineConfig.m_modeType != "game")
   {
     if (!initDemo(m_engineConfig.m_sceneFile))
     {

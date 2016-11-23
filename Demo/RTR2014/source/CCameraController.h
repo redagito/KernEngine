@@ -5,9 +5,8 @@
 
 #include <glm/glm.hpp>
 
-#include "graphics/window/CGlfwWindow.h"
-
-#include "input/IInputListener.h"
+#include "graphics/graphics/window/CGlfwWindow.h"
+#include "graphics/input/IInputListener.h"
 
 class IControllableCamera;
 class IInputProvider;

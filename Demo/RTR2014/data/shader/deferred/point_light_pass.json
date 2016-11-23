@@ -1,0 +1,9 @@
+{
+	"description" : "Renders point light into light buffer.",
+	"vertex" : {
+		"file" : "data/shader/source/deferred/point_light_pass_vertex.glsl"
+	},
+	"fragment" : {
+		"file" : "data/shader/source/deferred/point_light_pass_fragment.glsl"
+	}
+}

@@ -1,0 +1,9 @@
+{
+	"description" : "Adds godray texture to scene texture.",
+	"vertex" : {
+		"file" : "data/shader/source/post/god_ray_2_vertex.glsl"
+	},
+	"fragment" : {
+		"file" : "data/shader/source/post/god_ray_2_fragment.glsl"
+	}
+}

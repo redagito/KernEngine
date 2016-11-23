@@ -15,5 +15,5 @@ void main()
 
 	vec3 texel = texture(scene_texture, uv).xyz;
 	vec3 texelGodrays = texture(godray_texture, uv).xyz;
-	color = clamp(texel + texelGodrays, 0.0, 1.0);
+	color = texel + texelGodrays;
 }

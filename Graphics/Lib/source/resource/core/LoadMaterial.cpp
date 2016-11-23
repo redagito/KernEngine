@@ -108,7 +108,7 @@ bool loadMaterialFromIni(const std::string &file, std::string &base,
                          std::string &normal, std::string &specular,
                          std::string &glow, std::string &alpha)
 {
-  LOG_DEBUG("Loading material from file %s.", file.c_str());
+  LOG_DEBUG("Loading material from ini file %s.", file.c_str());
   CIniFile ini;
   if (!ini.load(file))
   {
@@ -118,6 +118,14 @@ bool loadMaterialFromIni(const std::string &file, std::string &base,
 
   // Load from ini
   base = ini.getValue("base", "file", "");
+  if (base.empty())
+  {
+	  base = ini.getValue("diffuse", "file", "");
+	  if (!base.empty())
+	  {
+		  KERN_WARNING("The material file " << file << " uses deprecated 'diffuse' instead of 'base'");
+	  }
+  }
   normal = ini.getValue("normal", "file", "");
   specular = ini.getValue("specular", "file", "");
   glow = ini.getValue("glow", "file", "");

@@ -1,0 +1,9 @@
+{
+	"description" : "Adds lens flare texture to scene texture.",
+	"vertex" : {
+		"file" : "data/shader/source/post/lensflare_vertex_3.glsl"
+	},
+	"fragment" : {
+		"file" : "data/shader/source/post/lensflare_fragment_3.glsl"
+	}
+}

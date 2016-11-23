@@ -86,7 +86,7 @@ bool CDeferredRenderer::init(IResourceManager &manager)
   }
 
   // Post process
-  // TODO Dediacted post processor?
+  // TODO Dedicated post processor?
   if (!initPostProcessPass(manager))
   {
     LOG_ERROR("Failed to initialize post processing pass.");
@@ -952,16 +952,19 @@ void CDeferredRenderer::postProcessPass(
   vignetteBlurPass(window, manager, m_postProcessPassTexture2);
   // Scene in texture 0
 
-  // Bloom pass
-  m_postProcessPassFrameBuffer1.setActive(GL_FRAMEBUFFER);
-  bloomPass1(window, manager, m_postProcessPassTexture0);
-  // Bloom scene in texture 1
+  if (camera.getFeatureInfo().bloomActive)
+  {
+	  // Bloom pass
+	  m_postProcessPassFrameBuffer1.setActive(GL_FRAMEBUFFER);
+	  bloomPass1(window, manager, m_postProcessPassTexture0);
+	  // Bloom scene in texture 1
 
-  // Additive blend
-  m_postProcessPassFrameBuffer0.setActive(GL_FRAMEBUFFER);
-  bloomPass2(window, manager, m_postProcessPassTexture0,
-             m_postProcessPassTexture1);
-  // Scene with bloom in texture 0
+	  // Additive blend
+	  m_postProcessPassFrameBuffer0.setActive(GL_FRAMEBUFFER);
+	  bloomPass2(window, manager, m_postProcessPassTexture0,
+		  m_postProcessPassTexture1);
+	  // Scene with bloom in texture 0
+  }
 
   if (camera.getFeatureInfo().lenseFlareActive)
   {
@@ -2193,6 +2196,7 @@ bool CDeferredRenderer::initPostProcessPass(IResourceManager &manager)
     LOG_ERROR("Failed to initialize lens flare pass.");
     return false;
   }
+
   if (!initCelPass(manager))
   {
     LOG_ERROR("Failed to initialize cel pass.");

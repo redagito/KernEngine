@@ -1,0 +1,9 @@
+{
+	"description" : "Additively blends bloom texture on scene texture.",
+	"vertex" : {
+		"file" : "data/shader/source/post/bloom_2_vertex.glsl"
+	},
+	"fragment" : {
+		"file" : "data/shader/source/post/bloom_2_fragment.glsl"
+	}
+}

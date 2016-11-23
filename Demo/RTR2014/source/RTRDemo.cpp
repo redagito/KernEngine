@@ -5,36 +5,37 @@
 
 // Debug
 #include <foundation/debug/CDebugInfo.h>
-#include <foundation/Log.h>
+#include <foundation/debug/Log.h>
+#include <foundation/util/TimeStamp.h>
 
 // Graphics
-#include "graphics/renderer/core/RendererCoreConfig.h"
-#include "graphics/renderer/debug/RendererDebug.h"
+#include "graphics/graphics/renderer/core/RendererCoreConfig.h"
+#include "graphics/graphics/renderer/debug/RendererDebug.h"
 
 #include <GLFW/glfw3.h>
 
-#include "graphics/camera/CFirstPersonCamera.h"
-#include "graphics/camera/CFreeCamera.h"
+#include "graphics/graphics/camera/CFirstPersonCamera.h"
+#include "graphics/graphics/camera/CFreeCamera.h"
 
 // Renderer types
-#include "graphics/renderer/CForwardRenderer.h"
-#include "graphics/renderer/CDeferredRenderer.h"
+#include "graphics/graphics/renderer/CForwardRenderer.h"
+#include "graphics/graphics/renderer/CDeferredRenderer.h"
 
 // Resource system
-#include "resource/Resource.h"
+#include "graphics/resource/Resource.h"
 
-#include "graphics/scene/CScene.h"
-#include "graphics/window/CGlfwWindow.h"
-#include "graphics/resource/CGraphicsResourceManager.h"
+#include "graphics/graphics/scene/CScene.h"
+#include "graphics/graphics/window/CGlfwWindow.h"
+#include "graphics/graphics/resource/CGraphicsResourceManager.h"
 
-#include "util/TimeStamp.h"
-#include "graphics/CDebugInfoDisplay.h"
-#include "input/provider/CGlfwInputProvider.h"
-#include "io/CSceneLoader.h"
+#include "graphics/graphics/CDebugInfoDisplay.h"
+#include "graphics/input/provider/CGlfwInputProvider.h"
+#include "graphics/io/CSceneLoader.h"
+
 #include "CCameraController.h"
 
 // Animation
-#include "animation/CAnimationWorld.h"
+#include "graphics/animation/CAnimationWorld.h"
 
 RTRDemo::RTRDemo() {}
 
@@ -104,7 +105,7 @@ int RTRDemo::init(const std::string& configFile)
     m_cameraController->setCamera(m_camera);
     m_cameraController->setInputProvider(m_inputProvider.get());
 
-    m_debugInfoDisplay = std::make_shared<CDebugInfoDisplay>(m_resourceManager);
+    m_debugInfoDisplay = std::make_shared<CDebugInfoDisplay>(*m_resourceManager);
 
     m_window->addListener(m_cameraController.get());
 
@@ -184,7 +185,7 @@ int RTRDemo::run()
             m_debugInfo->setValue("Camera z", std::to_string(m_camera->getPosition().z));
             m_debugInfo->setValue("FPS", std::to_string(lastFrameCount));
 
-            m_debugInfoDisplay->draw(*m_debugInfo.get());
+            m_debugInfoDisplay->draw(*m_debugInfo.get(), true);
         }
 
 		// Perform animation update
@@ -257,7 +258,7 @@ bool RTRDemo::initRenderer()
 
     // Initialize deferred renderer
     LOG_INFO("Initializing deferred renderer.");
-    m_deferredRenderer.reset(CDeferredRenderer::create(m_resourceManager.get()));
+    m_deferredRenderer.reset(CDeferredRenderer::create(*m_resourceManager));
     if (m_deferredRenderer == nullptr)
     {
         LOG_ERROR("Failed to initialize deferred renderer.");
@@ -266,7 +267,7 @@ bool RTRDemo::initRenderer()
 
     // Initialize forward renderer
     LOG_INFO("Initializing forward renderer.");
-    m_forwardRenderer.reset(CForwardRenderer::create(m_resourceManager.get()));
+    m_forwardRenderer.reset(CForwardRenderer::create(*m_resourceManager));
     if (m_forwardRenderer == nullptr)
     {
         LOG_ERROR("Failed to initialize forward renderer.");
@@ -305,7 +306,7 @@ bool RTRDemo::initRenderer()
 
 bool RTRDemo::initScene()
 {
-    m_scene = std::make_shared<CScene>();
+    m_scene = std::make_shared<CScene>(m_graphicsResourceManager.get());
     CSceneLoader loader(*m_resourceManager);
 
     // Get startup scene from config

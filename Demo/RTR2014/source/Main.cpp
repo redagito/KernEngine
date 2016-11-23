@@ -1,4 +1,4 @@
-#include "demo/RTRDemo.h"
+#include "RTRDemo.h"
 
 int main(int argc, const char** argv)
 {

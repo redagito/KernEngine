@@ -8,8 +8,6 @@ layout (location = 2) in vec2 vertexUV;
 // Transformation matrices
 uniform mat4 model;
 uniform mat4 rotation;
-uniform mat4 translation;
-uniform mat4 scale;
 
 // View and projection matrices
 uniform mat4 view;
@@ -17,7 +15,7 @@ uniform mat4 projection;
 
 // Texture coordinate
 out vec2 uv;
-// Nornal vector
+// Normal vector
 smooth out vec3 normalVectorWorldSpace;
 
 smooth out vec3 vertexWorldSpace;

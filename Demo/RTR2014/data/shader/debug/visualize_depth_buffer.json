@@ -1,0 +1,9 @@
+{
+	"description" : "Creates linear representation of the depth buffer values for visualization.",
+	"vertex" : {
+		"file" : "data/shader/source/debug/visualize_depth_buffer_vertex.glsl"
+	},
+	"fragment" : {
+		"file" : "data/shader/source/debug/visualize_depth_buffer_fragment.glsl"
+	}
+}

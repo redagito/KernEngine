@@ -40,10 +40,10 @@ struct SFeatureInfo
   float dofFarBlur = 150.f;
 
   bool fxaaActive = true;
-  bool lenseFlareActive = true;
-  bool godRayActive = true;
+  bool lenseFlareActive = false;
+  bool godRayActive = false;
   bool toonActive = false;
-
+  bool bloomActive = false;
   bool normalMappingActive = true;
   // Hackyyy
   mutable unsigned int culledObjectCount = 0;

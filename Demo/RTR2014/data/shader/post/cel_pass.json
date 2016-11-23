@@ -1,0 +1,9 @@
+{
+	"description" : "Writes bloom texture.",
+	"vertex" : {
+		"file" : "data/shader/source/post/cel_vertex.glsl"
+	},
+	"fragment" : {
+		"file" : "data/shader/source/post/cel_fragment.glsl"
+	}
+}
