@@ -321,6 +321,13 @@ ResourceId CResourceManager::createShader(ResourceId vertex,
                                           ResourceId geometry,
                                           ResourceId fragment)
 {
+  // Needs at least valid vertex and fragment shader
+	if (vertex == invalidResource || fragment == invalidResource)
+	{
+		KERN_ERROR("Failed to create shader, resource id for vertex or fragment shader is invalid.");
+		return invalidResource;
+	}
+
   // Create shader
   ResourceId id = m_nextShaderId;
   ++m_nextShaderId;

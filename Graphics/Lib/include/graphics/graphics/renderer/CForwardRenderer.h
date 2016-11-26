@@ -57,7 +57,7 @@ protected:
             CMaterial *material, const IGraphicsResourceManager &manager);
 
 private:
-  bool initDefaultShaders(IResourceManager &manager);
+  bool initShaders(IResourceManager &manager);
 
   glm::mat4 m_currentView =
       glm::mat4(1.f); /**< Stores the current view matrix. */
@@ -66,7 +66,7 @@ private:
 
   std::list<SRenderRequest>
       m_customShaderMeshes;   /**< Render requests with custom shaders. */
-  ResourceId m_forwardShader; /**< Forward shader resource id. */
-  CShaderProgram *m_currentShader =
+  ResourceId m_forwardShaderId; /**< Forward shader resource id. */
+  CShaderProgram *m_forwardShader =
       nullptr; /**< Currently active shader object. */
 };

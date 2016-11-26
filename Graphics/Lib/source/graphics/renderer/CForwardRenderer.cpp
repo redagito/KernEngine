@@ -25,6 +25,9 @@
 #include "graphics/graphics/renderer/core/RendererCoreConfig.h"
 #include "graphics/graphics/renderer/debug/RendererDebug.h"
 
+// Shader sources
+#include "graphics/renderer/shader/ShaderForwardRenderer.h"
+
 CForwardRenderer::CForwardRenderer() { return; }
 
 CForwardRenderer::~CForwardRenderer()
@@ -57,7 +60,7 @@ bool CForwardRenderer::init(IResourceManager &manager)
   }
 
   // Load and init default shaders
-  return initDefaultShaders(manager);
+  return initShaders(manager);
 }
 
 void CForwardRenderer::draw(const IScene &scene, const ICamera &camera,
@@ -67,8 +70,9 @@ void CForwardRenderer::draw(const IScene &scene, const ICamera &camera,
   // Draw init
   window.setActive();
 
-  // Set forward shader as active
-  m_currentShader = manager.getShaderProgram(m_forwardShader);
+  // Retrieve and use forward shader
+  m_forwardShader = manager.getShaderProgram(m_forwardShaderId);
+  m_forwardShader->setActive();
 
   // Initializiation
   glBindFramebuffer(GL_FRAMEBUFFER, 0);
@@ -87,8 +91,8 @@ void CForwardRenderer::draw(const IScene &scene, const ICamera &camera,
   scene.getVisibleObjects(camera, query);
 
   // Send view/projection to default shader
-  m_currentShader->setUniform(viewMatrixUniformName, m_currentView);
-  m_currentShader->setUniform(projectionMatrixUniformName, m_currentProjection);
+  m_forwardShader->setUniform(viewMatrixUniformName, m_currentView);
+  m_forwardShader->setUniform(projectionMatrixUniformName, m_currentProjection);
 
   // Traverse visible objects
   while (query.hasNextObject())
@@ -155,17 +159,16 @@ void CForwardRenderer::draw(CMesh *mesh, const glm::mat4 &translation,
                             CMaterial *material,
                             const IGraphicsResourceManager &manager)
 {
-  // Decide which shader program to use
-  CShaderProgram *shader = m_currentShader;
-  shader->setActive();
 
   // Transformation matrices
-  shader->setUniform(translationMatrixUniformName, translation);
-  shader->setUniform(rotationMatrixUniformName, rotation);
-  shader->setUniform(scaleMatrixUniformName, scale);
-  shader->setUniform(modelMatrixUniformName, translation * rotation * scale);
+	m_forwardShader->setUniform(translationMatrixUniformName, translation);
+	m_forwardShader->setUniform(rotationMatrixUniformName, rotation);
+	m_forwardShader->setUniform(scaleMatrixUniformName, scale);
+	m_forwardShader->setUniform(modelMatrixUniformName, translation * rotation * scale);
 
   // Send material textures to shader
+
+	// Diffuse texture (base color)
   if (material->hasDiffuse())
   {
     material->getDiffuse()->setActive(diffuseTextureUnit);
@@ -174,8 +177,9 @@ void CForwardRenderer::draw(CMesh *mesh, const glm::mat4 &translation,
   {
     manager.getDefaultDiffuseTexture()->setActive(diffuseTextureUnit);
   }
-  shader->setUniform(diffuseTextureUniformName, diffuseTextureUnit);
+  m_forwardShader->setUniform(diffuseTextureUniformName, diffuseTextureUnit);
 
+  // Normal texture
   if (material->hasNormal())
   {
     material->getNormal()->setActive(normalTextureUnit);
@@ -185,8 +189,9 @@ void CForwardRenderer::draw(CMesh *mesh, const glm::mat4 &translation,
     // Use default texture
     manager.getDefaultNormalTexture()->setActive(normalTextureUnit);
   }
-  shader->setUniform(normalTextureUniformName, normalTextureUnit);
+  m_forwardShader->setUniform(normalTextureUniformName, normalTextureUnit);
 
+  // Specular texture
   if (material->hasSpecular())
   {
     material->getSpecular()->setActive(specularTextureUnit);
@@ -196,8 +201,9 @@ void CForwardRenderer::draw(CMesh *mesh, const glm::mat4 &translation,
     // Use default texture
     manager.getDefaultSpecularTexture()->setActive(specularTextureUnit);
   }
-  shader->setUniform(specularTextureUniformName, specularTextureUnit);
+  m_forwardShader->setUniform(specularTextureUniformName, specularTextureUnit);
 
+  // Glow texture
   if (material->hasGlow())
   {
     material->getGlow()->setActive(glowTextureUnit);
@@ -207,9 +213,10 @@ void CForwardRenderer::draw(CMesh *mesh, const glm::mat4 &translation,
     // Use default texture
     manager.getDefaultGlowTexture()->setActive(glowTextureUnit);
   }
-  shader->setUniform(glowTextureUniformName, glowTextureUnit);
+  m_forwardShader->setUniform(glowTextureUniformName, glowTextureUnit);
 
   // TODO Sort materials with alpha texture for blending.
+  // Alpha texture
   if (material->hasAlpha())
   {
     material->getAlpha()->setActive(alphaTextureUnit);
@@ -218,26 +225,24 @@ void CForwardRenderer::draw(CMesh *mesh, const glm::mat4 &translation,
   {
     manager.getDefaultAlphaTexture()->setActive(alphaTextureUnit);
   }
-  shader->setUniform(alphaTextureUniformName, alphaTextureUnit);
+  m_forwardShader->setUniform(alphaTextureUniformName, alphaTextureUnit);
 
   // Draw mesh
-  // TODO Consider custom shader bindings for meshes
   ::draw(*mesh);
-
-  // TODO Cleanup?
 }
 
-bool CForwardRenderer::initDefaultShaders(IResourceManager &manager)
+bool CForwardRenderer::initShaders(IResourceManager &manager)
 {
-  // TODO Read file name from config?
   std::string defaultShaderFile("data/shader/forward_test_0.ini");
-  m_forwardShader = manager.loadShader(defaultShaderFile);
+
+  auto vertexShaderId = manager.createString(getForwardRendererVertexShader());
+  auto fragmentShaderId = manager.createString(getForwardRendererFragmentShader());
+  m_forwardShaderId = manager.createShader(vertexShaderId, invalidResource, invalidResource, invalidResource, fragmentShaderId);
 
   // Check if ok
-  if (m_forwardShader == invalidResource)
+  if (m_forwardShaderId == invalidResource)
   {
-    LOG_ERROR("Failed to initialize the default shader from file %s.",
-              defaultShaderFile.c_str());
+	  LOG_ERROR("Failed to initialize the farward shader.");
     return false;
   }
   return true;

@@ -58,6 +58,7 @@ bool CGlfwWindow::init(unsigned int width, unsigned int height,
 
   glfwMakeContextCurrent(m_window);
   glfwSetInputMode(m_window, GLFW_STICKY_KEYS, GL_FALSE);
+  glfwSwapInterval(1);
 
 // Load OpenGL extensions
 #ifndef __APPLE__
