@@ -51,6 +51,11 @@ public:
   */
   void removeState(const std::string &name);
 
+  /**
+  * \brief Check if a state with the specified name exists
+  */
+  bool hasState(const std::string& name) const;
+
 private:
   std::unordered_map<std::string, std::unique_ptr<IGameState>>
       m_gameStates;          /**< Game states stored by name. */

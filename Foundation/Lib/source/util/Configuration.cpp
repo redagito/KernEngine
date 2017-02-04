@@ -7,7 +7,7 @@ static bool parseArg(const char *arg, Configuration &config)
   std::string key;
   std::string value;
   int index = 0;
-  int length = strlen(arg);
+  int length = static_cast<int>(strlen(arg));
 
   // Parse key
   for (; index < length; ++index)

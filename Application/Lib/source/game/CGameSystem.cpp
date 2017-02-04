@@ -93,3 +93,8 @@ void CGameSystem::removeState(const std::string &name)
   m_gameStates.erase(name);
   LOG_DEBUG("Removed game state %s from game system.", name.c_str());
 }
+
+bool CGameSystem::hasState(const std::string& name) const
+{
+	return m_gameStates.find(name) != m_gameStates.end();
+}

@@ -20,12 +20,16 @@ CGlfwWindow::~CGlfwWindow()
 {
   // Remove mapping
   s_windows.erase(m_window);
+  if (s_windows.empty())
+  {
+	  glfwTerminate();
+  }
 }
 
 bool CGlfwWindow::init(unsigned int width, unsigned int height,
                        const std::string &name)
 {
-  if (!glfwInit())
+  if (s_windows.empty() && !glfwInit())
   {
     LOG_ERROR("Failed to initialize GLFW.");
     return false;
@@ -44,7 +48,7 @@ bool CGlfwWindow::init(unsigned int width, unsigned int height,
   if (m_window == nullptr)
   {
     LOG_ERROR("Failed to create GLFW window.");
-    glfwTerminate();
+	if (s_windows.empty()) { glfwTerminate(); }
     return false;
   }
 
@@ -64,17 +68,17 @@ bool CGlfwWindow::init(unsigned int width, unsigned int height,
 #ifndef __APPLE__
   if (flextInit() != GL_TRUE)
   {
-    glfwTerminate();
+	  if (s_windows.empty()) { glfwTerminate(); }
     LOG_ERROR("Failed to initialize flextGL.");
     return false;
   }
 #endif
 
-  // Add mapping
-  s_windows[m_window] = this;
-
   // Set window resize callback
   glfwSetFramebufferSizeCallback(m_window, &CGlfwWindow::resizeCallback);
+
+  // Add mapping
+  s_windows[m_window] = this;
 
   return true;
 }

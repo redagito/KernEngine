@@ -17,7 +17,7 @@ template <typename T> bool serializeNative(std::ostream &stream, T value)
 template <typename T>
 bool serializeNativeVector(std::ostream &stream, const std::vector<T> &value)
 {
-  uint32_t size = value.size();
+  uint32_t size = static_cast<uint32_t>(value.size());
   return serialize(stream, size) && serializeNative(stream, value.data(), size);
 }
 
@@ -25,7 +25,7 @@ template <typename T>
 bool serializeVector(std::ostream &stream, const std::vector<T> &value)
 {
   // Write size
-  uint32_t size = value.size();
+  uint32_t size = static_cast<uint32_t>(value.size());
   if (!serialize(stream, size))
   {
     return false;
@@ -129,7 +129,7 @@ bool serialize(std::ostream &stream, const glm::mat4 &value)
 
 bool serialize(std::ostream &stream, const std::string &value)
 {
-  uint32_t size = value.size();
+  uint32_t size = static_cast<uint32_t>(value.size());
   return serializeNative(stream, size) &&
          serializeNative(stream, value.data(), size);
 }

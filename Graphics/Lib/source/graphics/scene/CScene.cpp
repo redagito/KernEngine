@@ -35,7 +35,7 @@ SceneObjectId CScene::createObject(ResourceId model, const glm::vec3 &position,
   // const CMesh* meshPtr = m_resourceManager->getMesh(meshId);
   m_objects.push_back(
       SSceneObject(model, position, rotation, scale, true, CBoundingSphere()));
-  return m_objects.size() - 1;
+  return static_cast<SceneObjectId>(m_objects.size()) - 1;
 }
 
 SceneObjectId CScene::createObject(ResourceId meshId, ResourceId material,
@@ -46,7 +46,7 @@ SceneObjectId CScene::createObject(ResourceId meshId, ResourceId material,
   const CMesh *meshPtr = m_resourceManager->getMesh(meshId);
   m_objects.push_back(SSceneObject(meshId, material, position, rotation, scale,
                                    true, meshPtr->getBoundingSphere()));
-  return m_objects.size() - 1;
+  return static_cast<SceneObjectId>(m_objects.size()) - 1;
 }
 
 bool CScene::getObject(SceneObjectId id, ResourceId &mesh, ResourceId &material,

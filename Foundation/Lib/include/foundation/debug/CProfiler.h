@@ -20,6 +20,7 @@ public:
    * Write formatted profile data.
    */
   static bool write(std::ostream &stream);
+  static bool hasData();
 
 private:
   /**
@@ -33,9 +34,10 @@ private:
     double maxCallTime = 0.f;       /**< Max call time. */
   };
 
+  using FunctionProfiles = std::unordered_map<std::string, SData>;
+
   double m_time = 0.0; /**< Start time. */
   std::string m_name;  /**< Profile name. */
-  static std::unordered_map<std::string, SData>
-      s_profileData; /**< Profile data. */
+  static FunctionProfiles s_profileData; /**< Profile data. */
   static std::mutex s_mutex;
 };

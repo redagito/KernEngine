@@ -1,4 +1,4 @@
-#include "RTRDemo.h"
+#include "CDemoRTR2014Application.h"
 
 #include <string>
 #include <vector>

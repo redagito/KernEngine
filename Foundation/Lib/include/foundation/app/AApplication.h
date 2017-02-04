@@ -24,6 +24,9 @@ public:
 
   bool isInitialized() const override;
 
+  /**
+   * Initializes logging mechanism
+   */
   virtual bool initialize() override;
   virtual void deinitialize() override;
 

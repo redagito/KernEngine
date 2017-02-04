@@ -1,4 +1,4 @@
-#include "RTRDemo.h"
+#include "CDemoRTR2014Application.h"
 
 int main(int argc, const char** argv)
 {
