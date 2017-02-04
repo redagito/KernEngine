@@ -71,16 +71,14 @@ bool CGamePlayState::init(IGraphicsSystem *graphicsSystem, IInputProvider *input
                                                                           glm::vec2(100.f, 100.f)));
 
     // Load bullet
-    ResourceId bulletMesh = m_resourceManager->loadMesh("data/mesh/bullet.obj");
-    if (bulletMesh == invalidResource)
-    {
-        return false;
-    }
-    ResourceId bulletMaterial = m_resourceManager->loadMaterial("data/material/white.json");
-    if (bulletMaterial == invalidResource)
-    {
-        return false;
-    }
+	auto bulletModel = m_resourceManager->loadModel("data/model/bullet.json");
+	if (bulletModel == invalidResource)
+	{
+		return false;
+	}
+	ResourceId bulletMesh;
+	ResourceId bulletMaterial;
+	m_resourceManager->getModel(bulletModel, bulletMesh, bulletMaterial);
 
     m_player->addController(std::make_shared<CWeaponController>(
         m_inputProvider, &getGameWorld(), m_scene, bulletMesh, bulletMaterial, m_resourceManager,

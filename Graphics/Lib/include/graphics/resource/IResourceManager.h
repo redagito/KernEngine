@@ -93,7 +93,7 @@ class IResourceManager
     /**
      * \brief Retrieves model data.
      */
-    virtual bool getModel(ResourceId id, ResourceId &mesh, ResourceId &model) = 0;
+    virtual bool getModel(ResourceId id, ResourceId &mesh, ResourceId &material) = 0;
 
     /**
      * \brief Creates string resource.

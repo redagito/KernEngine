@@ -1,14 +1,13 @@
-#include "RTRDemo.h"
+#include "CDemoRTR2014.h"
 
 int main(int argc, const char** argv)
 {
-    RTRDemo demo;
+	CDemoRTR2014 app;
 
-    int result = demo.init("data/demo.ini");
-    if (result != 0)
+    if (app.init("config/startup.ini") != 0)
     {
-        return result;
+        return 1;
     }
 
-    return demo.run();
+    return app.run();
 }

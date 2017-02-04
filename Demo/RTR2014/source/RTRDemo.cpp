@@ -1,4 +1,4 @@
-#include "RTRDemo.h"
+#include "CDemoRTR2014.h"
 
 #include <string>
 #include <vector>
@@ -37,11 +37,11 @@
 // Animation
 #include "graphics/animation/CAnimationWorld.h"
 
-RTRDemo::RTRDemo() {}
+CDemoRTR2014::CDemoRTR2014() {}
 
-RTRDemo::~RTRDemo() {}
+CDemoRTR2014::~CDemoRTR2014() {}
 
-int RTRDemo::init(const std::string& configFile)
+int CDemoRTR2014::init(const std::string& configFile)
 {
     // Init log file
     std::string logFile = "log/" + createTimeStamp() + ".log";
@@ -112,7 +112,7 @@ int RTRDemo::init(const std::string& configFile)
     return 0;
 }
 
-int RTRDemo::run()
+int CDemoRTR2014::run()
 {
     double f1Cooldown = 0.0;
     double f2Cooldown = 0.0;
@@ -215,7 +215,7 @@ int RTRDemo::run()
     return 0;
 }
 
-bool RTRDemo::initWindow()
+bool CDemoRTR2014::initWindow()
 {
     // Check if already initialized
     if (m_window != nullptr)
@@ -248,7 +248,7 @@ bool RTRDemo::initWindow()
     return true;
 }
 
-bool RTRDemo::initRenderer()
+bool CDemoRTR2014::initRenderer()
 {
     if (m_renderer != nullptr || m_deferredRenderer != nullptr || m_forwardRenderer != nullptr)
     {
@@ -304,7 +304,7 @@ bool RTRDemo::initRenderer()
     return true;
 }
 
-bool RTRDemo::initScene()
+bool CDemoRTR2014::initScene()
 {
     m_scene = std::make_shared<CScene>(m_graphicsResourceManager.get());
     CSceneLoader loader(*m_resourceManager);

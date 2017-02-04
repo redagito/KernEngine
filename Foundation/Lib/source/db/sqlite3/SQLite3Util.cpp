@@ -7,7 +7,8 @@ bool bindValue(sqlite3_stmt *stmt, int id, const std::string &str)
 {
     assert(stmt != nullptr);
 
-    return sqlite3_bind_text(stmt, id, str.data(), str.size(), SQLITE_STATIC) == SQLITE_OK;
+	return sqlite3_bind_text(stmt, id, str.data(), static_cast<int>(str.size()),
+                                        SQLITE_STATIC) == SQLITE_OK;
 }
 
 bool readValue(sqlite3_stmt *stmt, int column, std::string &str)
@@ -63,5 +64,6 @@ bool prepareStatement(sqlite3 *db, const std::string &sql, sqlite3_stmt **stmt)
     assert(db != nullptr);
     assert(stmt != nullptr);
 
-    return sqlite3_prepare_v2(db, sql.data(), sql.size(), stmt, nullptr) == SQLITE_OK;
+	return sqlite3_prepare_v2(db, sql.data(), static_cast<int>(sql.size()), stmt,
+                                         nullptr) == SQLITE_OK;
 }

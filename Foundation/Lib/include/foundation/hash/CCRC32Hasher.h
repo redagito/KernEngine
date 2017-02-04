@@ -1,5 +1,6 @@
 #pragma once
 
+#include <cstddef>
 #include <cstdint>
 
 /**
@@ -16,7 +17,7 @@ class CCRC32Hasher
     /**
      * Update current hash.
      */
-    void update(const uint8_t *data, std::uint32_t size);
+    void update(const uint8_t *data, std::size_t size);
 
     /**
      * Finalize and return current hash.

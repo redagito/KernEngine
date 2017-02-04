@@ -1,20 +1,32 @@
 #include <memory>
 
-#include "Engine.h"
+#include "CDemoCG2015.h"
 
 int main(int argc, const char **argv)
 {
-    // Create engine interface
-    std::unique_ptr<IEngine> engine(createEngine());
+	// Command line parameters
+	Configuration cmdConfig;
+	if (!parseCommandLine(argc, argv, cmdConfig))
+	{
+		// Unable to parse command line
+		return 1;
+	}
 
-    // TODO Parse program arguments
+	CDemoCG2015 app;
+
+	app.setCommandLineArguments(cmdConfig);
+	app.setApplicationId("CG2015");
+	app.setApplicationName("Computer Graphics Demo Game 2015");
+	app.setApplicationVersion("v1.0");
+	app.setCompanyName("KernTec");
 
     // Initialize from config file
-    if (!engine->init("data/startup.ini"))
+    if (!app.initialize())
     {
         return 1;
     }
     // Run engine
-    engine->run();
+    app.run();
+
     return 0;
 }

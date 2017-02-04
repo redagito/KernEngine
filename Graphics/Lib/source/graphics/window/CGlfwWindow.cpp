@@ -16,8 +16,12 @@ CGlfwWindow::CGlfwWindow() : m_window(nullptr), m_width(0), m_height(0), m_mouse
 
 CGlfwWindow::~CGlfwWindow()
 {
-    // Remove mapping
-    s_windows.erase(m_window);
+  // Remove mapping
+  s_windows.erase(m_window);
+  if (s_windows.empty())
+  {
+	  glfwTerminate();
+  }
 }
 
 bool CGlfwWindow::init(unsigned int width, unsigned int height, const std::string &name)
@@ -67,11 +71,11 @@ bool CGlfwWindow::init(unsigned int width, unsigned int height, const std::strin
     }
 #endif
 
+	// Set window resize callback
+	glfwSetFramebufferSizeCallback(m_window, &CGlfwWindow::resizeCallback);
+
     // Add mapping
     s_windows[m_window] = this;
-
-    // Set window resize callback
-    glfwSetFramebufferSizeCallback(m_window, &CGlfwWindow::resizeCallback);
 
     return true;
 }

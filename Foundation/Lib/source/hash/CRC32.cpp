@@ -44,9 +44,9 @@ uint32_t crc32Update(uint32_t currentHash, uint8_t data)
     return crc32Table[(currentHash ^ data) & 0xff] ^ (currentHash >> 8);
 }
 
-uint32_t crc32Update(uint32_t currentHash, const uint8_t *data, uint32_t size)
+uint32_t crc32Update(uint32_t currentHash, const uint8_t *data, std::size_t size)
 {
-    for (uint32_t i = 0; i < size; ++i)
+    for (std::size_t i = 0; i < size; ++i)
     {
         currentHash = crc32Update(currentHash, data[i]);
     }

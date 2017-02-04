@@ -13,4 +13,4 @@ using Configuration = std::unordered_map<std::string, CValue>;
  * Parse configuration from command line arguments.
  * Does not clear the map but overwrites existing entries.
  */
-bool parse(int argc, const char **argv, Configuration &config);
+bool parseCommandLine(int argc, const char **argv, Configuration &config);

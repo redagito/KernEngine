@@ -24,7 +24,10 @@ class AApplication : public IApplication
 
     bool isInitialized() const override;
 
-    virtual bool initialize() override;
+	/**
+	* Initializes logging mechanism
+	*/
+	virtual bool initialize() override;
     virtual void deinitialize() override;
 
    private:

@@ -20,7 +20,18 @@ CWeaponController::CWeaponController(IInputProvider *provider, CGameWorld *gameW
       m_mesh(mesh),
       m_material(material)
 {
-    return;
+	// Precaclulate bullet AABB
+
+	// Bullet collidable
+	std::vector<float> bulletVertices;
+	std::vector<unsigned int> bulletIndices;
+	std::vector<float> bulletNormals;
+	std::vector<float> bulletUvs;
+	EPrimitiveType bulletType;
+
+	m_resourceManager->getMesh(m_mesh, bulletVertices, bulletIndices, bulletNormals,
+		bulletUvs, bulletType);
+	m_bulletAABB = CAABBox::create(bulletVertices);
 }
 
 CWeaponController::~CWeaponController() {}
@@ -49,16 +60,8 @@ void CWeaponController::update(float dtime)
             bullet->setPosition(position + direction * 2.f);
             bullet->setRotation(m_object->getRotation());
 
-            // Bullet colidable
-            std::vector<float> bulletVertices;
-            std::vector<unsigned int> bulletIndices;
-            std::vector<float> bulletNormals;
-            std::vector<float> bulletUvs;
-            EPrimitiveType bulletType;
-            m_resourceManager->getMesh(m_mesh, bulletVertices, bulletIndices, bulletNormals,
-                                       bulletUvs, bulletType);
-            bullet->setCollidable(
-                m_collisionSystem->add(CAABBox::create(bulletVertices), m_collisionGroup));
+            // Bullet collidable
+            bullet->setCollidable(m_collisionSystem->add(m_bulletAABB, m_collisionGroup));
             bullet->getCollidable()->setDamage(50.f);
 
             // Create scene proxy

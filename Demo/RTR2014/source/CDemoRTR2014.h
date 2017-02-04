@@ -5,6 +5,7 @@
 #include <vector>
 
 #include <foundation/io/CIniFile.h>
+#include <application/AGameApplication.h>
 
 // GLFW
 struct GLFWwindow;
@@ -31,11 +32,11 @@ class CDebugInfoDisplay;
 /**
  * \brief Demo application class.
  */
-class RTRDemo
+class CDemoRTR2014 // : public AGameApplication
 {
    public:
-    RTRDemo();
-    ~RTRDemo();
+	   CDemoRTR2014();
+    ~CDemoRTR2014();
 
     /**
      * \brief nitialize demo with config file.

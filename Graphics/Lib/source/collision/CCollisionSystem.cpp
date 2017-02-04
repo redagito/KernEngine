@@ -8,10 +8,10 @@
 
 unsigned int CCollisionSystem::getNewGroupId()
 {
-    // Add new collision group
-    m_entities.push_back(std::list<CCollidable *>());
-    // Return the group id
-    return m_entities.size() - 1;
+  // Add new collision group
+  m_entities.push_back(std::list<CCollidable *>());
+  // Return the group id
+  return static_cast<unsigned int>(m_entities.size()) - 1;
 }
 
 // Cleanup
@@ -30,7 +30,7 @@ CCollidable *CCollisionSystem::add(const CAABBox &box, unsigned int groupId)
 {
     if (groupId >= m_entities.size())
     {
-        LOG_ERROR("Group id %i does not exist", groupId);
+        KERN_ERROR("Group id " << groupId << " does not exist");
         throw std::runtime_error("CCollisionSystem.add: Invalid goup id");
     }
     // Create new entity and add to the collision group

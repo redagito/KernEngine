@@ -8,7 +8,7 @@
  *
  * Calculates CRC32 hash for a block of data.
  */
-std::uint32_t crc32Calculate(const std::uint8_t *data, std::uint32_t size);
+std::uint32_t crc32Calculate(const std::uint8_t *data, std::size_t size);
 
 /**
  * Calculates CRC32 hash for a string.

@@ -6,7 +6,7 @@ static bool parseArg(const char *arg, Configuration &config)
 {
     std::string key;
     std::string value;
-	size_t index = 0;
+    size_t index = 0;
     size_t length = strlen(arg);
 
     // Parse key
@@ -65,9 +65,10 @@ static bool parseArg(const char *arg, Configuration &config)
     return true;
 }
 
-bool parse(int argc, const char **argv, Configuration &config)
+bool parseCommandLine(int argc, const char **argv, Configuration &config)
 {
-    for (int i = 0; i < argc; ++i)
+	// Skip first parameter
+    for (int i = 1; i < argc; ++i)
     {
         if (!parseArg(argv[i], config))
         {

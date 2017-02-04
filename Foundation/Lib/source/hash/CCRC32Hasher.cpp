@@ -3,7 +3,7 @@
 
 void CCRC32Hasher::start() { m_hash = crc32Start(); }
 
-void CCRC32Hasher::update(const uint8_t *data, std::uint32_t size)
+void CCRC32Hasher::update(const uint8_t *data, std::size_t size)
 {
     m_hash = crc32Update(m_hash, data, size);
 }

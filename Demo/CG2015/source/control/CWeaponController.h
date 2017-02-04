@@ -30,16 +30,18 @@ class CWeaponController : public IController
     void receiveMessage(Message msg);
 
    private:
-    CGameObject *m_object = nullptr; /**< Controlled game object. */
-    bool m_active = true;            /**< Active state flag. */
-    IInputProvider *m_inputProvider = nullptr;
-    float m_weaponCooldown = 0.f;
-    CGameWorld *m_gameWorld = nullptr;
-    IResourceManager *m_resourceManager = nullptr;
-    IScene *m_scene = nullptr;
-    ResourceId m_mesh = invalidResource;
-    ResourceId m_material = invalidResource;
-    CCollisionSystem *m_collisionSystem = nullptr;
+	unsigned int m_collisionGroup = 0; /**< Object collision group. */
+	CCollisionSystem *m_collisionSystem = nullptr;
+	IResourceManager *m_resourceManager = nullptr;
+	IInputProvider *m_inputProvider = nullptr;
+	CGameWorld *m_gameWorld = nullptr;
+	IScene *m_scene = nullptr;
+	ResourceId m_mesh = invalidResource;
+	ResourceId m_material = invalidResource;
 
-    unsigned int m_collisionGroup; /**< Player collision group. */
+    CGameObject *m_object = nullptr; /**< Controlled game object. */
+	bool m_active = true;            /**< Active state flag. */
+	// Time between shots
+	float m_weaponCooldown = 0.f;
+	CAABBox m_bulletAABB;
 };

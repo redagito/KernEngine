@@ -8,7 +8,7 @@
 
 std::mutex CProfiler::s_mutex;
 
-std::unordered_map<std::string, CProfiler::SData> CProfiler::s_profileData;
+CProfiler::FunctionProfiles CProfiler::s_profileData;
 
 CProfiler::CProfiler(const std::string &name) : m_time(getTime()), m_name(name) { return; }
 
@@ -38,14 +38,21 @@ CProfiler::~CProfiler()
     }
 }
 
+bool CProfiler::hasData() { return !s_profileData.empty(); }
+
 bool CProfiler::write(std::ostream &stream)
 {
-    stream << "[Profile data]" << std::endl;
+    // Copy profiling data
+    FunctionProfiles temp;
+    {
+        // Lock map only for copy
+        std::lock_guard<std::mutex> lock(s_mutex);
+        temp = s_profileData;
+    }
 
-    // Lock map
-    std::lock_guard<std::mutex> lock(s_mutex);
+	stream << "[Profile data]" << std::endl;
     // Write profiling statistics
-    for (const auto &data : s_profileData)
+    for (const auto &data : temp)
     {
         stream << "Name: " << data.first << std::endl;
         stream << "Call count: " << data.second.callCount << std::endl;
