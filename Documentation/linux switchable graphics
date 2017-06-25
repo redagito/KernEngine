@@ -1,0 +1,1 @@
+For switchable graphics on linux, Intel-AMD use DRI_PRIME=1 when starting an app

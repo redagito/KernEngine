@@ -21,7 +21,9 @@ file(GLOB LODEPNG_SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/external/lodepng/lodepng.c
 set(THIRD_PARTY_SOURCES ${THIRD_PARTY_SOURCES} ${LODEPNG_SOURCES})
 
 # Flextgl 4.3 core
-file(GLOB FLEXTGL_SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/external/flextgl43/*.cpp)
+# file(GLOB FLEXTGL_SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/external/flextgl43/*.cpp)
+# Flextgl 4.2 core
+file(GLOB FLEXTGL_SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/external/flextgl42/*.cpp)
 set(THIRD_PARTY_SOURCES ${THIRD_PARTY_SOURCES} ${FLEXTGL_SOURCES})
 
 # Foundation library source files
@@ -62,4 +64,5 @@ target_link_libraries(${PROJECT_NAME} LINK_PUBLIC glfw)
 target_include_directories(${PROJECT_NAME} PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/external/glfw/include)
 
 # FlextGL
-target_include_directories(${PROJECT_NAME} PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/external/flextgl43)
+# target_include_directories(${PROJECT_NAME} PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/external/flextgl43)
+target_include_directories(${PROJECT_NAME} PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/external/flextgl42)
