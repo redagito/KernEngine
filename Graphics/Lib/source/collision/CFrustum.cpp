@@ -165,16 +165,19 @@ bool CFrustum::isInside(glm::vec3 &p) const
 
 bool CFrustum::isInsideOrIntersects(const CBoundingSphere &sphere) const
 {
+  auto position = sphere.getPosition();
+  auto radius = sphere.getRadius();
+
   for (unsigned int i = 0; i < 6; ++i)
   {
     // Distance to sphere center
-    float distance = m_planes[i].distance(sphere.getPosition());
-    if (distance < -sphere.getRadius())
+    float distance = m_planes[i].distance(position);
+    if (distance < -radius)
     {
       // Outside
       return false;
     }
-    else if (distance < sphere.getRadius())
+    else if (distance < radius)
     {
       // Intersects
       return true;

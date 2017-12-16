@@ -193,42 +193,46 @@ void CScene::getVisibleObjects(const ICamera &camera, ISceneQuery &query) const
                                                      camera.getProjection());
 
   // Hackyyy
-  camera.getFeatureInfo().culledObjectCount = 0;
+  int culledObjectCount = 0;
 
-  // TODO Occlusion culling, better data structure for objects
-  for (unsigned int i = 0; i < m_objects.size(); ++i)
+  // Do not cull if disabled
+  if (s_useViewFrustumCulling)
   {
-    // Return only objects with visibility flag set
-    if (m_objects.at(i).m_visible)
-    {
-      // Check the objects bounding sphere against the view frustum or do not
-      // cull if disabled
-      if (!s_useViewFrustumCulling ||
-          viewFrustum.isInsideOrIntersects(m_objects.at(i).boundingSphere))
-      {
-        // Object is (at least partially) visible, add to query result
-        // Counter variable is object id
-        query.addObject(i);
-      }
-      else
-      {
-        camera.getFeatureInfo().culledObjectCount += 1;
-      }
-    }
-  }
+	  // TODO Occlusion culling, better data structure for objects
+	  for (unsigned int i = 0; i < m_objects.size(); ++i)
+	  {
+		const auto& object = m_objects.at(i);
+	    // Return only objects with visibility flag set
+	    if (object.m_visible)
+	    {
+	      // Check the objects bounding sphere against the view frustum
+	      if (viewFrustum.isInsideOrIntersects(object.boundingSphere))
+	      {
+	        // Object is (at least partially) visible, add to query result
+	        // Counter variable is object id
+	        query.addObject(i);
+	      }
+	      else
+	      {
+	        ++culledObjectCount;
+	      }
+	    }
+	  }
 
-  // Add visible point Lights
-  for (unsigned int i = 0; i < m_pointLights.size(); ++i)
-  {
-    // Check light volume against view frustum for point light culling
-    if (!s_useViewFrustumCulling ||
-        viewFrustum.isInsideOrIntersects(CBoundingSphere(
-            m_pointLights.at(i).m_position, m_pointLights.at(i).m_radius)))
-    {
-      // Counter variable is light id
-      query.addPointLight(i);
-    }
+	  // Add visible point Lights
+	  for (unsigned int i = 0; i < m_pointLights.size(); ++i)
+	  {
+	    // Check light volume against view frustum for point light culling
+		const auto& pointLight = m_pointLights.at(i);
+	    if (viewFrustum.isInsideOrIntersects(CBoundingSphere(
+	            pointLight.m_position, pointLight.m_radius)))
+	    {
+	      // Counter variable is light id
+	      query.addPointLight(i);
+	    }
+	  }
   }
+  camera.getFeatureInfo().culledObjectCount = culledObjectCount;
 
   // TODO Directional light culling?
   // For now add all directional lights

@@ -10,14 +10,12 @@
 #include "graphics/graphics/renderer/debug/RendererDebug.h"
 
 CTexture::CTexture()
-    : m_valid(false), m_textureId(0), m_width(0), m_height(0), m_format(0)
 {
   // empty
 }
 
 CTexture::CTexture(const std::vector<unsigned char> &image, unsigned int width,
                    unsigned int height, EColorFormat format, bool createMipmaps)
-    : m_valid(false), m_textureId(0), m_width(0), m_height(0), m_format(0)
 {
   // Init texture with data
   if (!init(image, width, height, format, createMipmaps))
@@ -28,7 +26,6 @@ CTexture::CTexture(const std::vector<unsigned char> &image, unsigned int width,
 
 CTexture::CTexture(unsigned int width, unsigned int height, EColorFormat format,
                    bool createMipmaps)
-    : m_valid(false), m_textureId(0), m_width(0), m_height(0), m_format(0)
 {
   // Init texture with data
   if (!init({}, width, height, format, createMipmaps))
@@ -109,7 +106,7 @@ void CTexture::setActive(GLint textureUnit) const
 {
   assert(isValid());
   glActiveTexture(GL_TEXTURE0 + textureUnit);
-  glBindTexture(GL_TEXTURE_2D, m_textureId);
+	glBindTexture(GL_TEXTURE_2D, m_textureId);
 }
 
 void CTexture::saveAsPng(const std::string &file)

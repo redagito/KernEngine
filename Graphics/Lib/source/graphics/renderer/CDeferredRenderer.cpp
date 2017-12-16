@@ -163,12 +163,14 @@ void CDeferredRenderer::draw(const IScene &scene, const ICamera &camera,
     displayPass(window, manager, m_postProcessPassOutputTexture);
   }
 
+#ifndef NDEBUG
   // Post draw error check
   std::string error;
   if (hasGLError(error))
   {
     LOG_ERROR("GL Error: %s", error.c_str());
   }
+#endif
 }
 
 CDeferredRenderer *CDeferredRenderer::create(IResourceManager &manager)
@@ -275,12 +277,14 @@ void CDeferredRenderer::geometryPass(const IScene &scene, const ICamera &camera,
     }
   }
 
+#ifndef NDEBUG
   // Post draw error check
   std::string error;
   if (hasGLError(error))
   {
     LOG_ERROR("GL Error: %s", error.c_str());
   }
+#endif
 
   // Disable geometry buffer
   m_geometryBuffer.setInactive(GL_FRAMEBUFFER);
@@ -372,12 +376,14 @@ void CDeferredRenderer::shadowMapPass(const IScene &scene,
     }
   }
 
+#ifndef NDEBUG
   // Post draw error check
   std::string error;
   if (hasGLError(error))
   {
     LOG_ERROR("GL Error: %s", error.c_str());
   }
+#endif
 
   // Disable geometry buffer
   m_shadowMapBuffer.setInactive(GL_FRAMEBUFFER);
@@ -505,12 +511,14 @@ void CDeferredRenderer::shadowCubePass(const IScene &scene,
     }
   }
 
+#ifndef NDEBUG
   // Post draw error check
   std::string error;
   if (hasGLError(error))
   {
     LOG_ERROR("GL Error: %s", error.c_str());
   }
+#endif
 
   // Disable buffer
   m_shadowCubeBuffer.setInactive(GL_FRAMEBUFFER);
@@ -1655,34 +1663,14 @@ void CDeferredRenderer::draw(CMesh *mesh, const glm::mat4 &translation,
                              CShaderProgram *shader)
 {
   // TODO Only called from geometry pass, rename?
-  std::string error;
-  if (hasGLError(error))
-  {
-    LOG_ERROR("GL Error: %s", error.c_str());
-  }
-
   shader->setActive();
 
-  if (hasGLError(error))
-  {
-    LOG_ERROR("GL Error: %s", error.c_str());
-  }
-
-  if (hasGLError(error))
-  {
-    LOG_ERROR("GL Error: %s", error.c_str());
-  }
 
   // Transformation matrices
   // shader->setUniform(translationMatrixUniformName, translation);
   shader->setUniform(rotationMatrixUniformName, rotation);
   // shader->setUniform(scaleMatrixUniformName, scale);
   shader->setUniform(modelMatrixUniformName, translation * rotation * scale);
-
-  if (hasGLError(error))
-  {
-    LOG_ERROR("GL Error: %s", error.c_str());
-  }
 
   // Send material textures to shader
   if (material->hasDiffuse())
@@ -1740,19 +1728,17 @@ void CDeferredRenderer::draw(CMesh *mesh, const glm::mat4 &translation,
   }
   shader->setUniform(alphaTextureUniformName, alphaTextureUnit);
 
-  if (hasGLError(error))
-  {
-    LOG_ERROR("GL Error: %s", error.c_str());
-  }
-
   // Draw mesh
   // TODO Consider custom shader bindings for meshes
   ::draw(*mesh);
 
+#ifndef NDEBUG
+  std::string error;
   if (hasGLError(error))
   {
     LOG_ERROR("GL Error: %s", error.c_str());
   }
+#endif
   // TODO Cleanup?
 }
 

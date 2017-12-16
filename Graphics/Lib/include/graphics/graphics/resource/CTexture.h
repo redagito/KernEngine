@@ -77,11 +77,11 @@ protected:
             unsigned int height, GLint format, bool createMipmaps);
 
 private:
-  bool m_valid;
+  bool m_valid =  false;
   bool m_hasMipmaps = false;
-  GLuint m_textureId;
-  unsigned int m_width;
-  unsigned int m_height;
-  GLint m_format;
-  GLenum m_externalFormat;
+  GLuint m_textureId = 0;
+  unsigned int m_width = 0;
+  unsigned int m_height = 0;
+  GLint m_format = 0;
+  GLenum m_externalFormat = 0;
 };

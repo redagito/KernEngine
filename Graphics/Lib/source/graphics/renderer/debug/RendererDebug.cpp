@@ -1,11 +1,15 @@
 #include "graphics/graphics/renderer/debug/RendererDebug.h"
 
 #include <sstream>
+#include <cstdlib>
 
 #include "graphics/graphics/renderer/core/RendererCoreConfig.h"
 
+#ifndef NDEBUG
+
 bool hasGLError(std::string &errorText)
 {
+	exit(0);
   GLenum code;
   bool fail = false;
   std::stringstream error;
@@ -53,3 +57,12 @@ bool hasGLError(std::string &errorText)
   }
   return fail;
 }
+
+#else
+
+bool hasGLError(std::string&)
+{
+	return false;
+}
+
+#endif
