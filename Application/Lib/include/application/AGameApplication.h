@@ -31,17 +31,6 @@ private:
 	*/
 	bool initWindow(unsigned int width, unsigned int height, const std::string &title);
 
-	/**
-	* \brief Creates and initializes the game system.
-	*/
-	bool initGameSystem(const std::string &gameFile);
-
-	/**
-	* \brief Creates and initializes game system in demo mode.
-	* TODO Should be considered legacy and removed later.
-	*/
-	bool initDemo(const std::string &sceneFile);
-
 	// Stores and manages game states
 	std::shared_ptr<CGameSystem> m_gameSystem;
 

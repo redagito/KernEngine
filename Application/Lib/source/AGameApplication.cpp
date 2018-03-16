@@ -133,8 +133,11 @@ bool AGameApplication::initialize()
 	}
 
 	// Finalize game system initialization
-	m_gameSystem->init(getInitialGameState(), m_graphicsSystem.get(), m_inputProvider.get(), m_resourceManager.get());
-
+	if (!m_gameSystem->init(getInitialGameState(), m_graphicsSystem.get(), m_inputProvider.get(), m_resourceManager.get()))
+	{
+		KERN_ERROR("Failed to initialize game system");
+		return false;
+	}
 	return true;
 }
 
@@ -151,7 +154,7 @@ int AGameApplication::run()
 	double f7Cooldown = 0.0;
 	double f8Cooldown = 0.0;
 	double f9Cooldown = 0.0;
-
+	
 	// Numeric key cooldown values	
 	double k1Cooldown = 0.0;
 	double k2Cooldown = 0.0;
