@@ -12,15 +12,11 @@ const std::vector<std::string> &CMediaType::getTree() const { return m_tree; }
 
 const std::string &CMediaType::getSubType() const { return m_subType; }
 
-const std::vector<std::string> &CMediaType::getSuffixes() const
-{
-  return m_suffixes;
-}
+const std::vector<std::string> &CMediaType::getSuffixes() const { return m_suffixes; }
 
-const std::unordered_map<std::string, std::string> &
-CMediaType::getParameters() const
+const std::unordered_map<std::string, std::string> &CMediaType::getParameters() const
 {
-  return m_parameters;
+    return m_parameters;
 }
 
 bool CMediaType::parse(const std::string &str) { return false; }

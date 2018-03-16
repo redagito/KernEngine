@@ -7,17 +7,17 @@
  */
 enum class EMediaType
 {
-  Application,
-  Audio,
-  Example,
-  Image,
-  Message,
-  Model,
-  Multipart,
-  Text,
-  Video,
+    Application,
+    Audio,
+    Example,
+    Image,
+    Message,
+    Model,
+    Multipart,
+    Text,
+    Video,
 
-  Unknown
+    Unknown
 };
 
 EMediaType fromString(const std::string &str);

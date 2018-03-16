@@ -7,10 +7,10 @@
  */
 enum class ELogLevel
 {
-  Info,
-  Debug,
-  Warning,
-  Error
+    Info,
+    Debug,
+    Warning,
+    Error
 };
 
 std::string toString(ELogLevel level);

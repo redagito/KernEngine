@@ -9,37 +9,35 @@
  */
 class CSceneQuery : public ISceneQuery
 {
-public:
-  /**
-   * \brief Sets initial storage.
-   */
-  CSceneQuery(unsigned int objectStorage = 200,
-              unsigned int lightStorage = 100);
+   public:
+    /**
+     * \brief Sets initial storage.
+     */
+    CSceneQuery(unsigned int objectStorage = 200, unsigned int lightStorage = 100);
 
-  void addObject(SceneObjectId id);
+    void addObject(SceneObjectId id);
 
-  bool hasNextObject() const;
+    bool hasNextObject() const;
 
-  SceneObjectId getNextObject();
+    SceneObjectId getNextObject();
 
-  void addPointLight(SceneObjectId id);
+    void addPointLight(SceneObjectId id);
 
-  bool hasNextPointLight() const;
+    bool hasNextPointLight() const;
 
-  SceneObjectId getNextPointLight();
+    SceneObjectId getNextPointLight();
 
-  void addDirectionalLight(SceneObjectId id);
+    void addDirectionalLight(SceneObjectId id);
 
-  bool hasNextDirectionalLight() const;
+    bool hasNextDirectionalLight() const;
 
-  SceneObjectId getNextDirectionalLight();
+    SceneObjectId getNextDirectionalLight();
 
-private:
-  unsigned int m_nextObjectIndex = 0;
-  unsigned int m_nextPointLightIndex = 0;
-  unsigned int m_nextDirectionalLightIndex = 0;
-  std::vector<SceneObjectId> m_visibleObjects;     /**< Visible objects. */
-  std::vector<SceneObjectId> m_visiblePointLights; /**< Visible lights. */
-  std::vector<SceneObjectId>
-      m_visibleDirectionalLights; /**< Visible directional lights. */
+   private:
+    unsigned int m_nextObjectIndex = 0;
+    unsigned int m_nextPointLightIndex = 0;
+    unsigned int m_nextDirectionalLightIndex = 0;
+    std::vector<SceneObjectId> m_visibleObjects;           /**< Visible objects. */
+    std::vector<SceneObjectId> m_visiblePointLights;       /**< Visible lights. */
+    std::vector<SceneObjectId> m_visibleDirectionalLights; /**< Visible directional lights. */
 };

@@ -10,9 +10,9 @@ float CCollidable::getDamage() const { return m_damageDealt; }
 // Returns accumuated damage and resets damage counter
 float CCollidable::getDamageReceived()
 {
-  float temp = m_damageReceived;
-  m_damageReceived = 0.f;
-  return temp;
+    float temp = m_damageReceived;
+    m_damageReceived = 0.f;
+    return temp;
 }
 
 // Returns group id
@@ -28,14 +28,14 @@ const CAABBox &CCollidable::getAABBox() const { return m_boxTransformed; }
 
 void CCollidable::setScale(const glm::vec3 &scale)
 {
-  m_boxTransformed.setHalfWidths(scale);
-  return;
+    m_boxTransformed.setHalfWidths(scale);
+    return;
 }
 
 void CCollidable::setTranslation(const glm::vec3 &translate)
 {
-  m_boxTransformed.setMid(translate);
-  return;
+    m_boxTransformed.setMid(translate);
+    return;
 }
 
 // Sets collidable state

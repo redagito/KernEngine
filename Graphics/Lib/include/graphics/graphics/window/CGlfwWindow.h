@@ -1,8 +1,8 @@
 #pragma once
 
-#include <unordered_map>
 #include <list>
 #include <set>
+#include <unordered_map>
 
 #include "graphics/graphics/IWindow.h"
 #include "graphics/input/IInputProvider.h"
@@ -11,8 +11,8 @@ struct GLFWwindow;
 
 class IGlfwWindowListener
 {
-public:
-  virtual void handleResizeEvent(int width, int height) = 0;
+   public:
+    virtual void handleResizeEvent(int width, int height) = 0;
 };
 
 /**
@@ -20,48 +20,48 @@ public:
  */
 class CGlfwWindow : public IWindow
 {
-public:
-  CGlfwWindow();
-  ~CGlfwWindow();
+   public:
+    CGlfwWindow();
+    ~CGlfwWindow();
 
-  bool init(unsigned int width, unsigned int height, const std::string &name);
+    bool init(unsigned int width, unsigned int height, const std::string &name);
 
-  void setWidth(unsigned int width);
-  void setHeight(unsigned int height);
+    void setWidth(unsigned int width);
+    void setHeight(unsigned int height);
 
-  unsigned int getWidth() const;
-  unsigned int getHeight() const;
+    unsigned int getWidth() const;
+    unsigned int getHeight() const;
 
-  void setActive() const;
+    void setActive() const;
 
-  bool isOpen() const;
+    bool isOpen() const;
 
-  /**
-   * \brief Swaps back and front buffers.
-   */
-  void swapBuffer();
+    /**
+     * \brief Swaps back and front buffers.
+     */
+    void swapBuffer();
 
-  /**
-  * \brief Toggles mouse capture state.
-  */
-  void toggleMouseCapture();
+    /**
+     * \brief Toggles mouse capture state.
+     */
+    void toggleMouseCapture();
 
-  GLFWwindow *getGlfwHandle() const;
+    GLFWwindow *getGlfwHandle() const;
 
-  void addListener(IGlfwWindowListener *l);
-  void removeListener(IGlfwWindowListener *l);
+    void addListener(IGlfwWindowListener *l);
+    void removeListener(IGlfwWindowListener *l);
 
-private:
-  static void resizeCallback(GLFWwindow *window, int width, int height);
-  void handleResize(int width, int height);
+   private:
+    static void resizeCallback(GLFWwindow *window, int width, int height);
+    void handleResize(int width, int height);
 
-  static std::unordered_map<GLFWwindow *, CGlfwWindow *>
-      s_windows; /**< GLFW window to window object mapping. */
+    static std::unordered_map<GLFWwindow *, CGlfwWindow *>
+        s_windows; /**< GLFW window to window object mapping. */
 
-  GLFWwindow *m_window = nullptr; /**< Window resource. */
-  unsigned int m_width = 0;       /**< Current window width. */
-  unsigned int m_height = 0;      /**< Current window height. */
+    GLFWwindow *m_window = nullptr; /**< Window resource. */
+    unsigned int m_width = 0;       /**< Current window width. */
+    unsigned int m_height = 0;      /**< Current window height. */
 
-  bool m_mouseCaptured = false; /**< Current mouse capture state. */
-  std::set<IGlfwWindowListener *> m_listeners;
+    bool m_mouseCaptured = false; /**< Current mouse capture state. */
+    std::set<IGlfwWindowListener *> m_listeners;
 };

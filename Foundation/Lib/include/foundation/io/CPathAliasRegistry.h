@@ -2,13 +2,13 @@
 
 #include "foundation/io/CUniformResourceIdentifier.h"
 
+#include <mutex>
 #include <string>
 #include <unordered_map>
 #include <vector>
-#include <mutex>
 
-#include "foundation/io/CPathAlias.h"
 #include "foundation/core/CCoreSystem.h"
+#include "foundation/io/CPathAlias.h"
 
 /**
  * Central registry for path aliases.
@@ -16,23 +16,22 @@
  */
 class CPathAliasRegistry
 {
-public:
-  CPathAliasRegistry(const CCoreSystem &coreSystem);
-  ~CPathAliasRegistry();
+   public:
+    CPathAliasRegistry(const CCoreSystem &coreSystem);
+    ~CPathAliasRegistry();
 
-  void setAlias(const std::string &alias, const std::string &path);
-  void setAlias(const CPathAlias &alias);
-  bool hasAlias(const std::string &alias) const;
-  std::string getPath(const std::string &alias) const;
-  void removeAlias(const std::string &alias);
+    void setAlias(const std::string &alias, const std::string &path);
+    void setAlias(const CPathAlias &alias);
+    bool hasAlias(const std::string &alias) const;
+    std::string getPath(const std::string &alias) const;
+    void removeAlias(const std::string &alias);
 
-  std::vector<CPathAlias> getAllAliases() const;
+    std::vector<CPathAlias> getAllAliases() const;
 
-  CUniformResourceIdentifier
-  resolveAliases(const CUniformResourceIdentifier &uri) const;
-  std::string resolveAliases(const std::string &uriStr);
+    CUniformResourceIdentifier resolveAliases(const CUniformResourceIdentifier &uri) const;
+    std::string resolveAliases(const std::string &uriStr);
 
-private:
-  std::unordered_map<std::string, std::string> m_pathAliases;
-  mutable std::recursive_mutex m_pathAliasesMutex;
+   private:
+    std::unordered_map<std::string, std::string> m_pathAliases;
+    mutable std::recursive_mutex m_pathAliasesMutex;
 };

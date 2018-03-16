@@ -1,7 +1,7 @@
 #pragma once
 
-#include <ostream>
 #include <memory>
+#include <ostream>
 
 #include "foundation/io/Serialize.h"
 
@@ -11,14 +11,15 @@
  */
 class CBinaryWriter
 {
-public:
-  CBinaryWriter(const std::shared_ptr<std::ostream> &stream);
+   public:
+    CBinaryWriter(const std::shared_ptr<std::ostream> &stream);
 
-  template <typename T> bool write(const T &t)
-  {
-    return serialize(t, *m_stream);
-  }
+    template <typename T>
+    bool write(const T &t)
+    {
+        return serialize(t, *m_stream);
+    }
 
-private:
-  std::shared_ptr<std::ostream> m_stream;
+   private:
+    std::shared_ptr<std::ostream> m_stream;
 };

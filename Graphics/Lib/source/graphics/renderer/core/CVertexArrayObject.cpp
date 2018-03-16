@@ -6,14 +6,14 @@ CVertexArrayObject::~CVertexArrayObject() { glDeleteVertexArrays(1, &m_vaoId); }
 
 void CVertexArrayObject::setActive() const
 {
-  glBindVertexArray(m_vaoId);
-  return;
+    glBindVertexArray(m_vaoId);
+    return;
 }
 
 void CVertexArrayObject::setInactive() const
 {
-  glBindVertexArray(0);
-  return;
+    glBindVertexArray(0);
+    return;
 }
 
 GLuint CVertexArrayObject::getId() const { return m_vaoId; }

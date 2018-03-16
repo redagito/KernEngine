@@ -1,6 +1,6 @@
 #pragma once
 
 /**
-* \brief Returns time in [s].
-*/
+ * \brief Returns time in [s].
+ */
 double getTime();

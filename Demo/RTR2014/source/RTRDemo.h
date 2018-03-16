@@ -29,22 +29,22 @@ class CDebugInfo;
 class CDebugInfoDisplay;
 
 /**
-* \brief Demo application class.
-*/
+ * \brief Demo application class.
+ */
 class RTRDemo
 {
    public:
     RTRDemo();
     ~RTRDemo();
 
-	/**
-	* \brief nitialize demo with config file.
-	*/
+    /**
+     * \brief nitialize demo with config file.
+     */
     int init(const std::string& configFile);
 
-	/**
-	* \brief Run demo.
-	*/
+    /**
+     * \brief Run demo.
+     */
     int run();
 
    private:
@@ -52,7 +52,7 @@ class RTRDemo
     bool initRenderer();
     bool initScene();
 
-	void updateAnimation(float timeDiff);
+    void updateAnimation(float timeDiff);
 
     CIniFile m_config;
 
@@ -60,9 +60,9 @@ class RTRDemo
         nullptr; /**< Resource loader and manager. */
     std::shared_ptr<IGraphicsResourceManager> m_graphicsResourceManager =
         nullptr; /**< Resource manager for graphics resources. */
-    
-	std::shared_ptr<CGlfwWindow> m_window = nullptr;
-	std::shared_ptr<IInputProvider> m_inputProvider = nullptr;
+
+    std::shared_ptr<CGlfwWindow> m_window = nullptr;
+    std::shared_ptr<IInputProvider> m_inputProvider = nullptr;
 
     std::shared_ptr<IRenderer> m_renderer = nullptr;                 /**< Active renderer. */
     std::shared_ptr<IRenderer> m_deferredRenderer = nullptr;         /**< Deferred renderer. */
@@ -75,6 +75,6 @@ class RTRDemo
     std::shared_ptr<CDebugInfoDisplay> m_debugInfoDisplay =
         nullptr; /**< Debug information renderer. */
 
-	// Animation
-	std::shared_ptr<CAnimationWorld> m_animationWorld;
+    // Animation
+    std::shared_ptr<CAnimationWorld> m_animationWorld;
 };

@@ -5,23 +5,19 @@
 
 #include <foundation/math/TransformUtils.h>
 
-#include "application/game/CGameObject.h"
 #include "application/game/AGameState.h"
+#include "application/game/CGameObject.h"
 
-CSimpleWaypointController::CSimpleWaypointController(const glm::vec3 &end,
-                                                     float speed,
+CSimpleWaypointController::CSimpleWaypointController(const glm::vec3 &end, float speed,
                                                      AGameState *state)
     : m_end(end), m_speed(speed), m_gameState(state)
 {
-  return;
+    return;
 }
 
 CSimpleWaypointController::~CSimpleWaypointController() { return; }
 
-void CSimpleWaypointController::attach(CGameObject *object)
-{
-  m_object = object;
-}
+void CSimpleWaypointController::attach(CGameObject *object) { m_object = object; }
 
 void CSimpleWaypointController::detach() { m_object = nullptr; }
 
@@ -29,39 +25,39 @@ void CSimpleWaypointController::setActive(bool state) { m_active = state; }
 
 void CSimpleWaypointController::update(float dtime)
 {
-  glm::vec3 position = m_object->getPosition();
-  if (m_active && m_object != nullptr)
-  {
-    // Reached end
-    if (position == m_end)
+    glm::vec3 position = m_object->getPosition();
+    if (m_active && m_object != nullptr)
     {
-      // Countdown idle time
-      m_idleTimer -= dtime;
-    }
-    if (m_idleTimer <= 0.f)
-    {
-      // Idle time over, trigger lose condition
-      m_gameState->triggerStateTransition("lose");
-    }
+        // Reached end
+        if (position == m_end)
+        {
+            // Countdown idle time
+            m_idleTimer -= dtime;
+        }
+        if (m_idleTimer <= 0.f)
+        {
+            // Idle time over, trigger lose condition
+            m_gameState->triggerStateTransition("lose");
+        }
 
-    // Normalized direction vector
-    glm::vec3 direction = glm::normalize(m_end - position);
-    // Current distance to target
-    float distance = glm::distance(position, m_end);
-    // Next step over distance?
-    if (m_speed * dtime > distance)
-    {
-      // Reach end
-      position = m_end;
-    }
-    else
-    {
-      // Add step
-      position += direction * m_speed * dtime;
-    }
+        // Normalized direction vector
+        glm::vec3 direction = glm::normalize(m_end - position);
+        // Current distance to target
+        float distance = glm::distance(position, m_end);
+        // Next step over distance?
+        if (m_speed * dtime > distance)
+        {
+            // Reach end
+            position = m_end;
+        }
+        else
+        {
+            // Add step
+            position += direction * m_speed * dtime;
+        }
 
-    m_object->setPosition(position);
-  }
+        m_object->setPosition(position);
+    }
 }
 
 void CSimpleWaypointController::receiveMessage(Message msg) {}

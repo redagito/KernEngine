@@ -7,13 +7,13 @@
 
 class CConsoleApplication : public AApplication
 {
-public:
-  virtual ~CConsoleApplication();
+   public:
+    virtual ~CConsoleApplication();
 
-  virtual bool initialize() override;
-  virtual void deinitialize() override;
+    virtual bool initialize() override;
+    virtual void deinitialize() override;
 
-private:
-  CCoreSystem m_coreSystem;
-  CIOSystem m_ioSystem;
+   private:
+    CCoreSystem m_coreSystem;
+    CIOSystem m_ioSystem;
 };

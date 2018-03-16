@@ -1,6 +1,9 @@
 cmake_minimum_required (VERSION 3.0.0)
 project (KernEngine)
 
+# Use folder structure
+set_property (GLOBAL PROPERTY USE_FOLDERS ON)
+
 # Foundation library
 add_subdirectory (Foundation)
 

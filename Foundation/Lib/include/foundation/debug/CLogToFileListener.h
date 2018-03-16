@@ -6,12 +6,12 @@
 
 class CLogToFileListener : public ILogListener
 {
-public:
-  CLogToFileListener(const std::string &fileName);
+   public:
+    CLogToFileListener(const std::string &fileName);
 
-  void notify(ELogLevel level, const std::string &file, unsigned int line,
-              const std::string &function, const std::string &text);
+    void notify(ELogLevel level, const std::string &file, unsigned int line,
+                const std::string &function, const std::string &text);
 
-private:
-  std::ofstream m_stream;
+   private:
+    std::ofstream m_stream;
 };

@@ -1,82 +1,79 @@
 #include "graphics/graphics/window/CGlfwWindow.h"
 
-#include <cassert>
 #include <foundation/debug/Log.h>
+#include <cassert>
 
-#include "graphics/graphics/renderer/core/RendererCoreConfig.h"
+#define GLFW_INCLUDE_NONE
 #include <GLFW/glfw3.h>
+#include "graphics/graphics/renderer/core/RendererCoreConfig.h"
 
+std::unordered_map<GLFWwindow *, CGlfwWindow *> CGlfwWindow::s_windows; /**< Window mapping. */
 
-std::unordered_map<GLFWwindow *, CGlfwWindow *>
-    CGlfwWindow::s_windows; /**< Window mapping. */
-
-CGlfwWindow::CGlfwWindow()
-    : m_window(nullptr), m_width(0), m_height(0), m_mouseCaptured(false)
+CGlfwWindow::CGlfwWindow() : m_window(nullptr), m_width(0), m_height(0), m_mouseCaptured(false)
 {
-  return;
+    return;
 }
 
 CGlfwWindow::~CGlfwWindow()
 {
-  // Remove mapping
-  s_windows.erase(m_window);
+    // Remove mapping
+    s_windows.erase(m_window);
 }
 
-bool CGlfwWindow::init(unsigned int width, unsigned int height,
-                       const std::string &name)
+bool CGlfwWindow::init(unsigned int width, unsigned int height, const std::string &name)
 {
-  if (!glfwInit())
-  {
-    LOG_ERROR("Failed to initialize GLFW.");
-    return false;
-  }
+    if (!glfwInit())
+    {
+        LOG_ERROR("Failed to initialize GLFW.");
+        return false;
+    }
 
-  glfwWindowHint(GLFW_SAMPLES, 4);
-  glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, FLEXT_MAJOR_VERSION);
-  glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, FLEXT_MINOR_VERSION);
-  glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
-  glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+    glfwWindowHint(GLFW_SAMPLES, 4);
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, FLEXT_MAJOR_VERSION);
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, FLEXT_MINOR_VERSION);
+    glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
+    glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
-  // Create window from parameters
-  LOG_INFO("Creating GLFW window for OpenGL version %u.%u.",
-           FLEXT_MAJOR_VERSION, FLEXT_MINOR_VERSION);
-  m_window = glfwCreateWindow(width, height, name.c_str(), NULL, NULL);
-  if (m_window == nullptr)
-  {
-    LOG_ERROR("Failed to create GLFW window.");
-    glfwTerminate();
-    return false;
-  }
+    // Create window from parameters
+    LOG_INFO("Creating GLFW window for OpenGL version %u.%u.", FLEXT_MAJOR_VERSION,
+             FLEXT_MINOR_VERSION);
+    m_window = glfwCreateWindow(width, height, name.c_str(), NULL, NULL);
+    if (m_window == nullptr)
+    {
+        LOG_ERROR("Failed to create GLFW window.");
+        glfwTerminate();
+        return false;
+    }
 
-  int framebufferWidth;
-  int framebufferHeight;
+    int framebufferWidth;
+    int framebufferHeight;
 
-  glfwGetFramebufferSize(m_window, &framebufferWidth, &framebufferHeight);
+    glfwGetFramebufferSize(m_window, &framebufferWidth, &framebufferHeight);
 
-  m_width = framebufferWidth;
-  m_height = framebufferHeight;
+    m_width = framebufferWidth;
+    m_height = framebufferHeight;
 
-  glfwMakeContextCurrent(m_window);
-  glfwSetInputMode(m_window, GLFW_STICKY_KEYS, GL_FALSE);
-  glfwSwapInterval(1);
+    glfwMakeContextCurrent(m_window);
+    glfwSetInputMode(m_window, GLFW_STICKY_KEYS, GL_FALSE);
+    glfwSwapInterval(0);
 
 // Load OpenGL extensions
 #ifndef __APPLE__
-  if (flextInit() != GL_TRUE)
-  {
-    glfwTerminate();
-    LOG_ERROR("Failed to initialize flextGL.");
-    return false;
-  }
+    if (flextInit() != GL_TRUE)
+    {
+        glfwTerminate();
+        LOG_ERROR("Failed to initialize flextGL.");
+        return false;
+    }
 #endif
 
-  // Add mapping
-  s_windows[m_window] = this;
+    // Add mapping
+    s_windows[m_window] = this;
 
-  // Set window resize callback
-  glfwSetFramebufferSizeCallback(m_window, &CGlfwWindow::resizeCallback);
+    // Set window resize callback
+    glfwSetFramebufferSizeCallback(m_window, &CGlfwWindow::resizeCallback);
 
-  return true;
+    return true;
 }
 
 void CGlfwWindow::setWidth(unsigned int width) { m_width = width; }
@@ -95,46 +92,43 @@ void CGlfwWindow::swapBuffer() { glfwSwapBuffers(m_window); }
 
 void CGlfwWindow::toggleMouseCapture()
 {
-  // Set capture mode
-  if (m_mouseCaptured)
-  {
-    glfwSetInputMode(m_window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
-  }
-  else
-  {
-    glfwSetInputMode(m_window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
-  }
-  // Toggle
-  m_mouseCaptured = !m_mouseCaptured;
+    // Set capture mode
+    if (m_mouseCaptured)
+    {
+        glfwSetInputMode(m_window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+    }
+    else
+    {
+        glfwSetInputMode(m_window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+    }
+    // Toggle
+    m_mouseCaptured = !m_mouseCaptured;
 }
 
 GLFWwindow *CGlfwWindow::getGlfwHandle() const { return m_window; }
 
 void CGlfwWindow::addListener(IGlfwWindowListener *l) { m_listeners.insert(l); }
 
-void CGlfwWindow::removeListener(IGlfwWindowListener *l)
-{
-  m_listeners.erase(l);
-}
+void CGlfwWindow::removeListener(IGlfwWindowListener *l) { m_listeners.erase(l); }
 
 void CGlfwWindow::resizeCallback(GLFWwindow *window, int width, int height)
 {
-  assert(width > 0);
-  assert(height > 0);
-  if (s_windows.count(window) != 0)
-  {
-    CGlfwWindow *win = s_windows.at(window);
-    win->handleResize(width, height);
-  }
+    assert(width > 0);
+    assert(height > 0);
+    if (s_windows.count(window) != 0)
+    {
+        CGlfwWindow *win = s_windows.at(window);
+        win->handleResize(width, height);
+    }
 }
 
 void CGlfwWindow::handleResize(int width, int height)
 {
-  setWidth(width);
-  setHeight(height);
+    setWidth(width);
+    setHeight(height);
 
-  for (auto &l : m_listeners)
-  {
-    l->handleResizeEvent(width, height);
-  }
+    for (auto &l : m_listeners)
+    {
+        l->handleResizeEvent(width, height);
+    }
 }

@@ -14,45 +14,44 @@
  */
 class CJobDataDescriptor
 {
-public:
-  CJobDataDescriptor();
+   public:
+    CJobDataDescriptor();
 
-  /**
-   * Update a buffer.
-   */
-  void update(unsigned int index, void *data, unsigned int dataSize,
-              unsigned int sliceSize);
+    /**
+     * Update a buffer.
+     */
+    void update(unsigned int index, void *data, unsigned int dataSize, unsigned int sliceSize);
 
-  /**
-   * Returns number of active buffers.
-   */
-  unsigned int getBufferCount() const;
+    /**
+     * Returns number of active buffers.
+     */
+    unsigned int getBufferCount() const;
 
-  /**
-   * \return Pointer to buffer data.
-   */
-  void *getBufferData(unsigned int index) const;
+    /**
+     * \return Pointer to buffer data.
+     */
+    void *getBufferData(unsigned int index) const;
 
-  /**
-   * \return Size of a buffer.
-   */
-  unsigned int getBufferSize(unsigned int index) const;
+    /**
+     * \return Size of a buffer.
+     */
+    unsigned int getBufferSize(unsigned int index) const;
 
-  /**
-   * \return Size of a single slice within the buffer.
-   */
-  unsigned int getBufferSliceSize(unsigned int index) const;
+    /**
+     * \return Size of a single slice within the buffer.
+     */
+    unsigned int getBufferSliceSize(unsigned int index) const;
 
-private:
-  static const int s_maxNumBuffers = 8;
+   private:
+    static const int s_maxNumBuffers = 8;
 
-  unsigned int m_bufferCount = 0;
+    unsigned int m_bufferCount = 0;
 
-  struct SBuffer
-  {
-    void *m_data = nullptr;
-    unsigned int m_dataSize = 0;
-    unsigned int m_dataSliceSize = 0;
-  };
-  std::array<SBuffer, 8> m_buffers;
+    struct SBuffer
+    {
+        void *m_data = nullptr;
+        unsigned int m_dataSize = 0;
+        unsigned int m_dataSliceSize = 0;
+    };
+    std::array<SBuffer, 8> m_buffers;
 };

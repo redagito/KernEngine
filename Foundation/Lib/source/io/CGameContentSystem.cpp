@@ -12,10 +12,7 @@ void CGameContentSystem::setTitleId(const std::string &id) { m_titleId = id; }
 
 const std::string &CGameContentSystem::getTitleId() const { return m_titleId; }
 
-void CGameContentSystem::setVersion(const std::string &version)
-{
-  m_version = version;
-}
+void CGameContentSystem::setVersion(const std::string &version) { m_version = version; }
 
 const std::string &CGameContentSystem::getVersion() const { return m_version; }
 

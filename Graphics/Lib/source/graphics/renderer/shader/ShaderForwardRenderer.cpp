@@ -38,7 +38,6 @@ void main(void)
 
 )shadersource";
 
-
 static const std::string fragmentShader = R"shadersource(
 
 #version 330 core
@@ -71,12 +70,6 @@ void main(void)
 
 )shadersource";
 
-const std::string& getForwardRendererVertexShader()
-{
-	return vertexShader;
-}
+const std::string& getForwardRendererVertexShader() { return vertexShader; }
 
-const std::string& getForwardRendererFragmentShader()
-{
-	return fragmentShader;
-}
+const std::string& getForwardRendererFragmentShader() { return fragmentShader; }

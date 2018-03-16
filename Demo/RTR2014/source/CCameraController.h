@@ -21,13 +21,13 @@ class CCameraController : public IInputListener, public IGlfwWindowListener
     void setInputProvider(IInputProvider* provider);
 
     bool loadSequence(std::string file);
-    
+
     void animate(float dt);
 
     virtual void handleKeyEvent(EKeyEventType type, int keyCode) override;
     virtual void handleMouseMovementEvent(int x, int y) override;
     virtual void handleMouseButtonEvent(EMouseButtonEventType type, int buttonCode) override;
-    
+
     virtual void handleResizeEvent(int width, int height) override;
 
    private:
@@ -35,20 +35,21 @@ class CCameraController : public IInputListener, public IGlfwWindowListener
     void animateFeatures(float dt);
     void animateSequence(float dt);
     void animateManual(float dt);
-    
-    struct SequencePoint {
+
+    struct SequencePoint
+    {
         glm::vec3 position;
         glm::vec3 orientation;
         float timestamp;
         bool fxaaActive;
         bool fogActive;
     };
-    
+
     bool m_isRunningSequence = false;
     float m_sequenceTime = 0;
-    
+
     std::vector<SequencePoint> m_sequencePoints;
-    
+
     float m_speed = 1.0f;
     std::shared_ptr<IControllableCamera> m_camera = nullptr;
     IInputProvider* m_inputProvider = nullptr;

@@ -1,8 +1,8 @@
 #pragma once
 
 #include <istream>
-#include <string>
 #include <memory>
+#include <string>
 #include <vector>
 
 /**
@@ -10,14 +10,14 @@
  */
 class CTextReader
 {
-public:
-  CTextReader(const std::shared_ptr<std::istream> &stream);
+   public:
+    CTextReader(const std::shared_ptr<std::istream> &stream);
 
-  bool readChar(char &c);
-  bool readLine(std::string &line);
-  bool readLines(std::vector<std::string> &lines);
-  bool readAll(std::string &text);
+    bool readChar(char &c);
+    bool readLine(std::string &line);
+    bool readLines(std::vector<std::string> &lines);
+    bool readAll(std::string &text);
 
-private:
-  std::shared_ptr<std::istream> m_stream;
+   private:
+    std::shared_ptr<std::istream> m_stream;
 };

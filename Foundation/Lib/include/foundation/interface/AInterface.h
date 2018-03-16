@@ -15,7 +15,7 @@
  */
 class AInterface : public AAsyncPort
 {
-public:
-  virtual ~AInterface();
-  virtual void open() = 0;
+   public:
+    virtual ~AInterface();
+    virtual void open() = 0;
 };

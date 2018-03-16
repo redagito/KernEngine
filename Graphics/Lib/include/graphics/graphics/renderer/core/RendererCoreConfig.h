@@ -11,9 +11,9 @@
 #endif
 
 /**
-* Defines the default application-to-shader interface.
-* TODO Cleanup?
-*/
+ * Defines the default application-to-shader interface.
+ * TODO Cleanup?
+ */
 
 // Vertex array data locations
 const GLuint vertexDataShaderLocation = 0;
@@ -27,8 +27,7 @@ const std::string screenHeightUniformName = "screen_height";
 // Camera parameters
 const std::string cameraPositionUniformName = "camera_position";
 const std::string cameraDirectionUniformName = "camera_direction";
-const std::string viewDistanceUniformName =
-    "view_distance"; // TODO Rename, same as z-far?
+const std::string viewDistanceUniformName = "view_distance";  // TODO Rename, same as z-far?
 const std::string cameraZNearUniformName = "camera_z_near";
 const std::string cameraZFarUniformName = "camera_z_far";
 
@@ -50,18 +49,15 @@ const std::string inverseViewMatrixUniformName = "inverse_view";
 const std::string projectionMatrixUniformName = "projection";
 const std::string inverseProjectionMatrixUniformName = "inverse_projection";
 const std::string viewProjectionMatrixUniformName = "view_projection";
-const std::string inverseViewProjectionMatrixUniformName =
-    "inverse_view_projection";
-const std::string shadowViewProjectionBiasMatrixUniformName =
-    "shadow_view_projection_bias";
+const std::string inverseViewProjectionMatrixUniformName = "inverse_view_projection";
+const std::string shadowViewProjectionBiasMatrixUniformName = "shadow_view_projection_bias";
 
 // Transformation matrix uniform names
 const std::string rotationMatrixUniformName = "rotation";
 const std::string translationMatrixUniformName = "translation";
 const std::string scaleMatrixUniformName = "scale";
 const std::string modelMatrixUniformName = "model";
-const std::string modelViewProjectionMatrixUniformName =
-    "model_view_projection";
+const std::string modelViewProjectionMatrixUniformName = "model_view_projection";
 
 // Light parameter uniform names
 const std::string lightPositionUniformName = "light_position";
@@ -81,8 +77,7 @@ const GLint alphaTextureUnit = 4;
 // Texture units for light pass
 const GLint lightPassDepthTextureUnit = 0;
 const GLint lightPassNormalSpecularTextureUnit = 1;
-const GLint lightPassShadowMapTextureUnit =
-    2; // Should be lightPassShadowTextureUnit
+const GLint lightPassShadowMapTextureUnit = 2;  // Should be lightPassShadowTextureUnit
 
 // Texture units for illumination pass
 const GLint illuminationPassLightTextureUnit = 0;
@@ -154,7 +149,7 @@ const std::string normalSpecularTextureUniformName = "normal_specular_texture";
 const std::string diffuseGlowTextureUniformName = "diffuse_glow_texture";
 const std::string lightTextureUniformName = "light_texture";
 const std::string shadowMapTextureUniformName =
-    "shadow_map"; // Should be shadow_map_texture or shadow_texture
+    "shadow_map";  // Should be shadow_map_texture or shadow_texture
 const std::string shadowCubeTextureUniformName = "shadow_cube";
 const std::string sceneTextureUniformName = "scene_texture";
 const std::string blurTextureUniformName = "blur_texture";

@@ -4,6 +4,6 @@
 
 inline std::ostream& operator<<(std::ostream& os, const std::nullptr_t& n)
 {
-	os << "nullptr";
-	return os;
+    os << "nullptr";
+    return os;
 }

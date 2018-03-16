@@ -13,47 +13,47 @@
  */
 class CCoreSystem
 {
-public:
-  ~CCoreSystem();
+   public:
+    ~CCoreSystem();
 
-  /**
-   * Company name.
-   */
-  void setCompanyName(const std::string &name);
-  const std::string &getCompanyName() const;
+    /**
+     * Company name.
+     */
+    void setCompanyName(const std::string &name);
+    const std::string &getCompanyName() const;
 
-  /**
-   * Application name.
-   */
-  void setApplicationName(const std::string &name);
-  const std::string &getApplicationName() const;
+    /**
+     * Application name.
+     */
+    void setApplicationName(const std::string &name);
+    const std::string &getApplicationName() const;
 
-  /**
-   * Application root directory.
-   * Default value "home:"
-   */
-  void setRootDirectory(const std::string &root);
-  const std::string &getRootDirectory() const;
+    /**
+     * Application root directory.
+     * Default value "home:"
+     */
+    void setRootDirectory(const std::string &root);
+    const std::string &getRootDirectory() const;
 
-  /**
-   * Start core system.
-   */
-  void start();
+    /**
+     * Start core system.
+     */
+    void start();
 
-  /**
-   * Stop core system.
-   */
-  void stop();
+    /**
+     * Stop core system.
+     */
+    void stop();
 
-  /**
-   * Update core system while started.
-   */
-  void update();
+    /**
+     * Update core system while started.
+     */
+    void update();
 
-private:
-  bool m_started = false;
-  std::string m_companyName = "MyCompany";
-  std::string m_applicationName = "MyApplication";
-  std::string m_rootDirectory = "home:";
-  CConsole m_console;
+   private:
+    bool m_started = false;
+    std::string m_companyName = "MyCompany";
+    std::string m_applicationName = "MyApplication";
+    std::string m_rootDirectory = "home:";
+    CConsole m_console;
 };

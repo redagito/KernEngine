@@ -2,7 +2,4 @@
 
 MessageId::MessageId() {}
 
-bool MessageId::operator==(const MessageId &rhs) const
-{
-  return (this == &rhs);
-}
+bool MessageId::operator==(const MessageId &rhs) const { return (this == &rhs); }

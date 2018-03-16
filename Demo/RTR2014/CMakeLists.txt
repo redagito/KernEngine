@@ -1,17 +1,29 @@
 cmake_minimum_required (VERSION 3.0.0)
-project (DemoRTR2014)
+project (RTR2014)
 
-file(GLOB_RECURSE SOURCE_FILES
+file (GLOB_RECURSE SOURCE_FILES
 	${CMAKE_CURRENT_SOURCE_DIR}/source/*.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/source/*.cxx
 	${CMAKE_CURRENT_SOURCE_DIR}/source/*.h
+	${CMAKE_CURRENT_SOURCE_DIR}/source/*.hpp
+	${CMAKE_CURRENT_SOURCE_DIR}/source/*.hxx
 )
 
 add_executable (${PROJECT_NAME} ${SOURCE_FILES})
 
-set_property(TARGET ${PROJECT_NAME} PROPERTY CXX_STANDARD 11)
-set(CXX_STANDARD_REQUIRED ON)
+set_target_properties (${PROJECT_NAME} PROPERTIES
+	CXX_STANDARD 11
+)
 
-target_link_libraries (${PROJECT_NAME} ApplicationLib)
-target_include_directories(${PROJECT_NAME} PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/source)
+# Link dependencies
+target_link_libraries (${PROJECT_NAME} 
+	LINK_PRIVATE Application
+)
 
-file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/data DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
+# Includes
+target_include_directories (${PROJECT_NAME}
+	PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/source
+)
+
+# Copy runtime data
+file (COPY ${CMAKE_CURRENT_SOURCE_DIR}/data DESTINATION ${CMAKE_CURRENT_BINARY_DIR})

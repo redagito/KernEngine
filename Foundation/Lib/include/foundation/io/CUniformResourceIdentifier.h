@@ -5,7 +5,7 @@
  */
 class CUniformResourceIdentifier
 {
-public:
-  CUniformResourceIdentifier();
-  ~CUniformResourceIdentifier();
+   public:
+    CUniformResourceIdentifier();
+    ~CUniformResourceIdentifier();
 };

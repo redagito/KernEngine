@@ -8,33 +8,33 @@
  */
 class CPathAlias
 {
-public:
-  /**
-   * Default constructor.
-   */
-  CPathAlias();
+   public:
+    /**
+     * Default constructor.
+     */
+    CPathAlias();
 
-  /**
-   * Construct with alias and path.
-   */
-  CPathAlias(const std::string &alias, const std::string &path);
+    /**
+     * Construct with alias and path.
+     */
+    CPathAlias(const std::string &alias, const std::string &path);
 
-  /**
-   * \return Stored alias.
-   */
-  const std::string &getAlias() const;
+    /**
+     * \return Stored alias.
+     */
+    const std::string &getAlias() const;
 
-  /**
-   * \return Associated path.
-   */
-  const std::string &getPath() const;
+    /**
+     * \return Associated path.
+     */
+    const std::string &getPath() const;
 
-  /**
-   * \return False if alias or path is empty and true otherwise.
-   */
-  bool isValid() const;
+    /**
+     * \return False if alias or path is empty and true otherwise.
+     */
+    bool isValid() const;
 
-private:
-  std::string m_alias;
-  std::string m_path;
+   private:
+    std::string m_alias;
+    std::string m_path;
 };

@@ -2,21 +2,21 @@
 
 std::string toString(ELogLevel level)
 {
-  switch (level)
-  {
-  case ELogLevel::Info:
-    return "Info";
+    switch (level)
+    {
+    case ELogLevel::Info:
+        return "Info";
 
-  case ELogLevel::Debug:
-    return "Debug";
+    case ELogLevel::Debug:
+        return "Debug";
 
-  case ELogLevel::Warning:
-    return "Warning";
+    case ELogLevel::Warning:
+        return "Warning";
 
-  case ELogLevel::Error:
-    return "Error";
+    case ELogLevel::Error:
+        return "Error";
 
-  default:
-    return "Unknown";
-  }
+    default:
+        return "Unknown";
+    }
 }

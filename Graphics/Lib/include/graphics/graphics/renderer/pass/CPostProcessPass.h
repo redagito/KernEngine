@@ -6,10 +6,10 @@
 
 class CPostProcessPass
 {
-public:
-  CPostProcessPass(const std::string &shaderFile);
+   public:
+    CPostProcessPass(const std::string &shaderFile);
 
-  bool init(IResourceManager *manager);
+    bool init(IResourceManager *manager);
 
-  void run();
+    void run();
 };

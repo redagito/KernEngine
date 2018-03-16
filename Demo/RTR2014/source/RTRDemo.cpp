@@ -18,15 +18,15 @@
 #include "graphics/graphics/camera/CFreeCamera.h"
 
 // Renderer types
-#include "graphics/graphics/renderer/CForwardRenderer.h"
 #include "graphics/graphics/renderer/CDeferredRenderer.h"
+#include "graphics/graphics/renderer/CForwardRenderer.h"
 
 // Resource system
 #include "graphics/resource/Resource.h"
 
+#include "graphics/graphics/resource/CGraphicsResourceManager.h"
 #include "graphics/graphics/scene/CScene.h"
 #include "graphics/graphics/window/CGlfwWindow.h"
-#include "graphics/graphics/resource/CGraphicsResourceManager.h"
 
 #include "graphics/graphics/CDebugInfoDisplay.h"
 #include "graphics/input/provider/CGlfwInputProvider.h"
@@ -66,7 +66,7 @@ int RTRDemo::init(const std::string& configFile)
         return 1;
     }
 
-	m_inputProvider = std::make_shared<CGlfwInputProvider>(m_window->getGlfwHandle());
+    m_inputProvider = std::make_shared<CGlfwInputProvider>(m_window->getGlfwHandle());
 
     // Create resource manager
     m_resourceManager.reset(createResourceManager());
@@ -76,8 +76,8 @@ int RTRDemo::init(const std::string& configFile)
         return 1;
     }
 
-	// Create animation world
-	m_animationWorld = std::make_shared<CAnimationWorld>();
+    // Create animation world
+    m_animationWorld = std::make_shared<CAnimationWorld>();
 
     // Graphics resource manager, listens to resource manager
     CGraphicsResourceManager* manager = new CGraphicsResourceManager;
@@ -128,7 +128,7 @@ int RTRDemo::run()
     bool displayDebugInfo = false;
 
     m_window->toggleMouseCapture();
-    
+
     do
     {
         double startTime = glfwGetTime();
@@ -165,7 +165,7 @@ int RTRDemo::run()
             f3Cooldown = 0.3f;
             m_renderer = m_forwardRenderer;
         }
-        
+
         if (glfwGetKey(m_window->getGlfwHandle(), GLFW_KEY_F5) == GLFW_PRESS && f5Cooldown <= 0.f)
         {
             f5Cooldown = 0.3f;
@@ -188,8 +188,8 @@ int RTRDemo::run()
             m_debugInfoDisplay->draw(*m_debugInfo.get(), true);
         }
 
-		// Perform animation update
-		m_animationWorld->update((float) timeDiff);
+        // Perform animation update
+        m_animationWorld->update((float)timeDiff);
 
         m_window->swapBuffer();
 

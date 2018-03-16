@@ -1,15 +1,15 @@
 #pragma once
 
-#include <ostream>
 #include <cstdint>
+#include <ostream>
 
 #include <string>
 #include <tuple>
 
 #include <list>
-#include <vector>
 #include <map>
 #include <unordered_map>
+#include <vector>
 
 /**
  * Serialization routines for basic types.
@@ -49,8 +49,7 @@ template <typename KeyType, typename ValueType>
 bool serialize(const std::map<KeyType, ValueType> &container, std::ostream &os);
 
 template <typename KeyType, typename ValueType>
-bool serialize(const std::unordered_map<KeyType, ValueType> &container,
-               std::ostream &os);
+bool serialize(const std::unordered_map<KeyType, ValueType> &container, std::ostream &os);
 
 /**
  * Implementations of template functions.
@@ -58,60 +57,59 @@ bool serialize(const std::unordered_map<KeyType, ValueType> &container,
 template <typename TypeA, typename TypeB>
 bool serialize(const std::pair<TypeA, TypeB> &value, std::ostream &os)
 {
-  if (!serialize(value.first, os))
-    return false;
-  return serialize(value.second, os);
+    if (!serialize(value.first, os))
+        return false;
+    return serialize(value.second, os);
 }
 
 template <typename Type>
 bool serialize(const std::list<Type> &container, std::ostream &os)
 {
-  if (!serialize(container.size(), os))
-    return false;
-  for (const auto &value : container)
-  {
-    if (!serialize(value, os))
-      return false;
-  }
-  return true;
+    if (!serialize(container.size(), os))
+        return false;
+    for (const auto &value : container)
+    {
+        if (!serialize(value, os))
+            return false;
+    }
+    return true;
 }
 
 template <typename Type>
 bool serialize(const std::vector<Type> &container, std::ostream &os)
 {
-  if (!serialize(container.size(), os))
-    return false;
-  for (const auto &value : container)
-  {
-    if (!serialize(value, os))
-      return false;
-  }
-  return true;
+    if (!serialize(container.size(), os))
+        return false;
+    for (const auto &value : container)
+    {
+        if (!serialize(value, os))
+            return false;
+    }
+    return true;
 }
 
 template <typename KeyType, typename ValueType>
 bool serialize(const std::map<KeyType, ValueType> &container, std::ostream &os)
 {
-  if (!serialize(container.size(), os))
-    return false;
-  for (const auto &value : container)
-  {
-    if (!serialize(value, os))
-      return false;
-  }
-  return true;
+    if (!serialize(container.size(), os))
+        return false;
+    for (const auto &value : container)
+    {
+        if (!serialize(value, os))
+            return false;
+    }
+    return true;
 }
 
 template <typename KeyType, typename ValueType>
-bool serialize(const std::unordered_map<KeyType, ValueType> &container,
-               std::ostream &os)
+bool serialize(const std::unordered_map<KeyType, ValueType> &container, std::ostream &os)
 {
-  if (!serialize(container.size(), os))
-    return false;
-  for (const auto &value : container)
-  {
-    if (!serialize(value, os))
-      return false;
-  }
-  return true;
+    if (!serialize(container.size(), os))
+        return false;
+    for (const auto &value : container)
+    {
+        if (!serialize(value, os))
+            return false;
+    }
+    return true;
 }

@@ -10,35 +10,35 @@ static const ResourceId invalidResource = -1;
  */
 enum class EResourceType
 {
-  Mesh,
-  Image,
-  String,
-  Shader,
-  Material,
-  Model
+    Mesh,
+    Image,
+    String,
+    Shader,
+    Material,
+    Model
 };
 
 /**
-* \brief Primitive type for vertex data.
-* NOTE GL_QUAD is deprecated.
-*/
+ * \brief Primitive type for vertex data.
+ * NOTE GL_QUAD is deprecated.
+ */
 enum class EPrimitiveType
 {
-  Point = 1,
-  Line = 2,
-  Triangle = 3,
-  Invalid
+    Point = 1,
+    Line = 2,
+    Triangle = 3,
+    Invalid
 };
 
 /**
-* \brief Color format for texture data.
-*/
+ * \brief Color format for texture data.
+ */
 enum class EColorFormat
 {
-  GreyScale8 = 1,
-  RGB24 = 3,
-  RGBA32 = 4,
-  Invalid
+    GreyScale8 = 1,
+    RGB24 = 3,
+    RGBA32 = 4,
+    Invalid
 };
 
 /**
@@ -46,7 +46,7 @@ enum class EColorFormat
  */
 enum class EListenerEvent
 {
-  Create, /**< Specified resource was created. */
-  Change, /**< Specified resource was changed. */
-  Delete  /**< Specified resource was deleted. */
+    Create, /**< Specified resource was created. */
+    Change, /**< Specified resource was changed. */
+    Delete  /**< Specified resource was deleted. */
 };

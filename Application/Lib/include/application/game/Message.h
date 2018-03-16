@@ -2,7 +2,7 @@
 
 enum class Message
 {
-  DAMAGE,
-  COLLISION,
-  DEATH
+    DAMAGE,
+    COLLISION,
+    DEATH
 };

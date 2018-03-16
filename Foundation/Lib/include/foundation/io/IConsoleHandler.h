@@ -11,46 +11,46 @@ class CConsole;
  */
 class IConsoleHandler
 {
-public:
-  virtual ~IConsoleHandler();
+   public:
+    virtual ~IConsoleHandler();
 
-  /**
-   * Called on attached to console.
-   */
-  virtual void onAttach(const CConsole &console) = 0;
+    /**
+     * Called on attached to console.
+     */
+    virtual void onAttach(const CConsole &console) = 0;
 
-  /**
-   * Called on detach from console.
-   */
-  virtual void onDetach(const CConsole &console) = 0;
+    /**
+     * Called on detach from console.
+     */
+    virtual void onDetach(const CConsole &console) = 0;
 
-  /**
-   * Update call from console.
-   */
-  virtual void update() = 0;
+    /**
+     * Update call from console.
+     */
+    virtual void update() = 0;
 
-  /**
-   * Called on text output.
-   */
-  virtual void print(const std::string &text) = 0;
+    /**
+     * Called on text output.
+     */
+    virtual void print(const std::string &text) = 0;
 
-  /**
-   * Called on debug output.
-   */
-  virtual void debug(const std::string &text) = 0;
+    /**
+     * Called on debug output.
+     */
+    virtual void debug(const std::string &text) = 0;
 
-  /**
-   * Called on warning output.
-   */
-  virtual void warning(const std::string &text) = 0;
+    /**
+     * Called on warning output.
+     */
+    virtual void warning(const std::string &text) = 0;
 
-  /**
-   * Called on error output.
-   */
-  virtual void error(const std::string &text) = 0;
+    /**
+     * Called on error output.
+     */
+    virtual void error(const std::string &text) = 0;
 
-  /**
-   * Reads the input from the handler into the console.
-   */
-  virtual bool tryGetInput(std::string &text) = 0;
+    /**
+     * Reads the input from the handler into the console.
+     */
+    virtual bool tryGetInput(std::string &text) = 0;
 };

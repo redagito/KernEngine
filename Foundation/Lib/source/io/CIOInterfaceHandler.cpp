@@ -4,10 +4,7 @@ void CIOInterfaceHandler::onAttach() {}
 
 void CIOInterfaceHandler::onDetach() {}
 
-bool CIOInterfaceHandler::handle(const std::shared_ptr<AMessage> &msg)
-{
-  return false;
-}
+bool CIOInterfaceHandler::handle(const std::shared_ptr<AMessage> &msg) { return false; }
 
 void CIOInterfaceHandler::open() {}
 
