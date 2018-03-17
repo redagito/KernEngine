@@ -39,8 +39,8 @@ bool serializeVector(std::ostream &stream, const std::vector<T> &value)
         {
             return false;
         }
-        return true;
     }
+	return true;
 }
 
 bool serialize(std::ostream &stream, bool value) { return serializeNative(stream, value); }

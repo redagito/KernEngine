@@ -4,5 +4,6 @@
 
 int main(int argc, const char **argv)
 {
-	return GuardedMain<CDemoCG2015>(argc, argv, "CG2015", "Computer Graphics Demo Game 2015", "v1.0", "KernTec");
+    return GuardedMain<CDemoCG2015>(argc, argv, "CG2015", "Computer Graphics Demo Game 2015",
+                                    "v1.0", "KernTec");
 }

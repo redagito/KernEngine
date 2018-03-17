@@ -1,13 +1,8 @@
+#include <application/GuardedMain.h>
+
 #include "CDemoRTR2014.h"
 
 int main(int argc, const char** argv)
 {
-	CDemoRTR2014 app;
-
-    if (app.init("data/config.ini") != 0)
-    {
-        return 1;
-    }
-
-    return app.run();
+	return GuardedMain<CDemoRTR2014>(argc, argv, "RTR2014", "Realtime Rendering Demo 2014", "v1.0", "KernTec");
 }

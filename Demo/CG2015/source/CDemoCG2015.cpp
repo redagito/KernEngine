@@ -6,10 +6,6 @@
 #include "state/CLoseState.h"
 #include "state/CWinState.h"
 
-CDemoCG2015::CDemoCG2015() {}
-
-CDemoCG2015::~CDemoCG2015() {}
-
 bool CDemoCG2015::onInitialize()
 {
 	addGameState("load", new CLoadState("data/world/load_1.json", 10.f));
