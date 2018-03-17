@@ -1,4 +1,4 @@
-#include "graphics/io/CSceneLoader.h"
+#include "graphics/io/LoadScene.h"
 
 #include <fstream>
 
@@ -17,12 +17,7 @@
 #include "graphics/animation/CRotationController.h"
 #include "graphics/animation/CSineTranslationController.h"
 
-CSceneLoader::CSceneLoader(IResourceManager &resourceManager) : m_resourceManager(resourceManager)
-{
-    return;
-}
-
-bool CSceneLoader::load(const std::string &file, IScene &scene, CAnimationWorld &animationWorld)
+bool loadScene(const std::string &file, IScene &scene, CAnimationWorld &animationWorld, IResourceManager& resourceManager)
 {
     Json::Value root;
 
@@ -33,7 +28,7 @@ bool CSceneLoader::load(const std::string &file, IScene &scene, CAnimationWorld 
     }
 
     // Load scene objects
-    if (!loadSceneObjects(root["scene_objects"], scene, animationWorld))
+    if (!loadSceneObjects(root["scene_objects"], scene, animationWorld, resourceManager))
     {
         LOG_ERROR("Error while loading scene objects from scene file %s.", file.c_str());
         return false;
@@ -63,8 +58,8 @@ bool CSceneLoader::load(const std::string &file, IScene &scene, CAnimationWorld 
     return true;
 }
 
-bool CSceneLoader::loadSceneObjects(const Json::Value &node, IScene &scene,
-                                    CAnimationWorld &animationWorld)
+bool loadSceneObjects(const Json::Value &node, IScene &scene,
+                                    CAnimationWorld &animationWorld, IResourceManager& resourceManager)
 {
     // Node empty?
     if (node.empty())
@@ -83,7 +78,7 @@ bool CSceneLoader::loadSceneObjects(const Json::Value &node, IScene &scene,
     // Load scene objects
     for (unsigned int i = 0; i < node.size(); ++i)
     {
-        if (!loadSceneObject(node[i], scene, animationWorld))
+        if (!loadSceneObject(node[i], scene, animationWorld, resourceManager))
         {
             return false;
         }
@@ -91,8 +86,8 @@ bool CSceneLoader::loadSceneObjects(const Json::Value &node, IScene &scene,
     return true;
 }
 
-bool CSceneLoader::loadSceneObject(const Json::Value &node, IScene &scene,
-                                   CAnimationWorld &animationWorld)
+bool loadSceneObject(const Json::Value &node, IScene &scene,
+                                   CAnimationWorld &animationWorld, IResourceManager& resourceManager)
 {
     std::string mesh;
     std::string material;
@@ -126,7 +121,7 @@ bool CSceneLoader::loadSceneObject(const Json::Value &node, IScene &scene,
     }
 
     // Load mesh file
-    ResourceId meshId = m_resourceManager.loadMesh(mesh);
+    ResourceId meshId = resourceManager.loadMesh(mesh);
     if (meshId == -1)
     {
         LOG_ERROR("Failed to load mesh file %s.", mesh.c_str());
@@ -134,7 +129,7 @@ bool CSceneLoader::loadSceneObject(const Json::Value &node, IScene &scene,
     }
 
     // Load material file
-    ResourceId materialId = m_resourceManager.loadMaterial(material);
+    ResourceId materialId = resourceManager.loadMaterial(material);
     if (materialId == -1)
     {
         LOG_ERROR("Failed to load material file %s.", material.c_str());
@@ -156,7 +151,7 @@ bool CSceneLoader::loadSceneObject(const Json::Value &node, IScene &scene,
     return true;
 }
 
-bool CSceneLoader::loadPointLights(const Json::Value &node, IScene &scene,
+bool loadPointLights(const Json::Value &node, IScene &scene,
                                    CAnimationWorld &animationWorld)
 {
     // Node empty?
@@ -184,7 +179,7 @@ bool CSceneLoader::loadPointLights(const Json::Value &node, IScene &scene,
     return true;
 }
 
-bool CSceneLoader::loadPointLight(const Json::Value &node, IScene &scene,
+bool loadPointLight(const Json::Value &node, IScene &scene,
                                   CAnimationWorld &animationWorld)
 {
     glm::vec3 position;
@@ -232,7 +227,7 @@ bool CSceneLoader::loadPointLight(const Json::Value &node, IScene &scene,
     return true;
 }
 
-bool CSceneLoader::loadDirectionalLights(const Json::Value &node, IScene &scene,
+bool loadDirectionalLights(const Json::Value &node, IScene &scene,
                                          CAnimationWorld &animationWorld)
 {
     // Node empty?
@@ -262,7 +257,7 @@ bool CSceneLoader::loadDirectionalLights(const Json::Value &node, IScene &scene,
     return true;
 }
 
-bool CSceneLoader::loadDirectionalLight(const Json::Value &node, IScene &scene,
+bool loadDirectionalLight(const Json::Value &node, IScene &scene,
                                         CAnimationWorld &animationWorld)
 {
     glm::vec3 direction;
@@ -295,7 +290,7 @@ bool CSceneLoader::loadDirectionalLight(const Json::Value &node, IScene &scene,
     return true;
 }
 
-bool CSceneLoader::loadAmbientLight(const Json::Value &node, IScene &scene)
+bool loadAmbientLight(const Json::Value &node, IScene &scene)
 {
     if (node.empty())
     {
@@ -320,7 +315,7 @@ bool CSceneLoader::loadAmbientLight(const Json::Value &node, IScene &scene)
     return true;
 }
 
-bool CSceneLoader::loadAnimationControllers(const Json::Value &node, IScene &scene,
+bool loadAnimationControllers(const Json::Value &node, IScene &scene,
                                             CAnimationWorld &animationWorld, SceneObjectId id,
                                             AnimationObjectType type)
 {
@@ -349,7 +344,7 @@ bool CSceneLoader::loadAnimationControllers(const Json::Value &node, IScene &sce
     return true;
 }
 
-bool CSceneLoader::loadAnimationController(const Json::Value &node, IScene &scene,
+bool loadAnimationController(const Json::Value &node, IScene &scene,
                                            CAnimationWorld &animationWorld, SceneObjectId id,
                                            AnimationObjectType type)
 {
@@ -400,45 +395,5 @@ bool CSceneLoader::loadAnimationController(const Json::Value &node, IScene &scen
         return false;
     }
 
-    return true;
-}
-
-bool CSceneLoader::load(const Json::Value &node, const std::string &name, float &f)
-{
-    if (!deserialize(node[name], f))
-    {
-        LOG_ERROR("Failed to load '%s' parameter.", name.c_str());
-        return false;
-    }
-    return true;
-}
-
-bool CSceneLoader::load(const Json::Value &node, const std::string &name, bool &b)
-{
-    if (!deserialize(node[name], b))
-    {
-        LOG_ERROR("Failed to load '%s' parameter.", name.c_str());
-        return false;
-    }
-    return true;
-}
-
-bool CSceneLoader::load(const Json::Value &node, const std::string &name, glm::vec3 &vec)
-{
-    if (!deserialize(node[name], vec))
-    {
-        LOG_ERROR("Failed to load '%s' parameter.", name.c_str());
-        return false;
-    }
-    return true;
-}
-
-bool CSceneLoader::load(const Json::Value &node, const std::string &name, std::string &str)
-{
-    if (!deserialize(node[name], str))
-    {
-        LOG_ERROR("Failed to load '%s' parameter.", name.c_str());
-        return false;
-    }
     return true;
 }

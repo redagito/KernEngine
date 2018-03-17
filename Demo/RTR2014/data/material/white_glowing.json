@@ -1,0 +1,4 @@
+{
+	"base" : "data/image/white_diffuse.png",
+	"glow" : "data/image/max_glow.png"
+}

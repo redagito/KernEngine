@@ -3,6 +3,8 @@
 #include <GLFW/glfw3.h>
 #include <glm/glm.hpp>
 
+#include <foundation/debug/Log.h>
+
 #include <graphics/graphics/IGraphicsSystem.h>
 #include <graphics/graphics/IScene.h>
 
@@ -22,7 +24,7 @@
 #include "graphics/graphics/camera/CFirstPersonCamera.h"
 
 #include "graphics/animation/CAnimationWorld.h"
-#include "graphics/io/CSceneLoader.h"
+#include "graphics/io/LoadScene.h"
 
 // Collision
 #include "graphics/collision/CCollidable.h"
@@ -52,8 +54,12 @@ bool CGamePlayState::init(IGraphicsSystem *graphicsSystem, IInputProvider *input
     m_enemyGroup = m_collisionSystem->getNewGroupId();
 
     CAnimationWorld animWorld;
-    CSceneLoader loader(*resourceManager);
-    loader.load("data/world/game_1.json", *m_scene, animWorld);
+	std::string sceneFile = "data/world/game_1.json";
+	if (!loadScene(sceneFile, *m_scene, animWorld, *resourceManager))
+	{
+		KERN_ERROR("Failed to load scene file " << sceneFile);
+		return false;
+	}
 
     m_camera = std::make_shared<CFirstPersonCamera>(
         glm::vec3(90.f, 70.f, 90.f), glm::vec3(0.f, 0.f, 0.f), glm::vec3(0.f, 1.f, 0.f), 45.f,

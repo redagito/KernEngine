@@ -3,7 +3,7 @@
 #include <foundation/debug/Log.h>
 
 #include "graphics/graphics/camera/CFirstPersonCamera.h"
-#include "graphics/io/CSceneLoader.h"
+#include "graphics/io/LoadScene.h"
 
 const std::string exitStr = "exit";
 
@@ -34,8 +34,7 @@ bool CDemoState::init(IGraphicsSystem *graphicsSystem, IInputProvider *inputProv
 
     // Load scene from file
     LOG_INFO("Loading scene from file %s.", m_sceneFile.c_str());
-    CSceneLoader loader(*resourceManager);
-    if (!loader.load(m_sceneFile, *m_scene, m_animationWorld))
+    if (!loadScene(m_sceneFile, *m_scene, m_animationWorld, *resourceManager))
     {
         LOG_ERROR("Failed to load scene file %s.", m_sceneFile.c_str());
         return false;
