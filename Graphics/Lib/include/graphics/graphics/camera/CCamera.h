@@ -7,6 +7,9 @@
 class CCamera : public ICamera
 {
    public:
+    CCamera() = default;
+    CCamera(const glm::mat4 &view, const glm::mat4 &projection, const glm::vec3 &position);
+
     void setView(const glm::mat4 &view);
     const glm::mat4 &getView() const;
 

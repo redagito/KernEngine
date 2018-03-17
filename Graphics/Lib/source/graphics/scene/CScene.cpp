@@ -25,20 +25,19 @@ CScene::~CScene() {}
 SceneObjectId CScene::createObject(ResourceId model, const glm::vec3 &position,
                                    const glm::quat &rotation, const glm::vec3 &scale)
 {
-  // const CMesh* meshPtr = m_resourceManager->getMesh(meshId);
-  m_objects.push_back(
-      SSceneObject(model, position, rotation, scale, true, CBoundingSphere()));
-  return static_cast<SceneObjectId>(m_objects.size()) - 1;
+    // const CMesh* meshPtr = m_resourceManager->getMesh(meshId);
+    m_objects.push_back(SSceneObject(model, position, rotation, scale, true, CBoundingSphere()));
+    return static_cast<SceneObjectId>(m_objects.size()) - 1;
 }
 
 SceneObjectId CScene::createObject(ResourceId meshId, ResourceId material,
                                    const glm::vec3 &position, const glm::quat &rotation,
                                    const glm::vec3 &scale)
 {
-  const CMesh *meshPtr = m_resourceManager->getMesh(meshId);
-  m_objects.push_back(SSceneObject(meshId, material, position, rotation, scale,
-                                   true, meshPtr->getBoundingSphere()));
-  return static_cast<SceneObjectId>(m_objects.size()) - 1;
+    const CMesh *meshPtr = m_resourceManager->getMesh(meshId);
+    m_objects.push_back(SSceneObject(meshId, material, position, rotation, scale, true,
+                                     meshPtr->getBoundingSphere()));
+    return static_cast<SceneObjectId>(m_objects.size()) - 1;
 }
 
 bool CScene::getObject(SceneObjectId id, ResourceId &mesh, ResourceId &material,

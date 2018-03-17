@@ -4,7 +4,7 @@ int main(int argc, const char** argv)
 {
 	CDemoRTR2014 app;
 
-    if (app.init("config/startup.ini") != 0)
+    if (app.init("data/config.ini") != 0)
     {
         return 1;
     }

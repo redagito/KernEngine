@@ -2,8 +2,6 @@
 
 #include <glm/glm.hpp>
 
-#include <foundation/math/TransformUtils.h>
-
 #include "graphics/graphics/camera/IControllableCamera.h"
 
 class CFirstPersonCamera : public IControllableCamera

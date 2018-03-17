@@ -67,7 +67,7 @@ static bool parseArg(const char *arg, Configuration &config)
 
 bool parseCommandLine(int argc, const char **argv, Configuration &config)
 {
-	// Skip first parameter
+    // Skip first parameter
     for (int i = 1; i < argc; ++i)
     {
         if (!parseArg(argv[i], config))

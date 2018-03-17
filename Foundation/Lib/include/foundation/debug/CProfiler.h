@@ -19,7 +19,7 @@ class CProfiler
     /**
      * Write formatted profile data.
      */
-    static bool write(std::ostream & stream);
+    static bool write(std::ostream &stream);
     static bool hasData();
 
    private:
@@ -34,7 +34,7 @@ class CProfiler
         double maxCallTime = 0.f;       /**< Max call time. */
     };
 
-	using FunctionProfiles = std::unordered_map<std::string, SData>;
+    using FunctionProfiles = std::unordered_map<std::string, SData>;
 
     double m_time = 0.0;                   /**< Start time. */
     std::string m_name;                    /**< Profile name. */

@@ -50,7 +50,7 @@ bool CProfiler::write(std::ostream &stream)
         temp = s_profileData;
     }
 
-	stream << "[Profile data]" << std::endl;
+    stream << "[Profile data]" << std::endl;
     // Write profiling statistics
     for (const auto &data : temp)
     {

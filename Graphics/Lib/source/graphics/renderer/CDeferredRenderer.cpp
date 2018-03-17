@@ -7,12 +7,11 @@
 
 #include <foundation/debug/Log.h>
 
-#include "graphics/graphics/ICamera.h"
 #include "graphics/graphics/IScene.h"
 #include "graphics/graphics/IWindow.h"
+#include "graphics/graphics/camera/CCamera.h"
 #include "graphics/graphics/scene/CSceneQuery.h"
 
-#include "graphics/graphics/camera/CStaticCamera.h"
 #include "graphics/resource/IResourceManager.h"
 
 #include "graphics/graphics/IGraphicsResourceManager.h"
@@ -580,7 +579,7 @@ void CDeferredRenderer::pointLightPass(const IScene &scene, const ICamera &camer
             // too small and
             // 89.55 too big.
             glm::mat4 shadowProj = glm::perspective(89.54f, 1.0f, 0.01f, radius * 1.5f);
-            CStaticCamera shadowCamera(glm::mat4(), shadowProj, position);
+            const CCamera shadowCamera(glm::mat4(), shadowProj, position);
             shadowCubePass(scene, shadowCamera, window, manager);
 
             // Prepare light pass frame buffer
@@ -691,7 +690,7 @@ void CDeferredRenderer::directionalLightPass(const IScene &scene, const ICamera 
             glm::mat4 shadowView =
                 glm::lookAt(glm::vec3(0), glm::normalize(direction), glm::vec3(0.0f, 1.0f, 0.0f));
             glm::mat4 shadowProj = glm::ortho(-150.0f, 150.0f, -150.0f, 150.0f, -250.0f, 150.0f);
-            CStaticCamera shadowCamera(shadowView, shadowProj, camera.getPosition());
+            const CCamera shadowCamera(shadowView, shadowProj, camera.getPosition());
 
             // Render shadow map
             shadowMapPass(scene, shadowCamera, window, manager);

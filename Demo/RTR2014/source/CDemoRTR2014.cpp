@@ -15,7 +15,6 @@
 #include <GLFW/glfw3.h>
 
 #include "graphics/graphics/camera/CFirstPersonCamera.h"
-#include "graphics/graphics/camera/CFreeCamera.h"
 
 // Renderer types
 #include "graphics/graphics/renderer/CDeferredRenderer.h"

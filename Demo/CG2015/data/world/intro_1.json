@@ -16,18 +16,18 @@
         },
 		{
             "mesh" :  "data/mesh/titleobj.obj",
-            "material" : "data/material/white.json",
+            "material" : "data/material/white_glowing.json",
             "position" :  [ 0, 7, 0 ],
             "rotation" :  [ 0 , -0.2, 0 ],
             "scale" :  [ 1, 1, 1 ]
         },
-		{
-            "mesh" :  "data/mesh/enter.obj",
-            "material" : "data/material/white.json",
-            "position" :  [ 0, 6, 0 ],
-            "rotation" :  [ 0 , -0.2, 0 ],
-            "scale" :  [ 0.7, 0.7, 1 ]
-        },
+      {
+        "mesh": "data/mesh/enter.obj",
+        "material": "data/material/white_glowing.json",
+        "position": [ 0, 6, 0 ],
+        "rotation": [ 0, -0.2, 0 ],
+        "scale": [ 0.7, 0.7, 1 ]
+      },
 		{
         	"mesh" : "data/mesh/skybox.obj",
         	"material" : "data/material/skybox_2.json",

@@ -388,6 +388,6 @@ class CDeferredRenderer : public IRenderer
     // Fullscreen draw pass
     CScreenQuadPass m_screenQuadPass;
 
-	// Render requests with custom shaders.
+    // Render requests with custom shaders.
     std::list<SRenderRequest> m_customShaderMeshes;
 };

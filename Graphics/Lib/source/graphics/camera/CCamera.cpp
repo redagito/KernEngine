@@ -1,5 +1,10 @@
 #include "graphics/graphics/camera/CCamera.h"
 
+CCamera::CCamera(const glm::mat4 &view, const glm::mat4 &projection, const glm::vec3 &position)
+    : m_view(view), m_projection(projection), m_position(position)
+{
+}
+
 void CCamera::setView(const glm::mat4 &view) { m_view = view; }
 
 const glm::mat4 &CCamera::getView() const { return m_view; }

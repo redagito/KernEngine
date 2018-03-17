@@ -8,10 +8,10 @@
 
 unsigned int CCollisionSystem::getNewGroupId()
 {
-  // Add new collision group
-  m_entities.push_back(std::list<CCollidable *>());
-  // Return the group id
-  return static_cast<unsigned int>(m_entities.size()) - 1;
+    // Add new collision group
+    m_entities.push_back(std::list<CCollidable *>());
+    // Return the group id
+    return static_cast<unsigned int>(m_entities.size()) - 1;
 }
 
 // Cleanup

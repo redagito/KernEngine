@@ -4,6 +4,8 @@
 
 #include <glm/ext.hpp>
 
+#include <foundation/math/TransformUtils.h>
+
 CFirstPersonCamera::CFirstPersonCamera(const glm::vec3 &position, const glm::vec3 &target,
                                        const glm::vec3 &up, float fieldOfView, float aspectRatio,
                                        float zNear, float zFar)
