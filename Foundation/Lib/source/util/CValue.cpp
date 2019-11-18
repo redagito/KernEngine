@@ -45,11 +45,59 @@ CValue::CValue(const std::string &value)
     m_string[value.length()] = '\0';
 }
 
+CValue::CValue(const char *value)
+{
+    m_type = EType::String;
+    auto length = std::strlen(value);
+    m_string = new char[length + 1];
+    memcpy(m_string, value, length);
+    m_string[length] = '\0';
+}
+
 CValue::~CValue()
 {
     if (m_type == EType::String && m_string != nullptr)
     {
         delete[] m_string;
+    }
+}
+
+bool CValue::convert(bool &value) const
+{
+    switch (m_type)
+    {
+    case EType::Boolean:
+        value = m_boolean;
+        return true;
+
+    case EType::Integer:
+        value = m_integer != 0;
+        return true;
+
+    case EType::UnsignedInteger:
+        value = m_unsignedInteger != 0;
+        return true;
+
+    case EType::Float:
+        value = m_float != 0.f;
+        return true;
+
+    case EType::String:
+        if (std::strcmp(m_string, "true") == 0)
+        {
+            value = true;
+            return true;
+        }
+        else if (std::strcmp(m_string, "false") == 0)
+        {
+            value = false;
+            return true;
+        }
+        return false;
+
+    default:
+        // Unknown or invalid conversion
+        return false;
     }
 }
 
@@ -380,13 +428,37 @@ bool CValue::operator==(const CValue &rhs) const
             // Not implemented
             assert(false);
         }
+    case EType::String:
+        switch (rhs.m_type)
+        {
+        case EType::String:
+            // String with string
+            return std::strcmp(this->m_string, rhs.m_string) == 0;
+        case EType::Integer:
+        {
+            int32_t i;
+            if (!this->convert(i))
+                return false;
+            return i == rhs.m_integer;
+        }
+        case EType::Boolean:
+            bool b;
+            if (!this->convert(b))
+                return false;
+            return b == rhs.m_boolean;
+        default:
+            // Not implemented
+            assert(false);
+        }
     }
     return false;
 }
 
 bool CValue::operator!=(const CValue &rhs) const { return !((*this) == rhs); }
 
-bool CValue::operator<=(const CValue &rhs) const
+bool CValue::operator<=(const CValue &rhs) const { return ((*this) == rhs) || ((*this) < rhs); }
+
+bool CValue::operator<(const CValue &rhs) const
 {
     // Arithmetic subtract
     switch (m_type)
@@ -396,7 +468,7 @@ bool CValue::operator<=(const CValue &rhs) const
         {
         case EType::Integer:
             // Integer with integer
-            return m_integer <= rhs.m_integer;
+            return m_integer < rhs.m_integer;
         default:
             // Not implemented
             assert(false);

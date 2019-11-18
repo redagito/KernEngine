@@ -112,6 +112,7 @@ void CTexture::saveAsPng(const std::string &file)
     image.resize(m_width * m_height * 3);
     glBindTexture(GL_TEXTURE_2D, m_textureId);
     glGetTexImage(GL_TEXTURE_2D, 0, GL_RGB, GL_UNSIGNED_BYTE, image.data());
+	
     lodepng::encode(file, image, m_width, m_height, LCT_RGB);
 }
 

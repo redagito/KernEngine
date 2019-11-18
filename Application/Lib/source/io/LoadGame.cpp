@@ -2,7 +2,7 @@
 
 #include <string>
 
-#include <json/json.h>
+#include <nlohmann/json.hpp>
 #include <glm/glm.hpp>
 
 #include <foundation/debug/Log.h>
@@ -18,7 +18,7 @@
 
 bool load(const std::string &file, IResourceManager &manager, CGameSystem &system)
 {
-    Json::Value root;
+    nlohmann::json root;
     if (!load(file, root))
     {
         LOG_ERROR("Failed to load game from file %s.", file.c_str());
@@ -56,26 +56,26 @@ bool load(const std::string &file, IResourceManager &manager, CGameSystem &syste
     return true;
 }
 
-bool loadGameStates(const Json::Value &node, IResourceManager &manager, CGameSystem &system)
+bool loadGameStates(const nlohmann::json &node, IResourceManager &manager, CGameSystem &system)
 {
     // Node empty?
-    if (node.empty())
+    if (node.is_null())
     {
         LOG_INFO("Missing or empty 'game_states' node. No game states were loaded.");
         return false;
     }
 
     // Node is array type?
-    if (!node.isArray())
+    if (!node.is_array())
     {
         LOG_ERROR("The node 'game_states' must be array type.");
         return false;
     }
 
     // Load game states
-    for (unsigned int i = 0; i < node.size(); ++i)
+    for (auto it : node)
     {
-        if (!loadGameState(node[i], manager, system))
+        if (!loadGameState(it, manager, system))
         {
             return false;
         }
@@ -83,7 +83,7 @@ bool loadGameStates(const Json::Value &node, IResourceManager &manager, CGameSys
     return true;
 }
 
-bool loadGameState(const Json::Value &node, IResourceManager &manager, CGameSystem &system)
+bool loadGameState(const nlohmann::json &node, IResourceManager &manager, CGameSystem &system)
 {
     // Load name of state for identification
     std::string name;
@@ -111,7 +111,7 @@ bool loadGameState(const std::string &file, const std::string &name, IResourceMa
                    CGameSystem &system)
 {
     // Load json file
-    Json::Value root;
+    nlohmann::json root;
     if (!load(file, root))
     {
         LOG_ERROR("Failed to load game state from file %s.", file.c_str());

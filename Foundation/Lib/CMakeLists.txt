@@ -17,6 +17,17 @@ set_target_properties (${PROJECT_NAME} PROPERTIES
 	CXX_STANDARD 17
 )
 
+include(${CMAKE_BINARY_DIR}/conan.cmake)
+conan_cmake_run(REQUIRES 
+	glm/0.9.9.5@g-truc/stable
+	jsonformoderncpp/3.7.0@vthiery/stable
+	pugixml/1.10@bincrafters/stable
+	sqlite3/3.29.0@bincrafters/stable
+	
+	BASIC_SETUP CMAKE_TARGETS
+	BUILD missing
+)
+
 target_link_libraries(${PROJECT_NAME}
 	PUBLIC CONAN_PKG::glm
 	PUBLIC CONAN_PKG::jsonformoderncpp

@@ -3,7 +3,7 @@
 #include <algorithm>
 
 #include <GLFW/glfw3.h>
-#include <json/json.h>
+#include <nlohmann/json.hpp>
 
 #include <foundation/debug/Log.h>
 #include <foundation/io/JsonDeserialize.h>
@@ -22,10 +22,7 @@ CCameraController::~CCameraController()
     }
 }
 
-void CCameraController::setCamera(std::shared_ptr<IControllableCamera> camera)
-{
-    m_camera = camera;
-}
+void CCameraController::setCamera(std::shared_ptr<IControllableCamera> camera) { m_camera = camera; }
 
 void CCameraController::setInputProvider(IInputProvider* provider)
 {
@@ -47,8 +44,7 @@ bool CCameraController::loadSequence(std::string file)
     m_sequenceTime = 0;
     m_sequencePoints.clear();
 
-    Json::Reader reader;
-    Json::Value root;
+    nlohmann::json root;
 
     // Load scene file
     std::ifstream ifs(file);
@@ -59,26 +55,30 @@ bool CCameraController::loadSequence(std::string file)
     }
 
     // Parse json data
-    if (!reader.parse(ifs, root))
+    try
+    {
+        ifs >> root;
+    }
+    catch (const std::exception& e)
     {
         LOG_ERROR("Failed to load scene file %s with error %s.", file.c_str(),
-                  reader.getFormattedErrorMessages().c_str());
+                  e.what());
         return false;
     }
     // Read done, close file
     ifs.close();
 
-    Json::Value node = root["positions"];
-
     // Node empty?
-    if (node.empty())
+    if (root.find("positions") == root.end())
     {
         LOG_INFO("Missing or empty 'positions' node. No scene objects are loaded.");
         return true;
     }
 
+    nlohmann::json node = root.at("positions");
+
     // Node is array type
-    if (!node.isArray())
+    if (!node.is_array())
     {
         LOG_ERROR("The node 'positions' must be array type.");
         return false;
@@ -86,7 +86,8 @@ bool CCameraController::loadSequence(std::string file)
 
     bool success = true;
 
-    for (unsigned int i = 0; i < node.size(); ++i)
+	int i = 0;
+    for (auto it : node)
     {
         glm::vec3 position;
         glm::vec3 orientation;
@@ -94,35 +95,35 @@ bool CCameraController::loadSequence(std::string file)
         bool fxaaActive;
         bool fogActive;
 
-        if (!load(node[i], "position", position))
+        if (!load(it, "position", position))
         {
             LOG_ERROR("Failed loading node 'position' for element #%i.", i);
             success = false;
             break;
         }
 
-        if (!load(node[i], "orientation", orientation))
+        if (!load(it, "orientation", orientation))
         {
             LOG_ERROR("Failed loading node 'orientation' for element #%i.", i);
             success = false;
             break;
         }
 
-        if (!load(node[i], "timestamp", timestamp))
+        if (!load(it, "timestamp", timestamp))
         {
             LOG_ERROR("Failed loading node 'timestamp' for element #%i.", i);
             success = false;
             break;
         }
 
-        if (!load(node[i], "fxaa", fxaaActive))
+        if (!load(it, "fxaa", fxaaActive))
         {
             LOG_ERROR("Failed loading node 'fxaa' for element #%i.", i);
             success = false;
             break;
         }
 
-        if (!load(node[i], "fog", fogActive))
+        if (!load(it, "fog", fogActive))
         {
             LOG_ERROR("Failed loading node 'fog' for element #%i.", i);
             success = false;
@@ -131,6 +132,7 @@ bool CCameraController::loadSequence(std::string file)
 
         SequencePoint sp{position, glm::normalize(orientation), timestamp, fxaaActive, fogActive};
         m_sequencePoints.push_back(sp);
+        ++i;
     }
 
     m_isRunningSequence = success;
@@ -156,7 +158,7 @@ void CCameraController::animate(float dt)
 
 void CCameraController::animateFeatures(float dt)
 {
-    // tODO
+    // TODO
 }
 
 void CCameraController::animateSequence(float dt)

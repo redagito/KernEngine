@@ -2,8 +2,8 @@
 
 #include <fstream>
 
-#include <json/json.h>
 #include <glm/glm.hpp>
+#include <nlohmann/json.hpp>
 
 #include <foundation/debug/Log.h>
 #include <foundation/io/JsonDeserialize.h>
@@ -17,14 +17,11 @@
 #include "graphics/animation/CRotationController.h"
 #include "graphics/animation/CSineTranslationController.h"
 
-CSceneLoader::CSceneLoader(IResourceManager &resourceManager) : m_resourceManager(resourceManager)
-{
-    return;
-}
+CSceneLoader::CSceneLoader(IResourceManager &resourceManager) : m_resourceManager(resourceManager) { return; }
 
 bool CSceneLoader::load(const std::string &file, IScene &scene, CAnimationWorld &animationWorld)
 {
-    Json::Value root;
+    nlohmann::json root;
 
     if (!::load(file, root))
     {
@@ -63,8 +60,7 @@ bool CSceneLoader::load(const std::string &file, IScene &scene, CAnimationWorld 
     return true;
 }
 
-bool CSceneLoader::loadSceneObjects(const Json::Value &node, IScene &scene,
-                                    CAnimationWorld &animationWorld)
+bool CSceneLoader::loadSceneObjects(const nlohmann::json &node, IScene &scene, CAnimationWorld &animationWorld)
 {
     // Node empty?
     if (node.empty())
@@ -74,7 +70,7 @@ bool CSceneLoader::loadSceneObjects(const Json::Value &node, IScene &scene,
     }
 
     // Node is array type
-    if (!node.isArray())
+    if (!node.is_array())
     {
         LOG_ERROR("The node 'scene_objects' must be array type.");
         return false;
@@ -91,8 +87,7 @@ bool CSceneLoader::loadSceneObjects(const Json::Value &node, IScene &scene,
     return true;
 }
 
-bool CSceneLoader::loadSceneObject(const Json::Value &node, IScene &scene,
-                                   CAnimationWorld &animationWorld)
+bool CSceneLoader::loadSceneObject(const nlohmann::json &node, IScene &scene, CAnimationWorld &animationWorld)
 {
     std::string mesh;
     std::string material;
@@ -142,12 +137,11 @@ bool CSceneLoader::loadSceneObject(const Json::Value &node, IScene &scene,
     }
 
     // Create object in scene
-    SceneObjectId objectId =
-        scene.createObject(meshId, materialId, position, glm::quat(rotation), scale);
+    SceneObjectId objectId = scene.createObject(meshId, materialId, position, glm::quat(rotation), scale);
 
     // Load optional animation controllers
-    if (!loadAnimationControllers(node["animations"], scene, animationWorld, objectId,
-                                  AnimationObjectType::Model))
+    if (node.find("animations") != node.end() &&
+        !loadAnimationControllers(node.at("animations"), scene, animationWorld, objectId, AnimationObjectType::Model))
     {
         LOG_ERROR("Failed to load animation controller.");
         return false;
@@ -156,8 +150,7 @@ bool CSceneLoader::loadSceneObject(const Json::Value &node, IScene &scene,
     return true;
 }
 
-bool CSceneLoader::loadPointLights(const Json::Value &node, IScene &scene,
-                                   CAnimationWorld &animationWorld)
+bool CSceneLoader::loadPointLights(const nlohmann::json &node, IScene &scene, CAnimationWorld &animationWorld)
 {
     // Node empty?
     if (node.empty())
@@ -167,7 +160,7 @@ bool CSceneLoader::loadPointLights(const Json::Value &node, IScene &scene,
     }
 
     // Node is array type
-    if (!node.isArray())
+    if (!node.is_array())
     {
         LOG_ERROR("The node 'point_lights' must be array type.");
         return false;
@@ -184,8 +177,7 @@ bool CSceneLoader::loadPointLights(const Json::Value &node, IScene &scene,
     return true;
 }
 
-bool CSceneLoader::loadPointLight(const Json::Value &node, IScene &scene,
-                                  CAnimationWorld &animationWorld)
+bool CSceneLoader::loadPointLight(const nlohmann::json &node, IScene &scene, CAnimationWorld &animationWorld)
 {
     glm::vec3 position;
     glm::vec3 color;
@@ -219,12 +211,10 @@ bool CSceneLoader::loadPointLight(const Json::Value &node, IScene &scene,
     }
 
     // Create object in scene
-    SceneObjectId objectId =
-        scene.createPointLight(position, radius, color, intensity, castsShadow);
+    SceneObjectId objectId = scene.createPointLight(position, radius, color, intensity, castsShadow);
 
     // Load optional animation controllers
-    if (!loadAnimationControllers(node["animations"], scene, animationWorld, objectId,
-                                  AnimationObjectType::PointLight))
+    if (node.find("animations") == node.end() || !loadAnimationControllers(node["animations"], scene, animationWorld, objectId, AnimationObjectType::PointLight))
     {
         LOG_ERROR("Failed to load animation controller.");
         return false;
@@ -232,8 +222,7 @@ bool CSceneLoader::loadPointLight(const Json::Value &node, IScene &scene,
     return true;
 }
 
-bool CSceneLoader::loadDirectionalLights(const Json::Value &node, IScene &scene,
-                                         CAnimationWorld &animationWorld)
+bool CSceneLoader::loadDirectionalLights(const nlohmann::json &node, IScene &scene, CAnimationWorld &animationWorld)
 {
     // Node empty?
     if (node.empty())
@@ -245,7 +234,7 @@ bool CSceneLoader::loadDirectionalLights(const Json::Value &node, IScene &scene,
     }
 
     // Node is array type
-    if (!node.isArray())
+    if (!node.is_array())
     {
         LOG_ERROR("The node 'directional_lights' must be array type.");
         return false;
@@ -262,8 +251,7 @@ bool CSceneLoader::loadDirectionalLights(const Json::Value &node, IScene &scene,
     return true;
 }
 
-bool CSceneLoader::loadDirectionalLight(const Json::Value &node, IScene &scene,
-                                        CAnimationWorld &animationWorld)
+bool CSceneLoader::loadDirectionalLight(const nlohmann::json &node, IScene &scene, CAnimationWorld &animationWorld)
 {
     glm::vec3 direction;
     glm::vec3 color;
@@ -295,7 +283,7 @@ bool CSceneLoader::loadDirectionalLight(const Json::Value &node, IScene &scene,
     return true;
 }
 
-bool CSceneLoader::loadAmbientLight(const Json::Value &node, IScene &scene)
+bool CSceneLoader::loadAmbientLight(const nlohmann::json &node, IScene &scene)
 {
     if (node.empty())
     {
@@ -320,9 +308,8 @@ bool CSceneLoader::loadAmbientLight(const Json::Value &node, IScene &scene)
     return true;
 }
 
-bool CSceneLoader::loadAnimationControllers(const Json::Value &node, IScene &scene,
-                                            CAnimationWorld &animationWorld, SceneObjectId id,
-                                            AnimationObjectType type)
+bool CSceneLoader::loadAnimationControllers(const nlohmann::json &node, IScene &scene, CAnimationWorld &animationWorld,
+                                            SceneObjectId id, AnimationObjectType type)
 {
     if (node.empty())
     {
@@ -332,7 +319,7 @@ bool CSceneLoader::loadAnimationControllers(const Json::Value &node, IScene &sce
     }
 
     // Node is array type
-    if (!node.isArray())
+    if (!node.is_array())
     {
         LOG_ERROR("The node 'animations' must be array type.");
         return false;
@@ -349,9 +336,8 @@ bool CSceneLoader::loadAnimationControllers(const Json::Value &node, IScene &sce
     return true;
 }
 
-bool CSceneLoader::loadAnimationController(const Json::Value &node, IScene &scene,
-                                           CAnimationWorld &animationWorld, SceneObjectId id,
-                                           AnimationObjectType type)
+bool CSceneLoader::loadAnimationController(const nlohmann::json &node, IScene &scene, CAnimationWorld &animationWorld,
+                                           SceneObjectId id, AnimationObjectType type)
 {
     std::string controllerType;
     if (!load(node, "type", controllerType))
@@ -366,8 +352,7 @@ bool CSceneLoader::loadAnimationController(const Json::Value &node, IScene &scen
         {
             return false;
         }
-        animationWorld.addAnimationController(
-            std::make_shared<CRotationController>(id, type, scene, rotation));
+        animationWorld.addAnimationController(std::make_shared<CRotationController>(id, type, scene, rotation));
     }
     else if (controllerType == "movement")
     {
@@ -376,8 +361,7 @@ bool CSceneLoader::loadAnimationController(const Json::Value &node, IScene &scen
         {
             return false;
         }
-        animationWorld.addAnimationController(
-            std::make_shared<CMovementController>(id, type, scene, direction));
+        animationWorld.addAnimationController(std::make_shared<CMovementController>(id, type, scene, direction));
     }
     else if (controllerType == "sine_translation")
     {
@@ -400,45 +384,5 @@ bool CSceneLoader::loadAnimationController(const Json::Value &node, IScene &scen
         return false;
     }
 
-    return true;
-}
-
-bool CSceneLoader::load(const Json::Value &node, const std::string &name, float &f)
-{
-    if (!deserialize(node[name], f))
-    {
-        LOG_ERROR("Failed to load '%s' parameter.", name.c_str());
-        return false;
-    }
-    return true;
-}
-
-bool CSceneLoader::load(const Json::Value &node, const std::string &name, bool &b)
-{
-    if (!deserialize(node[name], b))
-    {
-        LOG_ERROR("Failed to load '%s' parameter.", name.c_str());
-        return false;
-    }
-    return true;
-}
-
-bool CSceneLoader::load(const Json::Value &node, const std::string &name, glm::vec3 &vec)
-{
-    if (!deserialize(node[name], vec))
-    {
-        LOG_ERROR("Failed to load '%s' parameter.", name.c_str());
-        return false;
-    }
-    return true;
-}
-
-bool CSceneLoader::load(const Json::Value &node, const std::string &name, std::string &str)
-{
-    if (!deserialize(node[name], str))
-    {
-        LOG_ERROR("Failed to load '%s' parameter.", name.c_str());
-        return false;
-    }
     return true;
 }

@@ -1,6 +1,11 @@
-#include <iostream>
+#define CATCH_CONFIG_MAIN
+#include <catch2/catch.hpp>
 
-int main(int argc, char** argv)
+#include <graphics/GraphicsSystem.h>
+
+TEST_CASE("Test main", "[main]")
 {
-	return 0;
+	kern::graphics::GraphicsSystem system;
+	system.openWindow(800, 600, "Test");
+	REQUIRE(true);
 }

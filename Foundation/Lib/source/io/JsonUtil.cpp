@@ -4,7 +4,7 @@
 #include "foundation/io/JsonDeserialize.h"
 #include "foundation/io/JsonUtil.h"
 
-bool load(const std::string &file, Json::Value &value)
+bool load(const std::string &file, nlohmann::json &value)
 {
     std::ifstream ifs(file);
     if (!ifs.is_open())
@@ -13,19 +13,28 @@ bool load(const std::string &file, Json::Value &value)
         return false;
     }
 
-    Json::Reader reader;
-    if (!reader.parse(ifs, value))
-    {
+	try
+	{
+		value = nlohmann::json::parse(ifs);
+	}
+	catch (const nlohmann::json::parse_error& e)
+	{
         LOG_ERROR("Failed to parse json file %s: %s", file.c_str(),
-                  reader.getFormattedErrorMessages().c_str());
+                  e.what());
         return false;
     }
     return true;
 }
 
-bool load(const Json::Value &node, const std::string &name, int &i)
+bool load(const nlohmann::json &node, const std::string &name, int &i)
 {
-    if (!deserialize(node[name], i))
+    if (node.find(name) == node.end())
+    {
+        LOG_ERROR("Failed to load '%s' parameter.", name.c_str());
+        return false;
+    }
+
+    if (!deserialize(node.at(name), i))
     {
         LOG_ERROR("Failed to load '%s' parameter.", name.c_str());
         return false;
@@ -33,9 +42,15 @@ bool load(const Json::Value &node, const std::string &name, int &i)
     return true;
 }
 
-bool load(const Json::Value &node, const std::string &name, unsigned int &u)
+bool load(const nlohmann::json &node, const std::string &name, unsigned int &u)
 {
-    if (!deserialize(node[name], u))
+    if (node.find(name) == node.end())
+    {
+        LOG_ERROR("Failed to load '%s' parameter.", name.c_str());
+        return false;
+    }
+
+    if (!deserialize(node.at(name), u))
     {
         LOG_ERROR("Failed to load '%s' parameter.", name.c_str());
         return false;
@@ -43,9 +58,15 @@ bool load(const Json::Value &node, const std::string &name, unsigned int &u)
     return true;
 }
 
-bool load(const Json::Value &node, const std::string &name, float &f)
+bool load(const nlohmann::json &node, const std::string &name, float &f)
 {
-    if (!deserialize(node[name], f))
+    if (node.find(name) == node.end())
+    {
+        LOG_ERROR("Failed to load '%s' parameter.", name.c_str());
+        return false;
+    }
+
+    if (!deserialize(node.at(name), f))
     {
         LOG_ERROR("Failed to load '%s' parameter.", name.c_str());
         return false;
@@ -53,9 +74,15 @@ bool load(const Json::Value &node, const std::string &name, float &f)
     return true;
 }
 
-bool load(const Json::Value &node, const std::string &name, bool &b)
+bool load(const nlohmann::json &node, const std::string &name, bool &b)
 {
-    if (!deserialize(node[name], b))
+    if (node.find(name) == node.end())
+    {
+        LOG_ERROR("Failed to load '%s' parameter.", name.c_str());
+        return false;
+    }
+
+    if (!deserialize(node.at(name), b))
     {
         LOG_ERROR("Failed to load '%s' parameter.", name.c_str());
         return false;
@@ -63,9 +90,15 @@ bool load(const Json::Value &node, const std::string &name, bool &b)
     return true;
 }
 
-bool load(const Json::Value &node, const std::string &name, glm::vec3 &vec)
+bool load(const nlohmann::json &node, const std::string &name, glm::vec3 &vec)
 {
-    if (!deserialize(node[name], vec))
+    if (node.find(name) == node.end())
+    {
+        LOG_ERROR("Failed to load '%s' parameter.", name.c_str());
+        return false;
+    }
+
+    if (!deserialize(node.at(name), vec))
     {
         LOG_ERROR("Failed to load '%s' parameter.", name.c_str());
         return false;
@@ -73,9 +106,15 @@ bool load(const Json::Value &node, const std::string &name, glm::vec3 &vec)
     return true;
 }
 
-bool load(const Json::Value &node, const std::string &name, std::string &str)
+bool load(const nlohmann::json &node, const std::string &name, std::string &str)
 {
-    if (!deserialize(node[name], str))
+    if (node.find(name) == node.end())
+    {
+        LOG_ERROR("Failed to load '%s' parameter.", name.c_str());
+        return false;
+    }
+
+    if (!deserialize(node.at(name), str))
     {
         LOG_ERROR("Failed to load '%s' parameter.", name.c_str());
         return false;

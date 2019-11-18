@@ -17,8 +17,8 @@ set_target_properties(${TEST_NAME} PROPERTIES
 )
 
 target_link_libraries (${TEST_NAME}
-	LINK_PRIVATE ${PROJECT_NAME}
-	LINK_PRIVATE CONAN_PKG::catch2
+	PRIVATE ${PROJECT_NAME}
+	PRIVATE CONAN_PKG::catch2
 )
 
 target_include_directories(${TEST_NAME}

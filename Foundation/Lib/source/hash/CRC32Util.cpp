@@ -11,5 +11,5 @@ std::uint32_t crc32Calculate(const std::uint8_t *data, std::uint32_t size)
 
 std::uint32_t crc32Calculate(const std::string &data)
 {
-    return crc32Calculate(reinterpret_cast<const std::uint8_t *>(data.data()), data.size());
+    return crc32Calculate(reinterpret_cast<const std::uint8_t *>(data.data()), (std::uint32_t)data.size());
 }

@@ -11,13 +11,13 @@ unsigned int CCollisionSystem::getNewGroupId()
     // Add new collision group
     m_entities.push_back(std::list<CCollidable *>());
     // Return the group id
-    return m_entities.size() - 1;
+    return (unsigned int)m_entities.size() - 1;
 }
 
 // Cleanup
 CCollisionSystem::~CCollisionSystem()
 {
-    for (unsigned int i = 0; i < m_entities.size(); ++i)
+    for (size_t i = 0; i < m_entities.size(); ++i)
     {
         for (auto iter = m_entities[i].begin(); iter != m_entities[i].end(); ++iter)
         {

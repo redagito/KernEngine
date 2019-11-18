@@ -47,7 +47,7 @@ bool load(const std::string &file, CResourceManager &manager, SModel &model)
 
 bool loadModelFromJson(const std::string &file, std::string &meshFile, std::string &materialFile)
 {
-    Json::Value root;
+    nlohmann::json root;
     if (!load(file, root))
     {
         return false;

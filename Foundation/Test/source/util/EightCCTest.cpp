@@ -1,9 +1,9 @@
-#include <catch.hpp>
+#include <catch2/catch.hpp>
 
-#include <foundation/util/EightCC.h>
+#include <foundation/util/CEightCC.h>
 
-TEST_CASE("Default contructor sets to zero", "[util.EightCC]")
+TEST_CASE("Default contructor sets to zero", "[util.CEightCC]")
 {
-	EightCC e;
+	CEightCC e;
 	REQUIRE(e.get() == 0);
 }

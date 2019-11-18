@@ -40,13 +40,13 @@ bool load(const std::string& configFile, SEngineConfig& config)
     }
     else if (getFileExtension(configFile) == "json")
     {
-        Json::Value root;
+        nlohmann::json root;
         if (load(configFile, root))
         {
             // Sub nodes
-            Json::Value game = root["game"];
-            Json::Value renderer = root["renderer"];
-            Json::Value window = root["window"];
+            nlohmann::json game = root["game"];
+            nlohmann::json renderer = root["renderer"];
+            nlohmann::json window = root["window"];
 
             // Load values
             config.m_modeType = "game";  // Json only supports game mode

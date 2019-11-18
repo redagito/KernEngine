@@ -135,7 +135,7 @@ bool loadMaterialFromIni(const std::string &file, std::string &base, std::string
 bool loadMaterialFromJson(const std::string &file, std::string &base, std::string &normal,
                           std::string &specular, std::string &glow, std::string &alpha)
 {
-    Json::Value root;
+    nlohmann::json root;
     if (!load(file, root))
     {
         LOG_ERROR("Failed to load material file %s as json file.", file.c_str());

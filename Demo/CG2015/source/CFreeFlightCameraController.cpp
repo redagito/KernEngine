@@ -50,7 +50,7 @@ bool CFreeFlightCameraController::loadSequence(std::string file)
     m_sequencePoints.clear();
 
     Json::Reader reader;
-    Json::Value root;
+    nlohmann::json root;
 
     // Load scene file
     std::ifstream ifs(file);
@@ -70,7 +70,7 @@ bool CFreeFlightCameraController::loadSequence(std::string file)
     // Read done, close file
     ifs.close();
 
-    Json::Value node = root["positions"];
+    nlohmann::json node = root["positions"];
 
     // Node empty?
     if (node.empty())

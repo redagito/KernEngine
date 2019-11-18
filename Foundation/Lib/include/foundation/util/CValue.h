@@ -29,10 +29,11 @@ class CValue
     CValue(uint32_t value);
     CValue(float value);
     CValue(const std::string &value);
+    CValue(const char* value);
 
     ~CValue();
 
-    bool convert(double &value) const;
+    bool convert(bool &value) const;
     bool convert(int32_t &value) const;
     bool convert(uint32_t &value) const;
     bool convert(float &value) const;
@@ -46,8 +47,9 @@ class CValue
     CValue &operator=(CValue &&rhs);
 
     bool operator==(const CValue &rhs) const;
-    bool operator!=(const CValue &rhs) const;
+    bool operator<(const CValue &rhs) const;
 
+    bool operator!=(const CValue &rhs) const;
     bool operator<=(const CValue &rhs) const;
 
    private:

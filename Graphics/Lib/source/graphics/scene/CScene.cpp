@@ -27,7 +27,7 @@ SceneObjectId CScene::createObject(ResourceId model, const glm::vec3 &position,
 {
     // const CMesh* meshPtr = m_resourceManager->getMesh(meshId);
     m_objects.push_back(SSceneObject(model, position, rotation, scale, true, CBoundingSphere()));
-    return m_objects.size() - 1;
+    return (SceneObjectId)m_objects.size() - 1;
 }
 
 SceneObjectId CScene::createObject(ResourceId meshId, ResourceId material,
@@ -37,7 +37,7 @@ SceneObjectId CScene::createObject(ResourceId meshId, ResourceId material,
     const CMesh *meshPtr = m_resourceManager->getMesh(meshId);
     m_objects.push_back(SSceneObject(meshId, material, position, rotation, scale, true,
                                      meshPtr->getBoundingSphere()));
-    return m_objects.size() - 1;
+    return (SceneObjectId)m_objects.size() - 1;
 }
 
 bool CScene::getObject(SceneObjectId id, ResourceId &mesh, ResourceId &material,
@@ -78,7 +78,7 @@ SceneObjectId CScene::createPointLight(const glm::vec3 &position, float radius,
                                        const glm::vec3 &color, float intensity, bool castsShadow)
 {
     m_pointLights.push_back(SScenePointLight(position, radius, color, intensity, castsShadow));
-    return m_pointLights.size() - 1;
+    return (SceneObjectId)m_pointLights.size() - 1;
 }
 
 bool CScene::getPointLight(SceneObjectId id, glm::vec3 &position, float &radius, glm::vec3 &color,
@@ -118,7 +118,7 @@ SceneObjectId CScene::createDirectionalLight(const glm::vec3 &direction, const g
                                              float intensity, bool castsShadow)
 {
     m_directionalLights.push_back(SSceneDirectionalLight(direction, color, intensity, castsShadow));
-    return m_directionalLights.size() - 1;
+    return (SceneObjectId)m_directionalLights.size() - 1;
 }
 
 bool CScene::getDirectionalLight(SceneObjectId id, glm::vec3 &direction, glm::vec3 &color,
