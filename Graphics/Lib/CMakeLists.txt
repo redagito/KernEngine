@@ -23,7 +23,7 @@ conan_cmake_run(REQUIRES
 	glfw/3.3@bincrafters/stable 
 	glad/0.1.29@bincrafters/stable
 	lodepng/1.0@int010h/stable
-	Assimp/4.1.0@jacmoe/stable
+	assimp/5.0.1
 	
 	OPTIONS glad:profile=core
 	OPTIONS glad:api_type=gl
@@ -31,7 +31,7 @@ conan_cmake_run(REQUIRES
 	OPTIONS glad:spec=gl
 	OPTIONS glad:no_loader=False
 	
-	OPTIONS Assimp:shared=False
+	OPTIONS assimp:shared=False
 	
 	BASIC_SETUP CMAKE_TARGETS
 	BUILD missing
@@ -44,7 +44,7 @@ target_link_libraries(${PROJECT_NAME}
 	PUBLIC CONAN_PKG::glfw
 	PUBLIC CONAN_PKG::glad
 	PUBLIC CONAN_PKG::lodepng
-	PUBLIC CONAN_PKG::Assimp
+	PUBLIC CONAN_PKG::assimp
 )
 
 target_include_directories(${PROJECT_NAME} 
