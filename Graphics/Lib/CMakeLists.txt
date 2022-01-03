@@ -20,15 +20,14 @@ set_target_properties (${PROJECT_NAME} PROPERTIES
 )
 
 conan_cmake_run(REQUIRES
-	glfw/3.3@bincrafters/stable 
-	glad/0.1.29@bincrafters/stable
-	lodepng/1.0@int010h/stable
-	assimp/5.0.1
+	glfw/3.3.6
+	glad/0.1.34
+	lodepng/cci.20200615
+	assimp/5.1.0
 	
-	OPTIONS glad:profile=core
-	OPTIONS glad:api_type=gl
-	OPTIONS glad:api_version=4.6
 	OPTIONS glad:spec=gl
+	OPTIONS glad:gl_profile=core
+	OPTIONS glad:gl_version=4.6
 	OPTIONS glad:no_loader=False
 	
 	OPTIONS assimp:shared=False

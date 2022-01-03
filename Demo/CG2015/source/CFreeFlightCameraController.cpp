@@ -4,7 +4,7 @@
 #include <fstream>
 
 #include <GLFW/glfw3.h>
-#include <json/json.h>
+#include <nlohmann/json.hpp>
 
 #include <foundation/debug/Log.h>
 #include <foundation/io/JsonDeserialize.h>

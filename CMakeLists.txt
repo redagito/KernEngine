@@ -18,7 +18,7 @@ set (CXX_STANDARD_REQUIRED ON)
 
 # Provides unit test library in global scope
 conan_cmake_run(REQUIRES 
-	catch2/2.5.0@bincrafters/stable
+	catch2/2.11.1
 	
 	BASIC_SETUP CMAKE_TARGETS
 	BUILD missing
@@ -35,13 +35,6 @@ add_subdirectory (Graphics)
 # Application layer library
 # Depends on Graphics
 add_subdirectory (Application)
-
-# Utility library for toolkit
-add_subdirectory (Util)
-
-# Tools and applications
-# Depends on Util
-add_subdirectory (Toolkit)
 
 # Demo applications and sample games
 # Depends on Applicaton

@@ -19,10 +19,10 @@ set_target_properties (${PROJECT_NAME} PROPERTIES
 
 include(${CMAKE_BINARY_DIR}/conan.cmake)
 conan_cmake_run(REQUIRES 
-	glm/0.9.9.5@g-truc/stable
-	jsonformoderncpp/3.7.0@vthiery/stable
-	pugixml/1.10@bincrafters/stable
-	sqlite3/3.29.0@bincrafters/stable
+	glm/0.9.9.5
+	jsonformoderncpp/3.7.0
+	pugixml/1.11
+	sqlite3/3.37.1
 	
 	BASIC_SETUP CMAKE_TARGETS
 	BUILD missing
