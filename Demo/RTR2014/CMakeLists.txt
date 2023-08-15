@@ -7,6 +7,8 @@ file (GLOB_RECURSE SOURCE_FILES
 	${CMAKE_CURRENT_SOURCE_DIR}/source/*.hpp
 	${CMAKE_CURRENT_SOURCE_DIR}/source/*.hxx
 )
+# Source group to preserve folder structure in ide
+source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR} FILES ${SOURCE_FILES})
 
 add_executable (${PROJECT_NAME} ${SOURCE_FILES})
 

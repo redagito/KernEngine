@@ -53,12 +53,12 @@ bool loadModelFromJson(const std::string &file, std::string &meshFile, std::stri
         return false;
     }
 
-    if (!deserialize(root["mesh"], meshFile))
+    if (!deserialize(root, "mesh", meshFile))
     {
         LOG_ERROR("Failed to load mesh node.");
         return false;
     }
-    if (!deserialize(root["material"], materialFile))
+    if (!deserialize(root, "material", materialFile))
     {
         LOG_ERROR("Failed to load material node.");
         return false;

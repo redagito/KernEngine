@@ -1,22 +1,33 @@
 #include "foundation/io/JsonDeserialize.h"
 
-bool load(const std::string &file, nlohmann::json &value)
+namespace glm
 {
-    std::ifstream ifs(file);
-    if (!ifs.is_open())
-    {
-        LOG_ERROR("failed to open json file %s.", file.c_str());
-        return false;
-    }
+void from_json(const nlohmann::json &j, glm::vec2 &val)
+{
+    val.x = j[0];
+    val.y = j[1];
+}
 
-    try
-    {
-        value = nlohmann::json::parse(ifs);
-    }
-    catch (const nlohmann::json::parse_error &e)
-    {
-        LOG_ERROR("Failed to parse json file %s: %s", file.c_str(), e.what());
-        return false;
-    }
-    return true;
+void from_json(const nlohmann::json &j, glm::vec3 &val)
+{
+    val.x = j[0];
+    val.y = j[1];
+    val.z = j[2];
+}
+
+void from_json(const nlohmann::json &j, glm::vec4 &val)
+{
+    val.x = j[0];
+    val.y = j[1];
+    val.z = j[2];
+    val.w = j[3];
+}
+
+void from_json(const nlohmann::json &j, glm::quat &val)
+{
+    val.x = j[0];
+    val.y = j[1];
+    val.z = j[2];
+    val.w = j[3];
+}
 }

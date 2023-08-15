@@ -143,10 +143,10 @@ bool loadMaterialFromJson(const std::string &file, std::string &base, std::strin
     }
 
     // Load from json
-    deserialize(root["base"], base);
-    deserialize(root["normal"], normal);
-    deserialize(root["specular"], specular);
-    deserialize(root["glow"], glow);
-    deserialize(root["alpha"], alpha);
+    deserialize(root, "base", base);
+    deserialize(root, "normal", normal);
+    deserialize(root, "specular", specular);
+    deserialize(root, "glow", glow);
+    deserialize(root, "alpha", alpha);
     return true;
 }

@@ -2,40 +2,25 @@
 
 #include <vector>
 
-#include <lodepng.h>
+#include <stb_image.h>
 
 #include <foundation/debug/Log.h>
 #include <foundation/util/StringUtil.h>
 
 bool load(const std::string &file, EColorFormat format, SImage &image)
 {
-    auto extension = getFileExtension(file);
-    if (extension == "png")
-    {
-        return loadPng(file, format, image);
-    }
-    else if (extension == "jpg" || extension == "jpeg")
-    {
-        return loadJpeg(file, format, image);
-    }
-    LOG_ERROR("The image file %s has an invalid or unknown format.", file.c_str());
-    return false;
-}
-
-bool loadPng(const std::string &file, EColorFormat format, SImage &image)
-{
     // Map color type
-    LodePNGColorType colorType;
+    int desiredChannels = 0;
     switch (format)
     {
     case EColorFormat::GreyScale8:
-        colorType = LCT_GREY;
+        desiredChannels = 1;
         break;
     case EColorFormat::RGB24:
-        colorType = LCT_RGB;
+        desiredChannels = 3;
         break;
     case EColorFormat::RGBA32:
-        colorType = LCT_RGBA;
+        desiredChannels = 4;
         break;
     default:
         LOG_ERROR("Unknown color format encountered while loading image file %s.", file.c_str());
@@ -44,16 +29,21 @@ bool loadPng(const std::string &file, EColorFormat format, SImage &image)
     }
 
     // Decode image data
-    unsigned int err =
-        lodepng::decode(image.m_data, image.m_width, image.m_height, file, colorType);
-    if (err != 0)
+    int channels = 0;
+    int width = 0;
+    int height = 0;
+    stbi_set_flip_vertically_on_load(1);
+    uint8_t* data = stbi_load(file.c_str(), &width, &height, &channels, desiredChannels);
+    if (data == nullptr)
     {
-        LOG_ERROR("An error occured while decoding the image file %s: %s", file.c_str(),
-                  lodepng_error_text(err));
+        LOG_ERROR("An error occured while decoding the image file %s", file.c_str());
         return false;
     }
+
     image.m_format = format;
+    image.m_width = width;
+    image.m_height = height;
+    image.m_data.assign(data, data + width * height * desiredChannels);
+    stbi_image_free(data);
     return true;
 }
-
-bool loadJpeg(const std::string &file, EColorFormat format, SImage &image) { return false; }

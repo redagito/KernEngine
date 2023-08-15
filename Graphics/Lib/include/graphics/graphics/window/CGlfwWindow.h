@@ -3,6 +3,7 @@
 #include <list>
 #include <set>
 #include <unordered_map>
+#include <string>
 
 #include "graphics/graphics/IWindow.h"
 #include "graphics/input/IInputProvider.h"
@@ -40,6 +41,9 @@ class CGlfwWindow : public IWindow
      * \brief Swaps back and front buffers.
      */
     void swapBuffer();
+
+    // Event processing
+    void processEvents();
 
     /**
      * \brief Toggles mouse capture state.

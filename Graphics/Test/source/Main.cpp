@@ -1,11 +1,20 @@
-#define CATCH_CONFIG_MAIN
-#include <catch2/catch.hpp>
+#include <catch2/catch_test_macros.hpp>
 
-#include <graphics/GraphicsSystem.h>
+#include <chrono>
+#include <thread>
+
+#include <graphics/graphics/window/CGlfwWindow.h>
 
 TEST_CASE("Test main", "[main]")
 {
-	kern::graphics::GraphicsSystem system;
-	system.openWindow(800, 600, "Test");
+    CGlfwWindow window;
+    window.init(800, 600, "Test");
+    auto start = std::chrono::high_resolution_clock::now();
+    while (std::chrono::high_resolution_clock::now() - start < std::chrono::seconds(5) && window.isOpen())
+    {
+        window.processEvents();
+        window.swapBuffer();
+        std::this_thread::sleep_for(std::chrono::milliseconds(10));
+    }
 	REQUIRE(true);
 }

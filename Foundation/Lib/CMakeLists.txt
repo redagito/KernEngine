@@ -1,3 +1,5 @@
+project(FoundationLib)
+
 file(GLOB_RECURSE SOURCE_FILES
 	${CMAKE_CURRENT_SOURCE_DIR}/source/*.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/source/*.cxx
@@ -8,8 +10,8 @@ file(GLOB_RECURSE SOURCE_FILES
 	${CMAKE_CURRENT_SOURCE_DIR}/include/*.hpp
 	${CMAKE_CURRENT_SOURCE_DIR}/include/*.hxx
 )
-GroupSources(source)
-GroupSources(include)
+# Source group to preserve folder structure in ide
+source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR} FILES ${SOURCE_FILES})
 
 add_library (${PROJECT_NAME} ${SOURCE_FILES})
 
@@ -17,29 +19,14 @@ set_target_properties (${PROJECT_NAME} PROPERTIES
 	CXX_STANDARD 17
 )
 
-include(${CMAKE_BINARY_DIR}/conan.cmake)
-conan_cmake_run(REQUIRES 
-	glm/0.9.9.5
-	jsonformoderncpp/3.7.0
-	pugixml/1.11
-	sqlite3/3.37.1
-	
-	BASIC_SETUP CMAKE_TARGETS
-	BUILD missing
-)
-
 target_link_libraries(${PROJECT_NAME}
-	PUBLIC CONAN_PKG::glm
-	PUBLIC CONAN_PKG::jsonformoderncpp
-	PUBLIC CONAN_PKG::sqlite3
-	PUBLIC CONAN_PKG::pugixml
+	PUBLIC glm::glm
+	PUBLIC nlohmann_json::nlohmann_json
+	# TODO Should probably be private
+	PUBLIC SQLite::SQLite3
 )
 
 target_include_directories(${PROJECT_NAME} 
 	PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/source
 	PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include
-)
-
-target_compile_definitions(${PROJECT_NAME} 
-	PUBLIC -DGLM_ENABLE_EXPERIMENTAL
 )

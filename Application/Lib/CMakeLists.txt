@@ -1,14 +1,15 @@
+project(ApplicationLib)
+
 # Application library source files
 file(GLOB_RECURSE SOURCE_FILES
 	${CMAKE_CURRENT_SOURCE_DIR}/source/*.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/source/*.cxx
 	${CMAKE_CURRENT_SOURCE_DIR}/source/*.h
 	${CMAKE_CURRENT_SOURCE_DIR}/source/*.hpp
-	${CMAKE_CURRENT_SOURCE_DIR}/source/*.hxx
 	${CMAKE_CURRENT_SOURCE_DIR}/include/*.h
 	${CMAKE_CURRENT_SOURCE_DIR}/include/*.hpp
-	${CMAKE_CURRENT_SOURCE_DIR}/include/*.hxx
 )
+# Source group to preserve folder structure in ide
+source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR} FILES ${SOURCE_FILES})
 
 add_library (${PROJECT_NAME} ${SOURCE_FILES})
 
@@ -25,5 +26,5 @@ target_include_directories(${PROJECT_NAME}
 
 # Link dependencies
 target_link_libraries(${PROJECT_NAME} 
-	LINK_PUBLIC Graphics
+	PUBLIC GraphicsLib
 )

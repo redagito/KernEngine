@@ -1,6 +1,6 @@
 #include "foundation/math/CTransformer.h"
 
-#include <glm/ext.hpp>
+#include <glm/gtx/quaternion.hpp>
 
 void CTransformer::setPosition(const glm::vec3 &position)
 {
@@ -92,7 +92,7 @@ const glm::mat4 &CTransformer::getInverseTranslationMatrix() const
 {
     if (m_translation.m_inverseDirty)
     {
-        m_translation.m_inverse = glm::translate(-m_positionVector);
+        m_translation.m_inverse = glm::translate(glm::mat4(1.f) , - m_positionVector);
         m_translation.m_inverseDirty = false;
     }
     return m_translation.m_inverse;
@@ -134,7 +134,7 @@ const glm::mat4 &CTransformer::getScaleMatrix() const
 {
     if (m_scale.m_matrixDirty)
     {
-        m_scale.m_matrix = glm::scale(m_scaleVector);
+        m_scale.m_matrix = glm::scale(glm::mat4(1.f), m_scaleVector);
         m_scale.m_matrixDirty = false;
     }
     return m_scale.m_matrix;
@@ -145,7 +145,7 @@ const glm::mat4 &CTransformer::getInverseScaleMatrix() const
     if (m_scale.m_inverseDirty)
     {
         // TODO Prevent div by zero?
-        m_scale.m_inverse = glm::scale(1.f / m_scaleVector);
+        m_scale.m_inverse = glm::scale(glm::mat4(1.f) , 1.f / m_scaleVector);
         m_scale.m_inverseDirty = false;
     }
     return m_scale.m_inverse;

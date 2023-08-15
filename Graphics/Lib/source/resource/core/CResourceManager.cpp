@@ -3,8 +3,6 @@
 #include <fstream>
 #include <sstream>
 
-#include <lodepng.h>
-//#include <tiny_obj_loader.h>
 #include <assimp/Importer.hpp>
 
 #include <foundation/debug/Log.h>

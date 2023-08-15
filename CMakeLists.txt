@@ -1,29 +1,29 @@
-cmake_minimum_required (VERSION 3.16.0)
-project (KernEngine)
-
-# Virtual folders in visual studio
-include (${PROJECT_SOURCE_DIR}/cmake/GroupSources.cmake)
-
-# Download automatically
-if(NOT EXISTS "${CMAKE_BINARY_DIR}/conan.cmake")
-   message(STATUS "Downloading conan.cmake from https://github.com/conan-io/cmake-conan")
-   file(DOWNLOAD "https://github.com/conan-io/cmake-conan/raw/master/conan.cmake"
-                 "${CMAKE_BINARY_DIR}/conan.cmake")
-endif()
-include(${CMAKE_BINARY_DIR}/conan.cmake)
+cmake_minimum_required(VERSION 3.25.0)
+project(KernEngine)
 
 # Use folder structure
-set_property (GLOBAL PROPERTY USE_FOLDERS ON)
-set (CXX_STANDARD_REQUIRED ON)
+set_property(GLOBAL PROPERTY USE_FOLDERS ON)
+set(CXX_STANDARD_REQUIRED ON)
 
-# Provides unit test library in global scope
-conan_cmake_run(REQUIRES 
-	catch2/2.11.1
-	
-	BASIC_SETUP CMAKE_TARGETS
-	BUILD missing
-)
-set_target_properties (CONAN_PKG::catch2 PROPERTIES IMPORTED_GLOBAL TRUE)
+# Dependencies
+# Foundation
+find_package(glm REQUIRED)
+find_package(nlohmann_json REQUIRED)
+find_package(SQLite3 REQUIRED)
+
+# Graphics
+find_package(OpenGL REQUIRED)
+find_package(glfw3 REQUIRED)
+find_package(glad REQUIRED)
+find_package(assimp REQUIRED)
+find_package(stb REQUIRED)
+find_package(Freetype REQUIRED)
+find_package(OpenAL REQUIRED)
+find_package(vorbis REQUIRED)
+find_package(lua REQUIRED)
+find_package(sol2 REQUIRED)
+find_package(fmtlog REQUIRED)
+find_package(catch2 REQUIRED)
 
 # Foundation library
 add_subdirectory (Foundation)
@@ -38,4 +38,4 @@ add_subdirectory (Application)
 
 # Demo applications and sample games
 # Depends on Applicaton
-add_subdirectory (Demo)
+# add_subdirectory (Demo)

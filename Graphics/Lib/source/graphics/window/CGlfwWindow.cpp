@@ -195,6 +195,8 @@ bool CGlfwWindow::isOpen() const { return !glfwWindowShouldClose(m_window); }
 
 void CGlfwWindow::swapBuffer() { glfwSwapBuffers(m_window); }
 
+void CGlfwWindow::processEvents() { glfwPollEvents(); }
+
 void CGlfwWindow::toggleMouseCapture()
 {
     // Set capture mode

@@ -3,7 +3,7 @@
 #include <cassert>
 #include <string>
 
-#include <lodepng.h>
+#include <stb_image_write.h>
 
 #include <foundation/debug/Log.h>
 
@@ -113,7 +113,10 @@ void CTexture::saveAsPng(const std::string &file)
     glBindTexture(GL_TEXTURE_2D, m_textureId);
     glGetTexImage(GL_TEXTURE_2D, 0, GL_RGB, GL_UNSIGNED_BYTE, image.data());
 	
-    lodepng::encode(file, image, m_width, m_height, LCT_RGB);
+    if (stbi_write_png(file.c_str(), m_width, m_height, 3, image.data(), m_width * 3) != 1)
+    {
+        LOG_ERROR("Failed to save png");
+    }
 }
 
 bool CTexture::init(const std::vector<unsigned char> &image, unsigned int width,

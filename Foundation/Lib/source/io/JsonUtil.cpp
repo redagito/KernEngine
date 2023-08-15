@@ -34,7 +34,7 @@ bool load(const nlohmann::json &node, const std::string &name, int &i)
         return false;
     }
 
-    if (!deserialize(node.at(name), i))
+    if (!deserialize(node, name, i))
     {
         LOG_ERROR("Failed to load '%s' parameter.", name.c_str());
         return false;
@@ -50,7 +50,7 @@ bool load(const nlohmann::json &node, const std::string &name, unsigned int &u)
         return false;
     }
 
-    if (!deserialize(node.at(name), u))
+    if (!deserialize(node, name, u))
     {
         LOG_ERROR("Failed to load '%s' parameter.", name.c_str());
         return false;
@@ -66,7 +66,7 @@ bool load(const nlohmann::json &node, const std::string &name, float &f)
         return false;
     }
 
-    if (!deserialize(node.at(name), f))
+    if (!deserialize(node, name, f))
     {
         LOG_ERROR("Failed to load '%s' parameter.", name.c_str());
         return false;
@@ -82,7 +82,7 @@ bool load(const nlohmann::json &node, const std::string &name, bool &b)
         return false;
     }
 
-    if (!deserialize(node.at(name), b))
+    if (!deserialize(node, name, b))
     {
         LOG_ERROR("Failed to load '%s' parameter.", name.c_str());
         return false;
@@ -98,7 +98,7 @@ bool load(const nlohmann::json &node, const std::string &name, glm::vec3 &vec)
         return false;
     }
 
-    if (!deserialize(node.at(name), vec))
+    if (!deserialize(node, name, vec))
     {
         LOG_ERROR("Failed to load '%s' parameter.", name.c_str());
         return false;
@@ -114,7 +114,7 @@ bool load(const nlohmann::json &node, const std::string &name, std::string &str)
         return false;
     }
 
-    if (!deserialize(node.at(name), str))
+    if (!deserialize(node, name, str))
     {
         LOG_ERROR("Failed to load '%s' parameter.", name.c_str());
         return false;

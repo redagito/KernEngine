@@ -2,6 +2,7 @@
 
 #include <functional>
 #include <vector>
+#include <string>
 
 #include "graphics/resource/ResourceConfig.h"
 

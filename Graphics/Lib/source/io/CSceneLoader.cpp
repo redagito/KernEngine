@@ -95,27 +95,27 @@ bool CSceneLoader::loadSceneObject(const nlohmann::json &node, IScene &scene, CA
     glm::vec3 rotation;
     glm::vec3 scale;
 
-    if (!load(node, "mesh", mesh))
+    if (!::load(node, "mesh", mesh))
     {
         return false;
     }
 
-    if (!load(node, "material", material))
+    if (!::load(node, "material", material))
     {
         return false;
     }
 
-    if (!load(node, "position", position))
+    if (!::load(node, "position", position))
     {
         return false;
     }
 
-    if (!load(node, "rotation", rotation))
+    if (!::load(node, "rotation", rotation))
     {
         return false;
     }
 
-    if (!load(node, "scale", scale))
+    if (!::load(node, "scale", scale))
     {
         return false;
     }
@@ -185,27 +185,27 @@ bool CSceneLoader::loadPointLight(const nlohmann::json &node, IScene &scene, CAn
     float intensity;
     bool castsShadow;
 
-    if (!load(node, "position", position))
+    if (!::load(node, "position", position))
     {
         return false;
     }
 
-    if (!load(node, "color", color))
+    if (!::load(node, "color", color))
     {
         return false;
     }
 
-    if (!load(node, "radius", radius))
+    if (!::load(node, "radius", radius))
     {
         return false;
     }
 
-    if (!load(node, "intensity", intensity))
+    if (!::load(node, "intensity", intensity))
     {
         return false;
     }
 
-    if (!load(node, "casts_shadow", castsShadow))
+    if (!::load(node, "casts_shadow", castsShadow))
     {
         return false;
     }
@@ -258,22 +258,22 @@ bool CSceneLoader::loadDirectionalLight(const nlohmann::json &node, IScene &scen
     float intensity;
     bool castsShadow;
 
-    if (!load(node, "direction", direction))
+    if (!::load(node, "direction", direction))
     {
         return false;
     }
 
-    if (!load(node, "color", color))
+    if (!::load(node, "color", color))
     {
         return false;
     }
 
-    if (!load(node, "intensity", intensity))
+    if (!::load(node, "intensity", intensity))
     {
         return false;
     }
 
-    if (!load(node, "casts_shadow", castsShadow))
+    if (!::load(node, "casts_shadow", castsShadow))
     {
         return false;
     }
@@ -294,12 +294,12 @@ bool CSceneLoader::loadAmbientLight(const nlohmann::json &node, IScene &scene)
     glm::vec3 color;
     float intensity;
 
-    if (!load(node, "color", color))
+    if (!::load(node, "color", color))
     {
         return false;
     }
 
-    if (!load(node, "intensity", intensity))
+    if (!::load(node, "intensity", intensity))
     {
         return false;
     }
@@ -340,7 +340,7 @@ bool CSceneLoader::loadAnimationController(const nlohmann::json &node, IScene &s
                                            SceneObjectId id, AnimationObjectType type)
 {
     std::string controllerType;
-    if (!load(node, "type", controllerType))
+    if (!::load(node, "type", controllerType))
     {
         return false;
     }
@@ -348,7 +348,7 @@ bool CSceneLoader::loadAnimationController(const nlohmann::json &node, IScene &s
     if (controllerType == "rotation")
     {
         glm::vec3 rotation;
-        if (!load(node, "rotation", rotation))
+        if (!::load(node, "rotation", rotation))
         {
             return false;
         }
@@ -357,7 +357,7 @@ bool CSceneLoader::loadAnimationController(const nlohmann::json &node, IScene &s
     else if (controllerType == "movement")
     {
         glm::vec3 direction;
-        if (!load(node, "direction", direction))
+        if (!::load(node, "direction", direction))
         {
             return false;
         }
@@ -367,11 +367,11 @@ bool CSceneLoader::loadAnimationController(const nlohmann::json &node, IScene &s
     {
         glm::vec3 translation;
         float timeScale;
-        if (!load(node, "translation", translation))
+        if (!::load(node, "translation", translation))
         {
             return false;
         }
-        if (!load(node, "timescale", timeScale))
+        if (!::load(node, "timescale", timeScale))
         {
             return false;
         }
