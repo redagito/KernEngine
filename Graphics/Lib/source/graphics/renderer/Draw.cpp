@@ -2,10 +2,16 @@
 
 #include <cassert>
 
+#include <foundation/debug/Log.h>
+
 #include "graphics/graphics/resource/CMesh.h"
 
 void draw(CMesh &mesh)
 {
+    if (mesh.getPrimitiveType() == EPrimitiveType::Invalid)
+    {
+        return;
+    }
     mesh.getVertexArray()->setActive();
 
     // Set primitive draw mode

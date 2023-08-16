@@ -21,7 +21,7 @@ class CFreeFlightCameraController : public IInputListener, public IGlfwWindowLis
     void setCamera(std::shared_ptr<IControllableCamera> camera);
     void setInputProvider(IInputProvider *provider);
 
-    bool loadSequence(std::string file);
+    bool loadSequence(const std::string& file);
 
     void animate(float dt);
 

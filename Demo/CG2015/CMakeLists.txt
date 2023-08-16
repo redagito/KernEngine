@@ -1,3 +1,4 @@
+# Computer Graphics 2 project from 2015
 project (CG2015)
 
 file (GLOB_RECURSE SOURCE_FILES
@@ -16,7 +17,7 @@ set_target_properties (${PROJECT_NAME} PROPERTIES
 	CXX_STANDARD 17
 )
 target_link_libraries (${PROJECT_NAME} 
-	PRIVATE Application
+	PRIVATE ApplicationLib
 )
 
 target_include_directories (${PROJECT_NAME}

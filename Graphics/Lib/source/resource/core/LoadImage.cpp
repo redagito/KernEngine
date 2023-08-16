@@ -32,7 +32,7 @@ bool load(const std::string &file, EColorFormat format, SImage &image)
     int channels = 0;
     int width = 0;
     int height = 0;
-    stbi_set_flip_vertically_on_load(1);
+    stbi_set_flip_vertically_on_load(true);
     uint8_t* data = stbi_load(file.c_str(), &width, &height, &channels, desiredChannels);
     if (data == nullptr)
     {

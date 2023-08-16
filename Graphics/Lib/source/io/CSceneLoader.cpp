@@ -140,11 +140,14 @@ bool CSceneLoader::loadSceneObject(const nlohmann::json &node, IScene &scene, CA
     SceneObjectId objectId = scene.createObject(meshId, materialId, position, glm::quat(rotation), scale);
 
     // Load optional animation controllers
-    if (node.find("animations") != node.end() &&
-        !loadAnimationControllers(node.at("animations"), scene, animationWorld, objectId, AnimationObjectType::Model))
+    if (node.find("animations") != node.end())
     {
-        LOG_ERROR("Failed to load animation controller.");
-        return false;
+        if (!loadAnimationControllers(node.at("animations"), scene, animationWorld, objectId,
+                                      AnimationObjectType::Model))
+        {
+            LOG_ERROR("Failed to scene object load animation controller.");
+            return false;
+        }
     }
 
     return true;
@@ -214,10 +217,14 @@ bool CSceneLoader::loadPointLight(const nlohmann::json &node, IScene &scene, CAn
     SceneObjectId objectId = scene.createPointLight(position, radius, color, intensity, castsShadow);
 
     // Load optional animation controllers
-    if (node.find("animations") == node.end() || !loadAnimationControllers(node["animations"], scene, animationWorld, objectId, AnimationObjectType::PointLight))
+    if (node.find("animations") != node.end())
     {
-        LOG_ERROR("Failed to load animation controller.");
-        return false;
+        if (!loadAnimationControllers(node["animations"], scene, animationWorld, objectId,
+            AnimationObjectType::PointLight))
+        {
+            LOG_ERROR("Failed to load point light animation controller.");
+            return false;
+        }
     }
     return true;
 }

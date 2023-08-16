@@ -44,32 +44,12 @@ void CFreeFlightCameraController::setInputProvider(IInputProvider *provider)
     }
 }
 
-bool CFreeFlightCameraController::loadSequence(std::string file)
+bool CFreeFlightCameraController::loadSequence(const std::string& file)
 {
     m_sequenceTime = 0;
     m_sequencePoints.clear();
 
-    Json::Reader reader;
-    nlohmann::json root;
-
-    // Load scene file
-    std::ifstream ifs(file);
-    if (!ifs.is_open())
-    {
-        LOG_ERROR("Failed to open json file %s.", file.c_str());
-        return false;
-    }
-
-    // Parse json data
-    if (!reader.parse(ifs, root))
-    {
-        LOG_ERROR("Failed to load scene file %s with error %s.", file.c_str(),
-                  reader.getFormattedErrorMessages().c_str());
-        return false;
-    }
-    // Read done, close file
-    ifs.close();
-
+    nlohmann::json root = nlohmann::json::parse(file);
     nlohmann::json node = root["positions"];
 
     // Node empty?
@@ -80,7 +60,7 @@ bool CFreeFlightCameraController::loadSequence(std::string file)
     }
 
     // Node is array type
-    if (!node.isArray())
+    if (!node.is_array())
     {
         LOG_ERROR("The node 'positions' must be array type.");
         return false;

@@ -6,6 +6,7 @@ glm/cci.20230113
 glad/0.1.36
 
 # Data loading
+tinyobjloader/2.0.0-rc10
 assimp/5.2.2
 nlohmann_json/3.11.2
 stb/cci.20220909

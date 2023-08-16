@@ -1,7 +1,8 @@
 cmake_minimum_required(VERSION 3.25.0)
 project(KernEngine)
 
-# Use folder structure
+# Demo project as default startup
+set_property(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY VS_STARTUP_PROJECT RTR2014)
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 set(CXX_STANDARD_REQUIRED ON)
 
@@ -15,6 +16,7 @@ find_package(SQLite3 REQUIRED)
 find_package(OpenGL REQUIRED)
 find_package(glfw3 REQUIRED)
 find_package(glad REQUIRED)
+find_package(tinyobjloader REQUIRED)
 find_package(assimp REQUIRED)
 find_package(stb REQUIRED)
 find_package(Freetype REQUIRED)
@@ -37,5 +39,5 @@ add_subdirectory (Graphics)
 add_subdirectory (Application)
 
 # Demo applications and sample games
-# Depends on Applicaton
-# add_subdirectory (Demo)
+# Depends on Application
+add_subdirectory (Demo)

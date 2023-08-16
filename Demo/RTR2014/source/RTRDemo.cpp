@@ -44,7 +44,7 @@ RTRDemo::~RTRDemo() {}
 int RTRDemo::init(const std::string& configFile)
 {
     // Init log file
-    std::string logFile = "log/" + createTimeStamp() + ".log";
+    std::string logFile = "log_" + createTimeStamp() + ".log";
     if (!CLogger::initLogFile(logFile))
     {
         LOG_WARNING("Failed to create log file at %s.", logFile.c_str());

@@ -124,7 +124,9 @@ const std::unique_ptr<CVertexBuffer> &CMesh::getUVBuffer() const { return m_uvs;
 
 const EPrimitiveType CMesh::getPrimitiveType() const { return m_type; }
 
-const std::unique_ptr<CVertexArrayObject> &CMesh::getVertexArray() const { return m_vao; }
+const std::unique_ptr<CVertexArrayObject> &CMesh::getVertexArray() const {
+    return m_vao; 
+}
 
 const CBoundingSphere &CMesh::getBoundingSphere() const { return m_boundingSphere; }
 

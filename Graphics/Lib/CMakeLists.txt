@@ -27,6 +27,7 @@ target_link_libraries(${PROJECT_NAME}
 	PUBLIC glad::glad
 	PUBLIC stb::stb
 	PUBLIC assimp::assimp
+	PUBLIC tinyobjloader::tinyobjloader 
 )
 
 target_include_directories(${PROJECT_NAME} 
