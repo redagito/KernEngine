@@ -76,17 +76,47 @@ bool loadMeshFromObj(const std::string &file, SMesh &mesh)
 
     auto shape = shapes.at(0);
 
-    mesh.m_vertices = attrib.vertices;
     mesh.m_type = EPrimitiveType::Triangle;
+    /*
+    mesh.m_vertices = attrib.vertices;
 
-    // Reorder nomrals and uvs to match vertex indices
-    mesh.m_normals.resize(mesh.m_vertices.size());
-    mesh.m_uvs.resize(mesh.m_vertices.size());
+    // Reorder normals and uvs to match vertex indices
+    // TODO Doesnt work
+    mesh.m_normals.resize(mesh.m_vertices.size(), -1.f);
+    mesh.m_uvs.resize(mesh.m_vertices.size() / 3 * 2);
     for (auto index : shape.mesh.indices)
     {
         mesh.m_indices.push_back(index.vertex_index);
-        mesh.m_normals[index.vertex_index] = attrib.normals.at(index.normal_index);
-        mesh.m_uvs[index.vertex_index] = attrib.texcoords.at(index.texcoord_index);
+        // 
+        if (index.normal_index >= 0)
+        {
+            mesh.m_normals[index.vertex_index * 3] = attrib.normals.at(index.normal_index * 3);
+            mesh.m_normals[index.vertex_index * 3 + 1] = attrib.normals.at(index.normal_index * 3 + 1);
+            mesh.m_normals[index.vertex_index * 3 + 2] = attrib.normals.at(index.normal_index * 3 + 2);
+        }
+
+        if (index.texcoord_index >= 0)
+        {
+            mesh.m_uvs[index.vertex_index * 2] = attrib.texcoords.at(index.texcoord_index * 2);
+            mesh.m_uvs[index.vertex_index * 2 + 1] = attrib.texcoords.at(index.texcoord_index * 2 + 1);
+        }
     }
+    */
+    // Flatten and remove index buffer to non indexed mesh
+    for (auto index : shape.mesh.indices)
+    {
+        // Vertex x/y/z
+        mesh.m_vertices.push_back(attrib.vertices.at(index.vertex_index * 3));
+        mesh.m_vertices.push_back(attrib.vertices.at(index.vertex_index * 3 + 1));
+        mesh.m_vertices.push_back(attrib.vertices.at(index.vertex_index * 3 + 2));
+        // Normal x/y/z
+        mesh.m_normals.push_back(attrib.normals.at(index.normal_index * 3));
+        mesh.m_normals.push_back(attrib.normals.at(index.normal_index * 3 + 1));
+        mesh.m_normals.push_back(attrib.normals.at(index.normal_index * 3 + 2));
+        // UVs
+        mesh.m_uvs.push_back(attrib.texcoords.at(index.texcoord_index * 2));
+        mesh.m_uvs.push_back(attrib.texcoords.at(index.texcoord_index * 2 + 1));
+    }
+
     return true;
 }
