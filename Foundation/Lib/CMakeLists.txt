@@ -22,6 +22,7 @@ set_target_properties (${PROJECT_NAME} PROPERTIES
 target_link_libraries(${PROJECT_NAME}
 	PUBLIC glm::glm
 	PUBLIC nlohmann_json::nlohmann_json
+	PUBLIC fmtlog::fmtlog
 	# TODO Should probably be private
 	PUBLIC SQLite::SQLite3
 )

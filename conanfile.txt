@@ -4,6 +4,7 @@
 glfw/3.3.8
 glm/cci.20230113
 glad/0.1.36
+imgui/1.89.8
 
 # Data loading
 tinyobjloader/2.0.0-rc10

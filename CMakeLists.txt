@@ -11,6 +11,7 @@ set(CXX_STANDARD_REQUIRED ON)
 find_package(glm REQUIRED)
 find_package(nlohmann_json REQUIRED)
 find_package(SQLite3 REQUIRED)
+find_package(fmtlog REQUIRED)
 
 # Graphics
 find_package(OpenGL REQUIRED)
@@ -20,24 +21,29 @@ find_package(tinyobjloader REQUIRED)
 find_package(assimp REQUIRED)
 find_package(stb REQUIRED)
 find_package(Freetype REQUIRED)
+
+# Audio
 find_package(OpenAL REQUIRED)
 find_package(vorbis REQUIRED)
 find_package(lua REQUIRED)
 find_package(sol2 REQUIRED)
-find_package(fmtlog REQUIRED)
 find_package(catch2 REQUIRED)
 
 # Foundation library
-add_subdirectory (Foundation)
+add_subdirectory(Foundation)
+
+# Audio library
+# Depends on foundation
+add_subdirectory(Audio)
 
 # Graphics and rendering library
 # Depends on Foundation
-add_subdirectory (Graphics)
+add_subdirectory(Graphics)
 
 # Application layer library
 # Depends on Graphics
-add_subdirectory (Application)
+add_subdirectory(Application)
 
 # Demo applications and sample games
 # Depends on Application
-add_subdirectory (Demo)
+add_subdirectory(Demo)
