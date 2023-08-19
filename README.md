@@ -36,7 +36,7 @@ Relevant tutorials
 * https://learnopengl.com
 * http://www.opengl-tutorial.org
 * https://open.gl
-* http://ogldev.atspace.co.uk
+* https://ogldev.org/
 * https://www.spieleprogrammierung.net/p/opengl-tutorial-liste.html
 * https://www.tomdalling.com/blog/category/modern-opengl
 * http://lazyfoo.net/tutorials/OpenGL
@@ -44,6 +44,9 @@ Relevant tutorials
 * http://www.mbsoftworks.sk/tutorials
 * http://duriansoftware.com/joe/An-intro-to-modern-OpenGL.-Table-of-Contents.html
 * https://www.rastertek.com/tutdx11s2ter.html - Actually DirectX11 but the terrain tutorial looks interesting
+* https://github.com/fendevel/Guide-to-Modern-OpenGL-Functions
+* https://www.swiftless.com/
+* https://www.khronos.org/opengl/wiki/Getting_Started - List of other tutorials
 
 ## Screenshots
 

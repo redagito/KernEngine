@@ -14,6 +14,7 @@ class SoundManager
     void registerSound(const std::string& name, const std::string& fileName);
     // Retrieves sound by previously registered name
     std::shared_ptr<Sound> getSound(const std::string& name);
+    bool hasSound(const std::string& name) const;
 
     private:
     std::shared_ptr<Sound> loadFromFile(const std::string& fileName);

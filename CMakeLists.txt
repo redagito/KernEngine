@@ -2,9 +2,12 @@ cmake_minimum_required(VERSION 3.25.0)
 project(KernEngine)
 
 # Demo project as default startup
-set_property(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY VS_STARTUP_PROJECT RTR2014)
+set_property(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY VS_STARTUP_PROJECT RenderTest)
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 set(CXX_STANDARD_REQUIRED ON)
+
+# Testing
+find_package(catch2 REQUIRED)
 
 # Dependencies
 # Foundation
@@ -21,13 +24,15 @@ find_package(tinyobjloader REQUIRED)
 find_package(assimp REQUIRED)
 find_package(stb REQUIRED)
 find_package(Freetype REQUIRED)
+find_package(imgui REQUIRED)
 
 # Audio
 find_package(OpenAL REQUIRED)
 find_package(vorbis REQUIRED)
+
+# Scripting
 find_package(lua REQUIRED)
 find_package(sol2 REQUIRED)
-find_package(catch2 REQUIRED)
 
 # Foundation library
 add_subdirectory(Foundation)

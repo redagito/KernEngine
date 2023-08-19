@@ -25,9 +25,11 @@ target_link_libraries(${PROJECT_NAME}
 	PUBLIC OpenGL::GL
 	PUBLIC glfw
 	PUBLIC glad::glad
+	PUBLIC imgui::imgui
 	PUBLIC stb::stb
 	PUBLIC assimp::assimp
-	PUBLIC tinyobjloader::tinyobjloader 
+	PUBLIC tinyobjloader::tinyobjloader
+	PUBLIC Freetype::Freetype
 )
 
 target_include_directories(${PROJECT_NAME} 

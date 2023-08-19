@@ -114,8 +114,16 @@ bool loadMeshFromObj(const std::string &file, SMesh &mesh)
         mesh.m_normals.push_back(attrib.normals.at(index.normal_index * 3 + 1));
         mesh.m_normals.push_back(attrib.normals.at(index.normal_index * 3 + 2));
         // UVs
-        mesh.m_uvs.push_back(attrib.texcoords.at(index.texcoord_index * 2));
-        mesh.m_uvs.push_back(attrib.texcoords.at(index.texcoord_index * 2 + 1));
+        if (index.texcoord_index >= 0)
+        {
+            mesh.m_uvs.push_back(attrib.texcoords.at(index.texcoord_index * 2));
+            mesh.m_uvs.push_back(attrib.texcoords.at(index.texcoord_index * 2 + 1));
+        }
+        else
+        {
+            mesh.m_uvs.push_back(0.f);
+            mesh.m_uvs.push_back(0.f);
+        }
     }
 
     return true;

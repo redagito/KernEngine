@@ -48,6 +48,12 @@ std::shared_ptr<Sound> SoundManager::getSound(const std::string& name)
     return sound;
 }
 
+bool SoundManager::hasSound(const std::string& name) const
+{
+    auto fileIter = namesToFiles.find(name);
+    return fileIter != namesToFiles.end();
+}
+
 std::shared_ptr<Sound> SoundManager::loadFromFile(const std::string& fileName)
 {
     auto extension = fileName.substr(fileName.length() - 4);
