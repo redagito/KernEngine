@@ -1,6 +1,6 @@
 #include "graphics/animation/CRotationController.h"
 
-#include "graphics/graphics/IScene.h"
+#include "graphics/IScene.h"
 
 CRotationController::CRotationController(SceneObjectId id, AnimationObjectType type, IScene &scene,
                                          const glm::vec3 &rotation)

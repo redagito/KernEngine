@@ -8,7 +8,7 @@
 #include <glm/glm.hpp>
 
 #include "graphics/animation/Animation.h"
-#include "graphics/graphics/SceneConfig.h"
+#include "graphics/SceneConfig.h"
 
 class IScene;
 class IResourceManager;

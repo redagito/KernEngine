@@ -2,7 +2,7 @@
 
 #include <cmath>
 
-#include "graphics/graphics/IScene.h"
+#include "graphics/IScene.h"
 
 CSineTranslationController::CSineTranslationController(SceneObjectId id, AnimationObjectType type,
                                                        IScene &scene, const glm::vec3 &translation,

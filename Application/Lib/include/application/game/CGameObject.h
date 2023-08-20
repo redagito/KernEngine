@@ -5,7 +5,7 @@
 
 #include <glm/glm.hpp>
 
-#include "graphics/graphics/proxy/CSceneObjectProxy.h"
+#include "graphics/proxy/CSceneObjectProxy.h"
 
 #include "application/game/Message.h"
 

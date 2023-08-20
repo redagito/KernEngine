@@ -5,7 +5,7 @@
 
 #include <glm/glm.hpp>
 
-#include "graphics/graphics/window/CGlfwWindow.h"
+#include "graphics/window/CGlfwWindow.h"
 
 #include "graphics/input/IInputListener.h"
 

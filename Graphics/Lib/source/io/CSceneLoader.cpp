@@ -9,7 +9,7 @@
 #include <foundation/io/JsonDeserialize.h>
 #include <foundation/io/JsonUtil.h>
 
-#include "graphics/graphics/IScene.h"
+#include "graphics/IScene.h"
 #include "graphics/resource/IResourceManager.h"
 
 #include "graphics/animation/CAnimationWorld.h"

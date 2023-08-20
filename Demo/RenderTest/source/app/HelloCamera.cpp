@@ -1,54 +1,7 @@
 #include "app/HelloCamera.h"
+#include "gfx/BasicMeshes.h"
 
 #include <glm/gtc/matrix_transform.hpp>
-
-// Cube vertices, 36 entries
-// clang-format off
-static const float cubeVertices[] = {
-    // x, y, z, u, v
-    -0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
-    0.5f, -0.5f, -0.5f,  1.0f, 0.0f,
-    0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
-    0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
-    -0.5f,  0.5f, -0.5f,  0.0f, 1.0f,
-    -0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
-
-    -0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
-    0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
-    0.5f,  0.5f,  0.5f,  1.0f, 1.0f,
-    0.5f,  0.5f,  0.5f,  1.0f, 1.0f,
-    -0.5f,  0.5f,  0.5f,  0.0f, 1.0f,
-    -0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
-
-    -0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
-    -0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
-    -0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-    -0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-    -0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
-    -0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
-
-    0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
-    0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
-    0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-    0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-    0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
-    0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
-
-    -0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-    0.5f, -0.5f, -0.5f,  1.0f, 1.0f,
-    0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
-    0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
-    -0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
-    -0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-
-    -0.5f,  0.5f, -0.5f,  0.0f, 1.0f,
-    0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
-    0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
-    0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
-    -0.5f,  0.5f,  0.5f,  0.0f, 0.0f,
-    -0.5f,  0.5f, -0.5f,  0.0f, 1.0f
-};
-// clang-format on
 
 bool HelloCamera::setup()
 {
@@ -107,10 +60,10 @@ void main()
     glBindBuffer(GL_ARRAY_BUFFER, vbo);
     // x/y/z
     glEnableVertexAttribArray(0);
-    glVertexAttribPointer(0, 3, GL_FLOAT, false, sizeof(GLfloat) * 5, nullptr);
+    glVertexAttribPointer(0, 3, GL_FLOAT, false, sizeof(GLfloat) * 8, nullptr);
     // u/v
     glEnableVertexAttribArray(1);
-    glVertexAttribPointer(1, 2, GL_FLOAT, false, sizeof(GLfloat) * 5, (void*)(sizeof(GLfloat) * 3));
+    glVertexAttribPointer(1, 2, GL_FLOAT, false, sizeof(GLfloat) * 8, (void*)(sizeof(GLfloat) * 3));
 
     glBindVertexArray(0);
 
@@ -158,7 +111,7 @@ void HelloCamera::render()
     glm::vec3 positions[] = {{0.f, 0.f, 0.f},  {2.f, 0.f, 0.f}, {0.f, -2.f, 0.f},
                              {0.f, 2.f, -2.f}, {0.f, 0.f, 2.f}, {3.f, -3.f, 2.f}};
 
-    auto vertexCount = sizeof(cubeVertices) / sizeof(GLfloat) / 5;
+    auto vertexCount = sizeof(cubeVertices) / sizeof(GLfloat) / 8;
 
     // Draw cubes
     for (const auto position : positions)

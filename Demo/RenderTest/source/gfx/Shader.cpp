@@ -17,7 +17,11 @@ Shader::~Shader()
     glDeleteProgram(id);
 }
 
-void Shader::setActive() const { glUseProgram(id); }
+void Shader::setActive() const { 
+    if (id == 0)
+        throw std::runtime_error("Shader id is null");
+    glUseProgram(id); 
+}
 
 void Shader::set(const std::string& name, const int value, bool required)
 {
@@ -74,6 +78,12 @@ void Shader::set(const std::string& name, const glm::mat4& value, bool required)
         return;
     glUniformMatrix4fv(loc, 1, GL_FALSE, glm::value_ptr(value));
 }
+
+void Shader::setTexture(const std::string& name, const Texture& texture, bool required)
+{
+    set(name, texture.id, required);
+}
+
 
 int Shader::getUniformLocation(const std::string& name, bool required) const
 {

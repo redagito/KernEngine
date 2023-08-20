@@ -31,6 +31,9 @@ class Window
 
     int getKey(int code) const;
 
+    float getAspectRation() const;
+    glm::mat4 getProjection(float fieldOfView, float zNear, float zFar) const;
+
     // Movement delta since last frame
     const glm::vec2& getCursorMovement() const;
     const glm::vec2& getScrollOffset() const;

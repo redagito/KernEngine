@@ -1,6 +1,6 @@
 #pragma once
 
-#include "graphics/graphics/IScene.h"
+#include "graphics/IScene.h"
 #include "graphics/input/IInputProvider.h"
 #include "graphics/resource/IResourceManager.h"
 

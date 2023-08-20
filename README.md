@@ -47,6 +47,7 @@ Relevant tutorials
 * https://github.com/fendevel/Guide-to-Modern-OpenGL-Functions
 * https://www.swiftless.com/
 * https://www.khronos.org/opengl/wiki/Getting_Started - List of other tutorials
+* https://github.com/fendevel/Guide-to-Modern-OpenGL-Functions
 
 ## Screenshots
 

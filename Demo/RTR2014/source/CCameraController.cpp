@@ -9,7 +9,7 @@
 #include <foundation/io/JsonDeserialize.h>
 #include <foundation/io/JsonUtil.h>
 
-#include "graphics/graphics/camera/IControllableCamera.h"
+#include "graphics/camera/IControllableCamera.h"
 #include "graphics/input/IInputProvider.h"
 
 CCameraController::CCameraController() {}

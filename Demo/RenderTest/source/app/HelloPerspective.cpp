@@ -1,7 +1,5 @@
 #include "app/HelloPerspective.h"
 
-#pragma once
-
 #include <glm/gtc/matrix_transform.hpp>
 
 bool HelloPerspective::setup()
@@ -92,8 +90,7 @@ void HelloPerspective::render()
     view = glm::translate(view, {0.f, 0.f, -3.f});
 
     // Projection
-    auto aspectRatio = (float)getWindow().getWidth() / (float)getWindow().getHeight();
-    glm::mat4 projection = glm::perspective(glm::radians(45.f), aspectRatio, 0.1f, 100.f);
+    glm::mat4 projection = glm::perspective(glm::radians(45.f), getWindow().getAspectRation(), 0.1f, 100.f);
 
     // Clear framebuffer
     glClear(GL_COLOR_BUFFER_BIT);

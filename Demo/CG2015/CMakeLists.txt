@@ -1,7 +1,7 @@
 # Computer Graphics 2 project from 2015
 project (CG2015)
 
-file (GLOB_RECURSE SOURCE_FILES
+file (GLOB_RECURSE SOURCE_FILES CONFIGURE_DEPENDS 
 	${CMAKE_CURRENT_SOURCE_DIR}/source/*.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/source/*.cxx
 	${CMAKE_CURRENT_SOURCE_DIR}/source/*.h

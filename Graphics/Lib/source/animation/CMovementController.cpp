@@ -1,6 +1,6 @@
 #include "graphics/animation/CMovementController.h"
 
-#include "graphics/graphics/IScene.h"
+#include "graphics/IScene.h"
 
 CMovementController::CMovementController(SceneObjectId id, AnimationObjectType type, IScene &scene,
                                          const glm::vec3 &direction)

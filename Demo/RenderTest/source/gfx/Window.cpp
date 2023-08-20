@@ -4,6 +4,7 @@
 #include <sstream>
 
 #include <fmtlog/fmtlog.h>
+#include <glm/ext/matrix_clip_space.hpp>
 
 static void APIENTRY glDebugOutput(GLenum source, GLenum type, GLuint id, GLenum severity, GLsizei length,
                                    const GLchar* message, const void* userParam)
@@ -217,6 +218,16 @@ void Window::setKeyCallback(const KeyCallback& callback) { m_keyCallback = callb
 bool Window::isOpen() const { return glfwWindowShouldClose(m_window) == GLFW_FALSE; }
 
 int Window::getKey(int code) const { return glfwGetKey(m_window, code); }
+
+float Window::getAspectRation() const
+{
+    return (float)getWidth() / (float)getHeight();
+}
+
+glm::mat4 Window::getProjection(float fieldOfView, float zNear, float zFar) const
+{
+    return glm::perspective(glm::radians(fieldOfView), getAspectRation(), zNear, zFar);
+}
 
 const glm::vec2& Window::getCursorMovement() const { return m_cursorMovement; }
 

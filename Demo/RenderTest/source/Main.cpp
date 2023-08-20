@@ -1,16 +1,37 @@
 #include <fmtlog/fmtlog.h>
 
-#include "app/HelloTriangle.h"
+// Getting started
 #include "app/ColorTriangle.h"
-#include "app/TexturedTriangle.h"
-#include "app/TexturedQuad.h"
-#include "app/TransformedQuad.h"
-#include "app/HelloPerspective.h"
 #include "app/CubePerspective.h"
-#include "app/RotatingCubes.h"
 #include "app/HelloCamera.h"
-#include "app/SimpleMoveCamera.h"
+#include "app/HelloPerspective.h"
+#include "app/HelloTriangle.h"
 #include "app/LookAroundCamera.h"
+#include "app/RotatingCubes.h"
+#include "app/SimpleMoveCamera.h"
+#include "app/TexturedQuad.h"
+#include "app/TexturedTriangle.h"
+#include "app/TransformedQuad.h"
+
+// Lighting
+#include "app/LightCube.h"
+#include "app/BasicLighting.h"
+
+// Model loading
+#include "app/ModelLoad.h"
+
+// Advanced OpenGL
+
+// Advanced lighting
+
+// PBR
+
+// In practice
+#include "app/RenderText.h"
+
+// Other
+#include "app/ImguiDemo.h"
+
 
 enum class AppKind
 {
@@ -24,7 +45,12 @@ enum class AppKind
     RotatingCubes,
     HelloCamera,
     SimpleMoveCamera,
-    LookAroundCamera
+    LookAroundCamera,
+    LightCube,
+    BasicLighting,
+
+    RenderText,
+    ImguiDemo
 };
 
 std::unique_ptr<RenderApplication> createApp(AppKind kind)
@@ -53,6 +79,14 @@ std::unique_ptr<RenderApplication> createApp(AppKind kind)
         return std::make_unique<SimpleMoveCamera>();
     case AppKind::LookAroundCamera:
         return std::make_unique<LookAroundCamera>();
+    case AppKind::LightCube:
+        return std::make_unique<LightCube>();
+    case AppKind::BasicLighting:
+        return std::make_unique<BasicLighting>();
+    case AppKind::RenderText:
+        return std::make_unique<RenderText>();
+    case AppKind::ImguiDemo:
+        return std::make_unique<ImguiDemo>();
     }
     throw std::runtime_error("Unsupported app kind");
 }
@@ -63,6 +97,7 @@ int main(int argc, char** argv)
     try
     {
         std::vector<AppKind> kinds;
+        // Getting started
         kinds.push_back(AppKind::HelloTriangle);
         kinds.push_back(AppKind::ColorTriangle);
         kinds.push_back(AppKind::TexturedTriangle);
@@ -74,6 +109,14 @@ int main(int argc, char** argv)
         kinds.push_back(AppKind::HelloCamera);
         kinds.push_back(AppKind::SimpleMoveCamera);
         kinds.push_back(AppKind::LookAroundCamera);
+        
+        // Lighting 
+        kinds.push_back(AppKind::LightCube);
+        kinds.push_back(AppKind::BasicLighting);
+        // In practice
+        kinds.push_back(AppKind::RenderText);
+        // Other
+        kinds.push_back(AppKind::ImguiDemo);
 
         for (auto kind : kinds)
         {

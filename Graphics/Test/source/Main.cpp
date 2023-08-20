@@ -3,7 +3,7 @@
 #include <chrono>
 #include <thread>
 
-#include <graphics/graphics/window/CGlfwWindow.h>
+#include <graphics/window/CGlfwWindow.h>
 
 TEST_CASE("Test main", "[main]")
 {

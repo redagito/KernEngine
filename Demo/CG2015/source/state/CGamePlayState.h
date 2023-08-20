@@ -2,9 +2,9 @@
 
 #include "graphics/animation/CAnimationWorld.h"
 
-#include "graphics/graphics/IGraphicsSystem.h"
-#include "graphics/graphics/IScene.h"
-#include "graphics/graphics/camera/IControllableCamera.h"
+#include "graphics/IGraphicsSystem.h"
+#include "graphics/IScene.h"
+#include "graphics/camera/IControllableCamera.h"
 
 #include "graphics/resource/IResourceManager.h"
 

@@ -5,7 +5,7 @@
 #include <unordered_map>
 #include <vector>
 
-#include "graphics/graphics/IGraphicsSystem.h"
+#include "graphics/IGraphicsSystem.h"
 #include "graphics/input/IInputProvider.h"
 
 #include "application/game/IGameState.h"

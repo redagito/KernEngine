@@ -6,6 +6,8 @@
 #include <string>
 #include <unordered_map>
 
+#include "gfx/Texture.h"
+
 class Shader
 {
    public:
@@ -21,11 +23,14 @@ class Shader
     void set(const std::string& name, const glm::vec3& value, bool required = false);
     void set(const std::string& name, const glm::vec4& value, bool required = false);
     void set(const std::string& name, const glm::mat4& value, bool required = false);
+    void setTexture(const std::string& name, const Texture& texture, bool required = false);
 
    private:
     int getUniformLocation(const std::string& name, bool required) const;
 
+    // Shader id
     GLuint id = 0;
+    // Cached uniform names with location ids
     mutable std::unordered_map<std::string, int> uniformLocations;
 };
 

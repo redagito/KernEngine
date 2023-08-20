@@ -1,7 +1,7 @@
 # Educational project for learning 3d rendering
 project(RenderTest)
 
-file (GLOB_RECURSE SOURCE_FILES
+file (GLOB_RECURSE SOURCE_FILES CONFIGURE_DEPENDS 
 	${CMAKE_CURRENT_SOURCE_DIR}/source/*.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/source/*.h
 	${CMAKE_CURRENT_SOURCE_DIR}/source/*.hpp

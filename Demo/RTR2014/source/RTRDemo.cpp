@@ -9,26 +9,26 @@
 #include <foundation/util/TimeStamp.h>
 
 // Graphics
-#include "graphics/graphics/renderer/core/RendererCoreConfig.h"
-#include "graphics/graphics/renderer/debug/RendererDebug.h"
+#include "graphics/renderer/core/RendererCoreConfig.h"
+#include "graphics/renderer/debug/RendererDebug.h"
 
 #include <GLFW/glfw3.h>
 
-#include "graphics/graphics/camera/CFirstPersonCamera.h"
-#include "graphics/graphics/camera/CFreeCamera.h"
+#include "graphics/camera/CFirstPersonCamera.h"
+#include "graphics/camera/CFreeCamera.h"
 
 // Renderer types
-#include "graphics/graphics/renderer/CDeferredRenderer.h"
-#include "graphics/graphics/renderer/CForwardRenderer.h"
+#include "graphics/renderer/CDeferredRenderer.h"
+#include "graphics/renderer/CForwardRenderer.h"
 
 // Resource system
 #include "graphics/resource/Resource.h"
 
-#include "graphics/graphics/resource/CGraphicsResourceManager.h"
-#include "graphics/graphics/scene/CScene.h"
-#include "graphics/graphics/window/CGlfwWindow.h"
+#include "graphics/resource/CGraphicsResourceManager.h"
+#include "graphics/scene/CScene.h"
+#include "graphics/window/CGlfwWindow.h"
 
-#include "graphics/graphics/CDebugInfoDisplay.h"
+#include "graphics/CDebugInfoDisplay.h"
 #include "graphics/input/provider/CGlfwInputProvider.h"
 #include "graphics/io/CSceneLoader.h"
 

@@ -49,19 +49,19 @@ color = vec4(fragmentColor * brightness, 1.f);
     };
 
     // Create vertex buffer
-    glCreateBuffers(1, &vertexBuffer);
-    glNamedBufferData(vertexBuffer, sizeof(vertexData), vertexData, GL_STATIC_DRAW);
+    glCreateBuffers(1, &m_vertexBuffer);
+    glNamedBufferData(m_vertexBuffer, sizeof(vertexData), vertexData, GL_STATIC_DRAW);
 
     // Index buffer
-    glCreateBuffers(1, &indexBuffer);
-    glNamedBufferData(indexBuffer, sizeof(indices), indices, GL_STATIC_DRAW);
+    glCreateBuffers(1, &m_indexBuffer);
+    glNamedBufferData(m_indexBuffer, sizeof(indices), indices, GL_STATIC_DRAW);
 
     // Vertex array object
-    glGenVertexArrays(1, &vertexArray);
-    glBindVertexArray(vertexArray);
+    glGenVertexArrays(1, &m_vertexArray);
+    glBindVertexArray(m_vertexArray);
 
     // Setup vertex buffer
-    glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
+    glBindBuffer(GL_ARRAY_BUFFER, m_vertexBuffer);
     // Vec2, xy positions in normalized device coordinates
     glEnableVertexAttribArray(0);
     glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof(GLfloat) * 5, nullptr);
@@ -69,7 +69,7 @@ color = vec4(fragmentColor * brightness, 1.f);
     glEnableVertexAttribArray(1);
     glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(GLfloat) * 5, (void*)(sizeof(GLfloat) * 2));
     // Setup index buffer
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBuffer);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_indexBuffer);
 
     glBindVertexArray(0);
 
@@ -92,13 +92,14 @@ void ColorTriangle::render()
     m_shader->set("xoffset", std::sin(accTime) / 2.f);
     m_shader->set("yoffset", std::cos(accTime) / 2.f);
 
-    glBindVertexArray(vertexArray);
+    glBindVertexArray(m_vertexArray);
     glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_INT, 0);
     glBindVertexArray(0);
 }
 
 ColorTriangle::~ColorTriangle()
 {
-    glDeleteVertexArrays(1, &vertexArray);
-    glDeleteBuffers(1, &vertexBuffer);
+    glDeleteVertexArrays(1, &m_vertexArray);
+    glDeleteBuffers(1, &m_vertexBuffer);
+    glDeleteBuffers(1, &m_indexBuffer);
 }

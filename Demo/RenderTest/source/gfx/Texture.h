@@ -26,8 +26,7 @@ class Texture
 };
 
 // Texture loading
-GLuint
-textureIdFromFile(const std::string& fileName, const std::string& directory);
+GLuint textureIdFromFile(const std::string& fileName, const std::string& directory);
 // caches
 void clearTextureCache();
 std::shared_ptr<Texture> textureFromFile(const std::string& fileName, const std::string& directory,

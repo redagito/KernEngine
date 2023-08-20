@@ -3,8 +3,8 @@
 #include <GLFW/glfw3.h>
 #include <glm/glm.hpp>
 
-#include <graphics/graphics/IGraphicsSystem.h>
-#include <graphics/graphics/IScene.h>
+#include <graphics/IGraphicsSystem.h>
+#include <graphics/IScene.h>
 
 // GameObject
 #include "application/game/CGameObject.h"
@@ -19,7 +19,7 @@
 #include "control/CSimpleWaypointController.h"
 #include "control/CWeaponController.h"
 
-#include "graphics/graphics/camera/CFirstPersonCamera.h"
+#include "graphics/camera/CFirstPersonCamera.h"
 
 #include "graphics/animation/CAnimationWorld.h"
 #include "graphics/io/CSceneLoader.h"

@@ -4,7 +4,7 @@
 
 #include "graphics/animation/Animation.h"
 #include "graphics/animation/IAnimationController.h"
-#include "graphics/graphics/SceneConfig.h"
+#include "graphics/SceneConfig.h"
 
 class IScene;
 

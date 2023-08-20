@@ -3,9 +3,9 @@
 #include "graphics/animation/CAnimationWorld.h"
 #include "graphics/resource/IResourceManager.h"
 
-#include "graphics/graphics/ICamera.h"
-#include "graphics/graphics/IGraphicsSystem.h"
-#include "graphics/graphics/IScene.h"
+#include "graphics/ICamera.h"
+#include "graphics/IGraphicsSystem.h"
+#include "graphics/IScene.h"
 
 #include "application/game/CGameSystem.h"
 #include "application/game/IGameState.h"

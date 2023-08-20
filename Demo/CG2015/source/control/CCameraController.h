@@ -5,7 +5,7 @@
 #include "application/game/IController.h"
 #include "application/game/Message.h"
 
-#include "graphics/graphics/camera/IControllableCamera.h"
+#include "graphics/camera/IControllableCamera.h"
 
 /**
  * \brief Controls camera movement based on the attached game object.
