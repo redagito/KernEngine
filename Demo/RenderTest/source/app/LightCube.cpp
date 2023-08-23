@@ -60,11 +60,13 @@ void main(){
     glBindVertexArray(m_vertexArray);
     glBindBuffer(GL_ARRAY_BUFFER, m_vertexBuffer);
 
-    glEnableVertexAttribArray(0);
     // Buffer has x/y/z/u/v/x/y/u
     // Location 0, vertex data x/y/z
     // uv and normal data is ignored
+    glEnableVertexAttribArray(0);
     glVertexAttribPointer(0, 3, GL_FLOAT, false, sizeof(GLfloat) * 8, nullptr);
+
+    // Rest gets ignored
     glBindVertexArray(0);
 
     glClearColor(0.f, 0.f, 0.f, 1.f);
@@ -81,6 +83,7 @@ void LightCube::render()
     glm::mat4 projection = glm::perspective(glm::radians(45.f), getWindow().getAspectRation(), 0.1f, 100.f);
 
     glm::vec3 cubePos(0.f);
+    glm::vec3 lightPos(1.2f, 1.f, 1.f);
 
     // Draw cube model
     m_modelShader->setActive();
@@ -95,7 +98,6 @@ void LightCube::render()
     glDrawArrays(GL_TRIANGLES, 0, 36);
 
     // Draw light model
-    glm::vec3 lightPos(1.2f, 1.f, 1.f);
     m_lightShader->setActive();
     m_lightShader->set("model", glm::scale(glm::translate(lightPos), glm::vec3(0.2f)));
     m_lightShader->set("view", m_camera.getView());

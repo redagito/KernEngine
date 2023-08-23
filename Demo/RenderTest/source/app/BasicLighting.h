@@ -11,7 +11,6 @@ class BasicLighting : public RenderApplication
     std::unique_ptr<Shader> m_lightShader;
     GLuint m_vertexArray = 0;
     GLuint m_vertexBuffer = 0;
-    Camera m_camera;
 
     bool setup() override;
 

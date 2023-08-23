@@ -78,9 +78,6 @@ void main()
 
 void LookAroundCamera::render()
 {
-    static float timeAcc = 0;
-    timeAcc += getTimeDelta();
-
     // Camera view direction
     // Cursor offset
     auto offset = getWindow().getCursorMovement();

@@ -1,10 +1,10 @@
 #include "gfx/Window.h"
 
-#include <stdexcept>
-#include <sstream>
-
 #include <fmtlog/fmtlog.h>
+
 #include <glm/ext/matrix_clip_space.hpp>
+#include <sstream>
+#include <stdexcept>
 
 static void APIENTRY glDebugOutput(GLenum source, GLenum type, GLuint id, GLenum severity, GLsizei length,
                                    const GLchar* message, const void* userParam)
@@ -126,35 +126,43 @@ Window::Window(unsigned int width, unsigned int height, const char* title) : m_w
     }
 
     // Key callback
-    glfwSetKeyCallback(m_window, [](GLFWwindow* w, int key, int code, int action, int mods) {
-        if (Window::s_window == nullptr)
-            return;
-        Window::s_window->m_keyCallback(*Window::s_window, key, code, action, mods);
-    });
+    glfwSetKeyCallback(m_window,
+                       [](GLFWwindow* w, int key, int code, int action, int mods)
+                       {
+                           if (Window::s_window == nullptr)
+                               return;
+                           Window::s_window->onKeyPress(key, code, action, mods);
+                       });
 
     // Mouse move callback
-    glfwSetCursorPosCallback(m_window, [](GLFWwindow* w, double x, double y) {
-        if (Window::s_window == nullptr)
-            return;
-        Window::s_window->onCursorMove(x, y);
-    });
+    glfwSetCursorPosCallback(m_window,
+                             [](GLFWwindow* w, double x, double y)
+                             {
+                                 if (Window::s_window == nullptr)
+                                     return;
+                                 Window::s_window->onCursorMove(x, y);
+                             });
 
     // Scrolling callback
-    glfwSetScrollCallback(m_window, [](GLFWwindow* w, double xOffset, double yOffset) {
-        if (Window::s_window == nullptr)
-            return;
-        Window::s_window->onScroll(xOffset, yOffset);
-    });
+    glfwSetScrollCallback(m_window,
+                          [](GLFWwindow* w, double xOffset, double yOffset)
+                          {
+                              if (Window::s_window == nullptr)
+                                  return;
+                              Window::s_window->onScroll(xOffset, yOffset);
+                          });
 
     // Set active context
     glfwMakeContextCurrent(m_window);
 
-    glfwSetFramebufferSizeCallback(m_window, [](GLFWwindow* window, int width, int height) {
-        if (Window::s_window == nullptr)
-            return;
-        glViewport(0, 0, width, height);
-        Window::s_window->onResize(width, height);
-    });
+    glfwSetFramebufferSizeCallback(m_window,
+                                   [](GLFWwindow* window, int width, int height)
+                                   {
+                                       if (Window::s_window == nullptr)
+                                           return;
+                                       glViewport(0, 0, width, height);
+                                       Window::s_window->onResize(width, height);
+                                   });
 
     // Load opengl functions
     if (gladLoadGLLoader((GLADloadproc)glfwGetProcAddress) == 0)
@@ -219,10 +227,7 @@ bool Window::isOpen() const { return glfwWindowShouldClose(m_window) == GLFW_FAL
 
 int Window::getKey(int code) const { return glfwGetKey(m_window, code); }
 
-float Window::getAspectRation() const
-{
-    return (float)getWidth() / (float)getHeight();
-}
+float Window::getAspectRation() const { return (float)getWidth() / (float)getHeight(); }
 
 glm::mat4 Window::getProjection(float fieldOfView, float zNear, float zFar) const
 {
@@ -280,3 +285,10 @@ void Window::onCursorMove(double x, double y)
 }
 
 void Window::onScroll(double xOffset, double yOffset) { m_scrollOffset = glm::vec2{xOffset, yOffset}; }
+
+void Window::onKeyPress(int key, int code, int action, int mods)
+{
+    // Default mappings
+    if (m_keyCallback != nullptr)
+        m_keyCallback(*this, key, code, action, mods);
+}

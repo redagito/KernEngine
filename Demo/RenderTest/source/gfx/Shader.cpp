@@ -102,12 +102,31 @@ int Shader::getUniformLocation(const std::string& name, bool required) const
     return index;
 }
 
+static std::string shaderTypeToString(GLenum shaderType)
+{
+    switch (shaderType)
+    {
+    case GL_VERTEX_SHADER:
+        return "Vertex";
+    case GL_FRAGMENT_SHADER:
+        return "Fragment";
+    case GL_GEOMETRY_SHADER:
+        return "Geometry";
+    case GL_TESS_CONTROL_SHADER:
+        return "Tess Control";
+    case GL_TESS_EVALUATION_SHADER:
+        return "Tess Eval";
+    default:
+        throw std::runtime_error("Unrecognized shader type");
+    }
+}
+
 GLuint createShaderObject(const std::string& code, GLenum shaderType)
 {
     GLuint shaderObject = glCreateShader(shaderType);
 
     // Compile shader
-    logi("Compiling shader");
+    logi("Compiling shader type");
     const char* temp = code.c_str();
     glShaderSource(shaderObject, 1, &temp, NULL);
     glCompileShader(shaderObject);
@@ -122,7 +141,7 @@ GLuint createShaderObject(const std::string& code, GLenum shaderType)
     {
         std::vector<char> infoLog(infoLogLength + 1);
         glGetShaderInfoLog(shaderObject, infoLogLength, NULL, infoLog.data());
-        logi("Error while compiling shader: {}", infoLog.data());
+        logi("Error while compiling {} shader: {}", shaderTypeToString(shaderType), infoLog.data());
     }
     if (result == GL_FALSE)
     {

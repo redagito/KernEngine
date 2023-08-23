@@ -12,7 +12,7 @@ class VertexBuffer
     {
         unsigned int componentCount = 0;
         // Initial offset
-        unsigned int offset = 0;
+        unsigned long long offset = 0;
     };
     // From raw data
     VertexBuffer(const float* data, unsigned int size, const std::vector<unsigned int>& componentCountPerAttribute);

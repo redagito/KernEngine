@@ -29,6 +29,7 @@ class Window
 
     bool isOpen() const;
 
+    // Get key state
     int getKey(int code) const;
 
     float getAspectRation() const;
@@ -51,6 +52,7 @@ class Window
     void onResize(unsigned int width, unsigned int height);
     void onCursorMove(double x, double y);
     void onScroll(double xOffset, double yOffset);
+    void onKeyPress(int key , int code, int action, int mods);
 
     unsigned int m_width = 0;
     unsigned int m_height = 0;

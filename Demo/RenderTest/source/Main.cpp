@@ -98,6 +98,7 @@ int main(int argc, char** argv)
     {
         std::vector<AppKind> kinds;
         // Getting started
+        /*
         kinds.push_back(AppKind::HelloTriangle);
         kinds.push_back(AppKind::ColorTriangle);
         kinds.push_back(AppKind::TexturedTriangle);
@@ -109,7 +110,7 @@ int main(int argc, char** argv)
         kinds.push_back(AppKind::HelloCamera);
         kinds.push_back(AppKind::SimpleMoveCamera);
         kinds.push_back(AppKind::LookAroundCamera);
-        
+        */
         // Lighting 
         kinds.push_back(AppKind::LightCube);
         kinds.push_back(AppKind::BasicLighting);
@@ -125,7 +126,7 @@ int main(int argc, char** argv)
     }
     catch (const std::exception& e)
     {
-        loge(e.what());
+        loge("{}", e.what());
     }
     return 0;
 }
