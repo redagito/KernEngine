@@ -1,13 +1,13 @@
 #include "control/CHealthController.h"
 
-#include "application/game/CGameObject.h"
-#include "graphics/collision/CCollidable.h"
+#include "kern/game/GameObject.h"
+#include "kern/graphics/collision/Collidable.h"
 
 CHealthController::CHealthController(float health) : m_health(health), m_active(true) { return; }
 
 CHealthController::~CHealthController() { return; }
 
-void CHealthController::attach(CGameObject *object) { m_object = object; }
+void CHealthController::attach(GameObject *object) { m_object = object; }
 
 void CHealthController::detach() { m_object = nullptr; }
 

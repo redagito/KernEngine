@@ -1,9 +1,13 @@
 #include <memory>
 
+#include <fmtlog/fmtlog.h>
+
 #include "Engine.h"
 
 int main(int argc, const char **argv)
 {
+    fmtlog::startPollingThread();
+
     // Create engine interface
     std::unique_ptr<IEngine> engine(createEngine());
 

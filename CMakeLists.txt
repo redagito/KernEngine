@@ -6,6 +6,14 @@ set_property(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY VS_STARTUP_PROJECT R
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 set(CXX_STANDARD_REQUIRED ON)
 
+if (MSVC)
+	# Ignore warnings about missing pdb
+	set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} /ignore:4099")
+	set(CMAKE_SHARED_LINKER_FLAGS "${CMAKE_SHARED_LINKER_FLAGS} /ignore:4099")
+	set(CMAKE_STATIC_LINKER_FLAGS "${CMAKE_STATIC_LINKER_FLAGS} /ignore:4099")
+endif()
+
+
 # Testing
 find_package(catch2 REQUIRED)
 
@@ -29,26 +37,15 @@ find_package(imgui REQUIRED)
 # Audio
 find_package(OpenAL REQUIRED)
 find_package(vorbis REQUIRED)
+find_package(minimp3 REQUIRED)
 
 # Scripting
 find_package(lua REQUIRED)
 find_package(sol2 REQUIRED)
 
-# Foundation library
-add_subdirectory(Foundation)
-
-# Audio library
-# Depends on foundation
-add_subdirectory(Audio)
-
-# Graphics and rendering library
-# Depends on Foundation
-add_subdirectory(Graphics)
-
-# Application layer library
-# Depends on Graphics
-add_subdirectory(Application)
+# Engine
+add_subdirectory(Engine)
 
 # Demo applications and sample games
-# Depends on Application
+# Depends on Engine
 add_subdirectory(Demo)

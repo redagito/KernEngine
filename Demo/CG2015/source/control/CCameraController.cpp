@@ -1,20 +1,20 @@
 #include "control/CCameraController.h"
 
-#include "application/game/CGameObject.h"
+#include "kern/game/GameObject.h"
 
-CCameraController::CCameraController(IControllableCamera *camera) : m_camera(camera) { return; }
+CameraController::CameraController(IControllableCamera *camera) : m_camera(camera) { return; }
 
-CCameraController::~CCameraController() {}
+CameraController::~CameraController() {}
 
-void CCameraController::attach(CGameObject *object) { m_object = object; }
+void CameraController::attach(GameObject *object) { m_object = object; }
 
-void CCameraController::detach()
+void CameraController::detach()
 {
     m_object = nullptr;
     m_camera = nullptr;
 }
 
-void CCameraController::update(float dtime)
+void CameraController::update(float dtime)
 {
     if (m_active && m_object != nullptr && m_camera != nullptr)
     {
@@ -60,6 +60,6 @@ void CCameraController::update(float dtime)
     }
 }
 
-void CCameraController::setActive(bool state) { m_active = state; }
+void CameraController::setActive(bool state) { m_active = state; }
 
-void CCameraController::receiveMessage(Message msg) {}
+void CameraController::receiveMessage(Message msg) {}

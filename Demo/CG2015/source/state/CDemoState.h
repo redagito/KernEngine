@@ -1,16 +1,16 @@
 #pragma once
 
-#include "application/game/IGameState.h"
+#include "kern/game/IGameState.h"
 
-#include "graphics/animation/CAnimationWorld.h"
+#include "kern/graphics/animation/AnimationWorld.h"
 
-#include "graphics/IGraphicsSystem.h"
-#include "graphics/IScene.h"
-#include "graphics/camera/IControllableCamera.h"
+#include "kern/graphics/IGraphicsSystem.h"
+#include "kern/graphics/IScene.h"
+#include "kern/graphics/camera/IControllableCamera.h"
 
 #include "CFreeFlightCameraController.h"
 
-#include "graphics/resource/IResourceManager.h"
+#include "kern/graphics/resource/IResourceManager.h"
 
 /**
  * \brief Represents the demo state of the engine.
@@ -40,5 +40,5 @@ class CDemoState : public IGameState
     std::shared_ptr<IControllableCamera> m_camera = nullptr;
     IScene *m_scene = nullptr;
     IGraphicsSystem *m_graphicsSystem = nullptr;
-    CAnimationWorld m_animationWorld;
+    AnimationWorld m_animationWorld;
 };

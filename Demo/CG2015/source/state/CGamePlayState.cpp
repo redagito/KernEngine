@@ -1,15 +1,20 @@
 #include "state/CGamePlayState.h"
 
+#define GLFW_INCLUDE_NONE
 #include <GLFW/glfw3.h>
+#include <kern/graphics/IGraphicsSystem.h>
+#include <kern/graphics/IScene.h>
+
 #include <glm/glm.hpp>
 
-#include <graphics/IGraphicsSystem.h>
-#include <graphics/IScene.h>
-
 // GameObject
-#include "application/game/CGameObject.h"
+#include "kern/game/GameObject.h"
 
 // Controller
+#include <kern/graphics/animation/AnimationWorld.h>
+#include <kern/graphics/camera/FirstPersonCamera.h>
+#include <kern/graphics/io/SceneLoader.h>
+
 #include "control/CCameraController.h"
 #include "control/CHealthController.h"
 #include "control/CLinearMovementController.h"
@@ -19,14 +24,9 @@
 #include "control/CSimpleWaypointController.h"
 #include "control/CWeaponController.h"
 
-#include "graphics/camera/CFirstPersonCamera.h"
-
-#include "graphics/animation/CAnimationWorld.h"
-#include "graphics/io/CSceneLoader.h"
-
 // Collision
-#include "graphics/collision/CCollidable.h"
-#include "graphics/collision/CCollisionSystem.h"
+#include <kern/graphics/collision/Collidable.h>
+#include <kern/graphics/collision/CollisionSystem.h>
 
 const std::string exitStr = "lose";
 const std::string exitStrW = "win";
@@ -41,7 +41,7 @@ CGamePlayState::~CGamePlayState()
 bool CGamePlayState::init(IGraphicsSystem *graphicsSystem, IInputProvider *inputProvider,
                           IResourceManager *resourceManager)
 {
-    m_collisionSystem = new CCollisionSystem();
+    m_collisionSystem = new CollisionSystem();
     m_graphicsSystem = graphicsSystem;
     m_inputProvider = inputProvider;
     m_resourceManager = resourceManager;
@@ -51,24 +51,23 @@ bool CGamePlayState::init(IGraphicsSystem *graphicsSystem, IInputProvider *input
     m_playerGroup = m_collisionSystem->getNewGroupId();
     m_enemyGroup = m_collisionSystem->getNewGroupId();
 
-    CAnimationWorld animWorld;
-    CSceneLoader loader(*resourceManager);
+    AnimationWorld animWorld;
+    SceneLoader loader(*resourceManager);
     loader.load("data/world/game_1.json", *m_scene, animWorld);
 
-    m_camera = std::make_shared<CFirstPersonCamera>(
-        glm::vec3(90.f, 70.f, 90.f), glm::vec3(0.f, 0.f, 0.f), glm::vec3(0.f, 1.f, 0.f), 45.f,
-        4.f / 3.f, 0.01f, 1000.f);
+    m_camera = std::make_shared<FirstPersonCamera>(glm::vec3(90.f, 70.f, 90.f), glm::vec3(0.f, 0.f, 0.f),
+                                                   glm::vec3(0.f, 1.f, 0.f), 45.f, 4.f / 3.f, 0.01f, 1000.f);
 
     // Disable god ray
     m_camera->getFeatureInfoForWrite().godRayActive = false;
 
     // Create player
-    m_player = new CGameObject();
+    m_player = new GameObject();
 
     m_player->addController(std::make_shared<CPlayerMovementController>(inputProvider, 20.f));
-    m_player->addController(std::make_shared<CCameraController>(m_camera.get()));
-    m_player->addController(std::make_shared<CRestrictPositionController>(glm::vec2(-100.f, -100.f),
-                                                                          glm::vec2(100.f, 100.f)));
+    m_player->addController(std::make_shared<CameraController>(m_camera.get()));
+    m_player->addController(
+        std::make_shared<CRestrictPositionController>(glm::vec2(-100.f, -100.f), glm::vec2(100.f, 100.f)));
 
     // Load bullet
     ResourceId bulletMesh = m_resourceManager->loadMesh("data/mesh/bullet.obj");
@@ -82,9 +81,9 @@ bool CGamePlayState::init(IGraphicsSystem *graphicsSystem, IInputProvider *input
         return false;
     }
 
-    m_player->addController(std::make_shared<CWeaponController>(
-        m_inputProvider, &getGameWorld(), m_scene, bulletMesh, bulletMaterial, m_resourceManager,
-        m_collisionSystem, m_playerGroup));
+    m_player->addController(std::make_shared<CWeaponController>(m_inputProvider, &getGameWorld(), m_scene, bulletMesh,
+                                                                bulletMaterial, m_resourceManager, m_collisionSystem,
+                                                                m_playerGroup));
     m_player->setPosition(glm::vec3(0.f, 20.f, -100.f));
     m_player->setRotation(glm::vec3(0.f));
     m_player->setScale(glm::vec3(0.5f));
@@ -102,33 +101,30 @@ bool CGamePlayState::init(IGraphicsSystem *graphicsSystem, IInputProvider *input
     std::vector<float> playerNormals;
     std::vector<float> playerUvs;
     EPrimitiveType playerType;
-    m_resourceManager->getMesh(playerShip, playerVertices, playerIndices, playerNormals, playerUvs,
-                               playerType);
-    m_player->setCollidable(m_collisionSystem->add(CAABBox::create(playerVertices), m_playerGroup));
+    m_resourceManager->getMesh(playerShip, playerVertices, playerIndices, playerNormals, playerUvs, playerType);
+    m_player->setCollidable(m_collisionSystem->add(AABBox::create(playerVertices), m_playerGroup));
     m_player->getCollidable()->setDamage(50.f);
 
-    ResourceId playerShipMaterial =
-        m_resourceManager->loadMaterial("data/material/line_metal.json");
+    ResourceId playerShipMaterial = m_resourceManager->loadMaterial("data/material/line_metal.json");
     if (playerShipMaterial == invalidResource)
     {
         return false;
     }
     // Create scene object
-    CSceneObjectProxy *playerSceneObject = new CSceneObjectProxy(
-        m_scene, m_scene->createObject(playerShip, playerShipMaterial, glm::vec3(0.f),
-                                       glm::quat(0.f, 0.f, 0.f, 0.f), glm::vec3(1.f)));
+    SceneObjectProxy *playerSceneObject =
+        new SceneObjectProxy(m_scene, m_scene->createObject(playerShip, playerShipMaterial, glm::vec3(0.f),
+                                                            glm::quat(0.f, 0.f, 0.f, 0.f), glm::vec3(1.f)));
     m_player->setSceneObject(playerSceneObject);
 
     // Add player
     getGameWorld().addObject(m_player);
 
     // Create mothership
-    m_mothership = new CGameObject();
+    m_mothership = new GameObject();
     m_mothership->setPosition(glm::vec3(0.f, 68.f, 700.f));
     m_mothership->setRotation(glm::vec3(0.f));
     m_mothership->setScale(glm::vec3(60.f));
-    m_mothership->addController(
-        std::make_shared<CSimpleWaypointController>(glm::vec3(0.f, 68.f, 0.f), 5.f, this));
+    m_mothership->addController(std::make_shared<CSimpleWaypointController>(glm::vec3(0.f, 68.f, 0.f), 5.f, this));
 
     // Get model resources
     ResourceId motherShip = m_resourceManager->loadMesh("data/mesh/mothership.obj");
@@ -136,23 +132,22 @@ bool CGamePlayState::init(IGraphicsSystem *graphicsSystem, IInputProvider *input
     {
         return false;
     }
-    ResourceId motherShipMaterial =
-        m_resourceManager->loadMaterial("data/material/mothership.json");
+    ResourceId motherShipMaterial = m_resourceManager->loadMaterial("data/material/mothership.json");
     if (motherShipMaterial == invalidResource)
     {
         return false;
     }
     // Create scene object
-    CSceneObjectProxy *motherSceneObject = new CSceneObjectProxy(
-        m_scene, m_scene->createObject(motherShip, motherShipMaterial, glm::vec3(0.f, 68.f, 700.f),
-                                       glm::quat(0.f, 0.f, 0.f, 0.f), glm::vec3(60.f)));
+    SceneObjectProxy *motherSceneObject =
+        new SceneObjectProxy(m_scene, m_scene->createObject(motherShip, motherShipMaterial, glm::vec3(0.f, 68.f, 700.f),
+                                                            glm::quat(0.f, 0.f, 0.f, 0.f), glm::vec3(60.f)));
     m_mothership->setSceneObject(motherSceneObject);
 
     // Add player
     getGameWorld().addObject(m_mothership);
 
     // Create pyramide
-    CGameObject *m_pyramide = new CGameObject();
+    GameObject *m_pyramide = new GameObject();
     m_pyramide->setPosition(glm::vec3(0.f, 2.f, 0.f));
     m_pyramide->setRotation(glm::vec3(0.f, -90.f, 0.f));
     m_pyramide->setScale(glm::vec3(3.f));
@@ -171,9 +166,9 @@ bool CGamePlayState::init(IGraphicsSystem *graphicsSystem, IInputProvider *input
     }
     // Create scene object
     // glm::vec3(0.f, -90.f, 0.f)
-    CSceneObjectProxy *pyramideSceneObject = new CSceneObjectProxy(
-        m_scene, m_scene->createObject(pyramide, pyramideMaterial, glm::vec3(0.f, 2.f, 0.f),
-                                       glm::quat(0.f, 0.f, 0.f, 0.f), glm::vec3(3.f)));
+    SceneObjectProxy *pyramideSceneObject =
+        new SceneObjectProxy(m_scene, m_scene->createObject(pyramide, pyramideMaterial, glm::vec3(0.f, 2.f, 0.f),
+                                                            glm::quat(0.f, 0.f, 0.f, 0.f), glm::vec3(3.f)));
     m_pyramide->setSceneObject(pyramideSceneObject);
 
     // Add player
@@ -195,14 +190,13 @@ bool CGamePlayState::init(IGraphicsSystem *graphicsSystem, IInputProvider *input
 
     // Load boss Enemy resources
     // Add enemy with rotating ring
-    m_bossEnemy = new CGameObject();
+    m_bossEnemy = new GameObject();
     m_bossEnemy->setPosition(glm::vec3(0.f, 20.f, -50.f));
     m_bossEnemy->setRotation(glm::vec3(0.f));
     m_bossEnemy->setScale(glm::vec3(0.6f));
-    m_bossEnemy->addController(std::make_shared<CRestrictPositionController>(
-        glm::vec2(-100.f, -100.f), glm::vec2(100.f, 100.f)));
     m_bossEnemy->addController(
-        std::make_shared<CLinearMovementController>(m_bossEnemy->getForward(), 17.f));
+        std::make_shared<CRestrictPositionController>(glm::vec2(-100.f, -100.f), glm::vec2(100.f, 100.f)));
+    m_bossEnemy->addController(std::make_shared<CLinearMovementController>(m_bossEnemy->getForward(), 17.f));
     m_bossEnemy->addController(std::make_shared<CHealthController>(300.f));
     m_bossEnemy->addController(std::make_shared<CRemoveOnDeathController>(this));
 
@@ -219,19 +213,19 @@ bool CGamePlayState::init(IGraphicsSystem *graphicsSystem, IInputProvider *input
     }
 
     // Create scene object
-    CSceneObjectProxy *bossSceneObject = new CSceneObjectProxy(
-        m_scene, m_scene->createObject(bossShip, bossShipMaterial, glm::vec3(0.f, 20.f, -50.f),
-                                       glm::quat(0.f, 0.f, 0.f, 0.f), glm::vec3(0.5f)));
-    m_bossEnemy->setSceneObject(bossSceneObject);
+    SceneObjectProxy *bosSceneObject =
+        new SceneObjectProxy(m_scene, m_scene->createObject(bossShip, bossShipMaterial, glm::vec3(0.f, 20.f, -50.f),
+                                                            glm::quat(0.f, 0.f, 0.f, 0.f), glm::vec3(0.5f)));
+    m_bossEnemy->setSceneObject(bosSceneObject);
 
     getGameWorld().addObject(m_bossEnemy);
 
-    m_ring = new CGameObject();
+    m_ring = new GameObject();
     m_ring->setPosition(glm::vec3(0.f, 20.f, -50.f));
     m_ring->setRotation(glm::vec3(0.f));
     m_ring->setScale(glm::vec3(0.5f));
-    m_ring->addController(std::make_shared<CRestrictPositionController>(glm::vec2(-100.f, -100.f),
-                                                                        glm::vec2(100.f, 100.f)));
+    m_ring->addController(
+        std::make_shared<CRestrictPositionController>(glm::vec2(-100.f, -100.f), glm::vec2(100.f, 100.f)));
     m_ring->addController(std::make_shared<CLinearMovementController>(m_ring->getForward(), 17.f));
 
     bossRing = m_resourceManager->loadMesh("data/mesh/ring_animation.obj");
@@ -247,9 +241,9 @@ bool CGamePlayState::init(IGraphicsSystem *graphicsSystem, IInputProvider *input
     }
 
     // Create scene object
-    CSceneObjectProxy *bossRingObject = new CSceneObjectProxy(
-        m_scene, m_scene->createObject(bossRing, bossRingMaterial, glm::vec3(0.f, 20.f, -50.f),
-                                       glm::quat(0.f, 0.f, 0.f, 0.f), glm::vec3(0.5f)));
+    SceneObjectProxy *bossRingObject =
+        new SceneObjectProxy(m_scene, m_scene->createObject(bossRing, bossRingMaterial, glm::vec3(0.f, 20.f, -50.f),
+                                                            glm::quat(0.f, 0.f, 0.f, 0.f), glm::vec3(0.5f)));
     m_ring->setSceneObject(bossRingObject);
 
     getGameWorld().addObject(m_ring);
@@ -271,16 +265,15 @@ bool CGamePlayState::update(float dtime)
         m_enemyTime = 2.f;
         m_enemyId++;
         // Create new enemy
-        CGameObject *enemy = new CGameObject();
+        GameObject *enemy = new GameObject();
         if (m_enemyId == 1)
         {
             enemy->setPosition(glm::vec3(-50.f, 30.f, 50.f));
             enemy->setRotation(glm::vec3(0.f));
             enemy->setScale(glm::vec3(0.5f));
-            enemy->addController(std::make_shared<CRestrictPositionController>(
-                glm::vec2(-100.f, -100.f), glm::vec2(100.f, 100.f)));
             enemy->addController(
-                std::make_shared<CLinearMovementController>(enemy->getForward(), 15.f));
+                std::make_shared<CRestrictPositionController>(glm::vec2(-100.f, -100.f), glm::vec2(100.f, 100.f)));
+            enemy->addController(std::make_shared<CLinearMovementController>(enemy->getForward(), 15.f));
             enemy->addController(std::make_shared<CHealthController>(100.f));
             enemy->addController(std::make_shared<CRemoveOnDeathController>(this));
         }
@@ -290,10 +283,9 @@ bool CGamePlayState::update(float dtime)
             enemy->setPosition(glm::vec3(0.f, 45.f, -50.f));
             enemy->setRotation(glm::vec3(0.f));
             enemy->setScale(glm::vec3(0.5f));
-            enemy->addController(std::make_shared<CRestrictPositionController>(
-                glm::vec2(-100.f, -100.f), glm::vec2(100.f, 100.f)));
             enemy->addController(
-                std::make_shared<CLinearMovementController>(enemy->getForward(), 15.f));
+                std::make_shared<CRestrictPositionController>(glm::vec2(-100.f, -100.f), glm::vec2(100.f, 100.f)));
+            enemy->addController(std::make_shared<CLinearMovementController>(enemy->getForward(), 15.f));
             enemy->addController(std::make_shared<CHealthController>(100.f));
             enemy->addController(std::make_shared<CRemoveOnDeathController>(this));
         }
@@ -303,10 +295,9 @@ bool CGamePlayState::update(float dtime)
             enemy->setPosition(glm::vec3(50.f, 20.f, 0.f));
             enemy->setRotation(glm::vec3(0.f));
             enemy->setScale(glm::vec3(0.5f));
-            enemy->addController(std::make_shared<CRestrictPositionController>(
-                glm::vec2(-100.f, -100.f), glm::vec2(100.f, 100.f)));
             enemy->addController(
-                std::make_shared<CLinearMovementController>(enemy->getForward(), 15.f));
+                std::make_shared<CRestrictPositionController>(glm::vec2(-100.f, -100.f), glm::vec2(100.f, 100.f)));
+            enemy->addController(std::make_shared<CLinearMovementController>(enemy->getForward(), 15.f));
             enemy->addController(std::make_shared<CHealthController>(100.f));
             enemy->addController(std::make_shared<CRemoveOnDeathController>(this));
         }
@@ -316,10 +307,9 @@ bool CGamePlayState::update(float dtime)
             enemy->setPosition(glm::vec3(50.f, 25.f, 0.f));
             enemy->setRotation(glm::vec3(0.f, 92.6, 0.f));
             enemy->setScale(glm::vec3(0.5f));
-            enemy->addController(std::make_shared<CRestrictPositionController>(
-                glm::vec2(-100.f, -100.f), glm::vec2(100.f, 100.f)));
-            enemy->addController(std::make_shared<CSimpleWaypointController>(
-                glm::vec3(-101.f, 25.f, 0.f), 15.f, this));
+            enemy->addController(
+                std::make_shared<CRestrictPositionController>(glm::vec2(-100.f, -100.f), glm::vec2(100.f, 100.f)));
+            enemy->addController(std::make_shared<CSimpleWaypointController>(glm::vec3(-101.f, 25.f, 0.f), 15.f, this));
             enemy->addController(std::make_shared<CHealthController>(100.f));
             enemy->addController(std::make_shared<CRemoveOnDeathController>(this));
         }
@@ -329,10 +319,10 @@ bool CGamePlayState::update(float dtime)
             enemy->setPosition(glm::vec3(0.f, 40.f, -50.f));
             enemy->setRotation(glm::vec3(0.f, 92.6, 0.f));
             enemy->setScale(glm::vec3(0.5f));
-            enemy->addController(std::make_shared<CRestrictPositionController>(
-                glm::vec2(-100.f, -100.f), glm::vec2(100.f, 100.f)));
-            enemy->addController(std::make_shared<CSimpleWaypointController>(
-                glm::vec3(-101.f, 40.f, -50.f), 15.f, this));
+            enemy->addController(
+                std::make_shared<CRestrictPositionController>(glm::vec2(-100.f, -100.f), glm::vec2(100.f, 100.f)));
+            enemy->addController(
+                std::make_shared<CSimpleWaypointController>(glm::vec3(-101.f, 40.f, -50.f), 15.f, this));
             enemy->addController(std::make_shared<CHealthController>(100.f));
             enemy->addController(std::make_shared<CRemoveOnDeathController>(this));
         }
@@ -342,10 +332,10 @@ bool CGamePlayState::update(float dtime)
             enemy->setPosition(glm::vec3(-50.f, 50.f, 50.f));
             enemy->setRotation(glm::vec3(0.f, 92.6, 0.f));
             enemy->setScale(glm::vec3(0.5f));
-            enemy->addController(std::make_shared<CRestrictPositionController>(
-                glm::vec2(-100.f, -100.f), glm::vec2(100.f, 100.f)));
-            enemy->addController(std::make_shared<CSimpleWaypointController>(
-                glm::vec3(-101.f, 50.f, 50.f), 15.f, this));
+            enemy->addController(
+                std::make_shared<CRestrictPositionController>(glm::vec2(-100.f, -100.f), glm::vec2(100.f, 100.f)));
+            enemy->addController(
+                std::make_shared<CSimpleWaypointController>(glm::vec3(-101.f, 50.f, 50.f), 15.f, this));
             enemy->addController(std::make_shared<CHealthController>(100.f));
             enemy->addController(std::make_shared<CRemoveOnDeathController>(this));
         }
@@ -356,14 +346,12 @@ bool CGamePlayState::update(float dtime)
         std::vector<float> enemyNormals;
         std::vector<float> enemyUvs;
         EPrimitiveType enemyType;
-        m_resourceManager->getMesh(enemyShip, enemyVertices, enemyIndices, enemyNormals, enemyUvs,
-                                   enemyType);
-        enemy->setCollidable(m_collisionSystem->add(CAABBox::create(enemyVertices), m_enemyGroup));
+        m_resourceManager->getMesh(enemyShip, enemyVertices, enemyIndices, enemyNormals, enemyUvs, enemyType);
+        enemy->setCollidable(m_collisionSystem->add(AABBox::create(enemyVertices), m_enemyGroup));
 
         // Create scene object
-        CSceneObjectProxy *enemySceneObject = new CSceneObjectProxy(
-            m_scene, m_scene->createObject(enemyShip, enemyShipMaterial,
-                                           glm::vec3(m_enemyXPosition, 25.f, 0.f),
+        SceneObjectProxy *enemySceneObject = new SceneObjectProxy(
+            m_scene, m_scene->createObject(enemyShip, enemyShipMaterial, glm::vec3(m_enemyXPosition, 25.f, 0.f),
                                            glm::quat(0.f, 0.f, 0.f, 0.f), glm::vec3(0.5f)));
         enemy->setSceneObject(enemySceneObject);
 
@@ -374,8 +362,7 @@ bool CGamePlayState::update(float dtime)
         m_enemyXPosition += 25.f;
     }
 
-    m_ring->setRotation(glm::vec3(m_ring->getRotation().x, m_ring->getRotation().y,
-                                  m_ring->getRotation().z + dtime));
+    m_ring->setRotation(glm::vec3(m_ring->getRotation().x, m_ring->getRotation().y, m_ring->getRotation().z + dtime));
 
     if (m_inputProvider->isKeyPressed(GLFW_KEY_P))
     {

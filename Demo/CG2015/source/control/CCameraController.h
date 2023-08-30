@@ -2,31 +2,31 @@
 
 #include <glm/glm.hpp>
 
-#include "application/game/IController.h"
-#include "application/game/Message.h"
+#include "kern/game/IGameObjectController.h"
+#include "kern/game/Message.h"
 
-#include "graphics/camera/IControllableCamera.h"
+#include "kern/graphics/camera/IControllableCamera.h"
 
 /**
  * \brief Controls camera movement based on the attached game object.
  */
-class CCameraController : public IController
+class CameraController : public IGameObjectController
 {
    public:
     /**
      * \brief Sets camera.
      */
-    CCameraController(IControllableCamera *camera);
+    CameraController(IControllableCamera *camera);
 
     /**
      * \brief Destructor for cleanup.
      */
-    ~CCameraController();
+    ~CameraController();
 
     /**
      * \brief On attach to object.
      */
-    void attach(CGameObject *object);
+    void attach(GameObject *object);
 
     /**
      * \brief On detaching from game object.
@@ -50,7 +50,7 @@ class CCameraController : public IController
 
    private:
     IControllableCamera *m_camera = nullptr; /**< Controlled camera. */
-    CGameObject *m_object = nullptr;         /**< Controlled game object. */
+    GameObject *m_object = nullptr;         /**< Controlled game object. */
     bool m_active = true;                    /**< Active state flag. */
     glm::vec3 m_prevLookAt;
     bool m_first = true;

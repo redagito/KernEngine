@@ -1,0 +1,57 @@
+#include "kern/graphics/renderer/pass/ScreenQuadPass.h"
+
+#include "kern/graphics/renderer/core/RendererCoreConfig.h"
+
+ScreenQuadPass::ScreenQuadPass()
+{
+    std::vector<float> vertices = {0.f, 0.f, 0.f};
+    std::vector<unsigned int> indices = {1};
+    std::vector<float> normals = {0.f, 1.f, 0.f};
+    std::vector<float> uvs = {0.f, 0.f, 0.f};
+    m_quad.reset(new Mesh(vertices, indices, normals, uvs, EPrimitiveType::Point));
+}
+
+bool ScreenQuadPass::init(IResourceManager &manager)
+{
+    std::string screenQuadShaderFile = "data/shader/compose_screenquad.ini";
+    m_shaderId = manager.loadShader(screenQuadShaderFile);
+    if (m_shaderId == invalidResource)
+    {
+        loge("Failed to load screenquad shader {}.", screenQuadShaderFile.c_str());
+        return false;
+    }
+    return true;
+}
+
+void ScreenQuadPass::draw(Texture *diffuseGlow, Texture *lightTexture, Texture *depthTexture,
+                          const glm::mat4 &inverseViewProj, FrameBuffer *fbo, const IGraphicsResourceManager *manager)
+{
+    m_shader = manager->getShaderProgram(m_shaderId);
+    if (fbo == nullptr)
+    {
+        glBindFramebuffer(GL_FRAMEBUFFER, 0);
+    }
+    else
+    {
+        fbo->setActive(GL_FRAMEBUFFER);
+    }
+
+    glDisable(GL_DEPTH_TEST);
+
+    m_shader->setActive();
+    diffuseGlow->setActive(0);
+    m_shader->setUniform(diffuseGlowTextureUniformName, 0);
+
+    lightTexture->setActive(1);
+    m_shader->setUniform(lightTextureUniformName, 1);
+
+    depthTexture->setActive(2);
+    m_shader->setUniform(depthTextureUniformName, 2);
+
+    m_shader->setUniform(inverseViewProjectionMatrixUniformName, inverseViewProj);
+
+    m_quad->getVertexArray()->setActive();
+    glDrawArrays(GL_POINTS, 0, 1);
+    m_quad->getVertexArray()->setInactive();
+    m_shader->setInactive();
+}

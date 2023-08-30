@@ -1,12 +1,13 @@
 #include "control/CPlayerMovementController.h"
 
+#define GLFW_INCLUDE_NONE
 #include <GLFW/glfw3.h>
 #include <glm/ext.hpp>
 
-#include <foundation/math/TransformUtils.h>
-#include <graphics/input/IInputProvider.h>
+#include "kern/foundation/TransformUtils.h"
+#include "kern/graphics/input/IInputProvider.h"
 
-#include "application/game/CGameObject.h"
+#include "kern/game/GameObject.h"
 
 CPlayerMovementController::CPlayerMovementController(IInputProvider *inputProvider, float speed)
     : m_inputProvider(inputProvider), m_speed(speed)
@@ -16,7 +17,7 @@ CPlayerMovementController::CPlayerMovementController(IInputProvider *inputProvid
 
 CPlayerMovementController::~CPlayerMovementController() { return; }
 
-void CPlayerMovementController::attach(CGameObject *object) { m_object = object; }
+void CPlayerMovementController::attach(GameObject *object) { m_object = object; }
 
 void CPlayerMovementController::detach()
 {

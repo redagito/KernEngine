@@ -2,14 +2,14 @@
 
 #include <glm/glm.hpp>
 
-#include "application/game/IController.h"
-#include "application/game/Message.h"
-#include "graphics/input/IInputProvider.h"
+#include "kern/game/IGameObjectController.h"
+#include "kern/game/Message.h"
+#include "kern/graphics/input/IInputProvider.h"
 
 /**
  * \brief Player side movement.
  */
-class CPlayerMovementController : public IController
+class CPlayerMovementController : public IGameObjectController
 {
    public:
     CPlayerMovementController(IInputProvider *inputProvider, float speed);
@@ -22,7 +22,7 @@ class CPlayerMovementController : public IController
     /**
      * \brief On attach to object.
      */
-    void attach(CGameObject *object);
+    void attach(GameObject *object);
 
     /**
      * \brief On dettaching from game object.
@@ -46,7 +46,7 @@ class CPlayerMovementController : public IController
 
    private:
     IInputProvider *m_inputProvider = nullptr;
-    CGameObject *m_object = nullptr; /**< Controlled game object. */
+    GameObject *m_object = nullptr; /**< Controlled game object. */
     float m_speed = 0.f;             /**< Side movement speed. */
     float m_rotationDegree = 0.f;    /**< Current rotation in degree. */
     bool m_active = true;            /**< Active state flag. */

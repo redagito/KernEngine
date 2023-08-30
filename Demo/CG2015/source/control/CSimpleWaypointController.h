@@ -2,15 +2,15 @@
 
 #include <glm/glm.hpp>
 
-#include "application/game/IController.h"
-#include "application/game/Message.h"
+#include "kern/game/IGameObjectController.h"
+#include "kern/game/Message.h"
 
 class AGameState;
 
 /**
  * \brief Point to point movement.
  */
-class CSimpleWaypointController : public IController
+class CSimpleWaypointController : public IGameObjectController
 {
    public:
     CSimpleWaypointController(const glm::vec3 &end, float speed, AGameState *gameState);
@@ -23,7 +23,7 @@ class CSimpleWaypointController : public IController
     /**
      * \brief On attach to object.
      */
-    void attach(CGameObject *object);
+    void attach(GameObject *object);
 
     /**
      * \brief On dettaching from game object.
@@ -49,7 +49,7 @@ class CSimpleWaypointController : public IController
     glm::vec3 m_end;
     float m_speed = 0.f; /**< Side movement speed. */
     AGameState *m_gameState = nullptr;
-    CGameObject *m_object = nullptr; /**< Controlled game object. */
+    GameObject *m_object = nullptr; /**< Controlled game object. */
     bool m_active = true;            /**< Active state flag. */
     float m_idleTimer = 5.f;
 };

@@ -1,12 +1,13 @@
 #include "control/CSimpleWaypointController.h"
 
+#define GLFW_INCLUDE_NONE
 #include <GLFW/glfw3.h>
 #include <glm/ext.hpp>
 
-#include <foundation/math/TransformUtils.h>
+#include <kern/foundation/TransformUtils.h>
 
-#include "application/game/AGameState.h"
-#include "application/game/CGameObject.h"
+#include "kern/game/AGameState.h"
+#include "kern/game/GameObject.h"
 
 CSimpleWaypointController::CSimpleWaypointController(const glm::vec3 &end, float speed,
                                                      AGameState *state)
@@ -17,7 +18,7 @@ CSimpleWaypointController::CSimpleWaypointController(const glm::vec3 &end, float
 
 CSimpleWaypointController::~CSimpleWaypointController() { return; }
 
-void CSimpleWaypointController::attach(CGameObject *object) { m_object = object; }
+void CSimpleWaypointController::attach(GameObject *object) { m_object = object; }
 
 void CSimpleWaypointController::detach() { m_object = nullptr; }
 

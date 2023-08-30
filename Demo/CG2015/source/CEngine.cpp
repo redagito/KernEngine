@@ -1,53 +1,33 @@
 #include "CEngine.h"
 
+#define GLFW_INCLUDE_NONE
+#include <GLFW/glfw3.h>
+#include <fmtlog/fmtlog.h>
+
 #include <cassert>
 #include <string>
 #include <vector>
 
-// Debug
-#include <foundation/debug/CDebugInfo.h>
-#include <foundation/debug/CLogger.h>
-#include <foundation/debug/Log.h>
-#include <foundation/debug/Profile.h>
-
-#include <foundation/util/StringUtil.h>
-#include <foundation/util/TimeStamp.h>
-
-#include <foundation/io/CIniFile.h>
-#include <foundation/io/JsonUtil.h>
-
-// Graphics
-#include "graphics/renderer/core/RendererCoreConfig.h"
-#include "graphics/renderer/debug/RendererDebug.h"
-#include "graphics/system/CGraphicsSystem.h"
-
-#include <GLFW/glfw3.h>
-
-#include "graphics/camera/CFirstPersonCamera.h"
-#include "graphics/camera/CFreeCamera.h"
-
-// Renderer types
-#include "graphics/renderer/CDeferredRenderer.h"
-#include "graphics/renderer/CForwardRenderer.h"
-
-#include "graphics/CDebugInfoDisplay.h"
-#include "graphics/resource/CGraphicsResourceManager.h"
-#include "graphics/scene/CScene.h"
-#include "graphics/window/CGlfwWindow.h"
-
-// Resource system
-#include "graphics/resource/Resource.h"
-
 #include "CFreeFlightCameraController.h"
-#include "graphics/input/provider/CGlfwInputProvider.h"
-#include "graphics/io/CSceneLoader.h"
-
-// Animation
-#include "graphics/animation/CAnimationWorld.h"
-
-// Game
-#include "application/game/CGameSystem.h"
-
+#include "kern/foundation/IniFile.h"
+#include "kern/foundation/JsonUtil.h"
+#include "kern/foundation/StringUtil.h"
+#include "kern/foundation/TimeStamp.h"
+#include "kern/game/GameSystem.h"
+#include "kern/graphics/animation/AnimationWorld.h"
+#include "kern/graphics/camera/FirstPersonCamera.h"
+#include "kern/graphics/camera/FreeCamera.h"
+#include "kern/graphics/input/GlfwInputProvider.h"
+#include "kern/graphics/io/SceneLoader.h"
+#include "kern/graphics/renderer/DeferredRenderer.h"
+#include "kern/graphics/renderer/ForwardRenderer.h"
+#include "kern/graphics/renderer/core/RendererCoreConfig.h"
+#include "kern/graphics/renderer/debug/RendererDebug.h"
+#include "kern/graphics/resource/GraphicsResourceManager.h"
+#include "kern/graphics/resource/Resource.h"
+#include "kern/graphics/scene/Scene.h"
+#include "kern/graphics/system/GraphicsSystem.h"
+#include "kern/graphics/window/GlfwWindow.h"
 #include "state/CDemoState.h"
 #include "state/CGamePlayState.h"
 #include "state/CLoadState.h"
@@ -57,58 +37,40 @@
 
 CEngine::CEngine() {}
 
-CEngine::~CEngine()
-{
-    m_gameSystem = nullptr;
-    std::stringstream ss;
-    if (!CProfiler::write(ss))
-    {
-        KERN_WARNING("Failed to retrieve profiling data.");
-    }
-    KERN_DEBUG("Profiler info: " << ss.str());
-}
+CEngine::~CEngine() { m_gameSystem = nullptr; }
 
 bool CEngine::init(const char *configFile)
 {
-    // Init log file
-    std::string logFile = "log_" + createTimeStamp() + ".log";
-    if (!CLogger::initLogFile(logFile))
-    {
-        KERN_WARNING("Failed to create log file at " << logFile);
-    }
-
     // Load configuration file
     if (!load(configFile, m_engineConfig))
     {
-        KERN_WARNING("Failed to load config file " << configFile
-                                                   << ". Starting with default settings.");
+        logw("Failed to load config file {}. Starting with default settings.", configFile);
         // TODO Return if no config exists?
     }
 
     // Create window for rendering
-    if (!initWindow(m_engineConfig.m_windowWidth, m_engineConfig.m_windowHeight,
-                    m_engineConfig.m_windowTitle))
+    if (!initWindow(m_engineConfig.m_windowWidth, m_engineConfig.m_windowHeight, m_engineConfig.m_windowTitle))
     {
-        LOG_ERROR("Failed to initialize window.");
+        loge("Failed to initialize window.");
         return false;
     }
     // TODO GLFW handle not properly wrapped away, GFLW should not be used
     // directly
-    m_inputProvider = std::make_shared<CGlfwInputProvider>(m_window->getGlfwHandle());
+    m_inputProvider = std::make_shared<GlfwInputProvider>(m_window->getGlfwHandle());
 
     // Create central resource manager
     m_resourceManager.reset(createResourceManager());
     if (m_resourceManager == nullptr)
     {
-        LOG_ERROR("Failed to initialize resource manager.");
+        loge("Failed to initialize resource manager.");
         return false;
     }
 
     // Create and initialize graphics system
-    m_graphicsSystem = std::make_shared<CGraphicsSystem>();
+    m_graphicsSystem = std::make_shared<GraphicsSystem>();
     if (!m_graphicsSystem->init(*m_resourceManager))
     {
-        LOG_ERROR("Failed to initialize graphics system.");
+        loge("Failed to initialize graphics system.");
         return false;
     }
 
@@ -118,7 +80,7 @@ bool CEngine::init(const char *configFile)
     {
         if (!initDemo(m_engineConfig.m_sceneFile))
         {
-            LOG_ERROR("Failed to initialize demo mode.");
+            loge("Failed to initialize demo mode.");
             return false;
         }
     }
@@ -126,13 +88,13 @@ bool CEngine::init(const char *configFile)
     {
         if (!initGameSystem(m_engineConfig.m_gameFile))
         {
-            LOG_ERROR("Failed to initialize game system.");
+            loge("Failed to initialize game system.");
             return false;
         }
     }
     else
     {
-        KERN_ERROR("No scene file or game file specified");
+        loge("No scene file or game file specified");
         return false;
     }
     return true;
@@ -313,16 +275,16 @@ bool CEngine::initWindow(unsigned int width, unsigned int height, const std::str
         return true;
     }
 
-    LOG_INFO("Initializing application window.");
-    LOG_INFO("Window width: %u.", width);
-    LOG_INFO("Window height: %u.", height);
-    LOG_INFO("Window title: %s.", title.c_str());
+    logi("Initializing application window.");
+    logi("Window width: {}.", width);
+    logi("Window height: {}.", height);
+    logi("Window title: {}.", title.c_str());
 
     // Create window
-    CGlfwWindow *window = new CGlfwWindow;
+    GlfwWindow *window = new GlfwWindow;
     if (!window->init(width, height, title))
     {
-        LOG_ERROR("Failed to initialize GLFW window wrapper.");
+        loge("Failed to initialize GLFW window wrapper.");
         delete window;
         return false;
     }
@@ -335,7 +297,7 @@ bool CEngine::initWindow(unsigned int width, unsigned int height, const std::str
 bool CEngine::initGameSystem(const std::string &gameFile)
 {
     // Create and set game system
-    m_gameSystem = std::make_shared<CGameSystem>();
+    m_gameSystem = std::make_shared<GameSystem>();
 
     // TODO Load from game file
     m_gameSystem->addState("load", new CLoadState("data/world/load_1.json", 10.f));
@@ -343,10 +305,9 @@ bool CEngine::initGameSystem(const std::string &gameFile)
     m_gameSystem->addState("game", new CGamePlayState());
     m_gameSystem->addState("lose", new CLoseState("data/world/lose.json"));
     m_gameSystem->addState("win", new CWinState("data/world/win.json"));
-    if (!m_gameSystem->init("load", m_graphicsSystem.get(), m_inputProvider.get(),
-                            m_resourceManager.get()))
+    if (!m_gameSystem->init("load", m_graphicsSystem.get(), m_inputProvider.get(), m_resourceManager.get()))
     {
-        LOG_ERROR("Failed to initialize game system.");
+        loge("Failed to initialize game system.");
         return false;
     }
 
@@ -356,14 +317,13 @@ bool CEngine::initGameSystem(const std::string &gameFile)
 bool CEngine::initDemo(const std::string &sceneFile)
 {
     // Create and set game system
-    m_gameSystem = std::make_shared<CGameSystem>();
+    m_gameSystem = std::make_shared<GameSystem>();
 
     // Create demo state from with scene file
     m_gameSystem->addState("demo", new CDemoState(sceneFile));
-    if (!m_gameSystem->init("demo", m_graphicsSystem.get(), m_inputProvider.get(),
-                            m_resourceManager.get()))
+    if (!m_gameSystem->init("demo", m_graphicsSystem.get(), m_inputProvider.get(), m_resourceManager.get()))
     {
-        LOG_ERROR("Failed to initialize game system.");
+        loge("Failed to initialize game system.");
         return false;
     }
     return true;

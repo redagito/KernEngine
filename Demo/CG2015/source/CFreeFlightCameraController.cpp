@@ -3,16 +3,15 @@
 #include <algorithm>
 #include <fstream>
 
+#define GLFW_INCLUDE_NONE
 #include <GLFW/glfw3.h>
+#include <fmtlog/fmtlog.h>
+#include <kern/foundation/JsonDeserialize.h>
+#include <kern/foundation/JsonUtil.h>
+#include <kern/graphics/camera/IControllableCamera.h>
+#include <kern/graphics/input/IInputProvider.h>
+
 #include <nlohmann/json.hpp>
-
-#include <foundation/debug/Log.h>
-#include <foundation/io/JsonDeserialize.h>
-#include <foundation/io/JsonUtil.h>
-
-#include "graphics/camera/IControllableCamera.h"
-
-#include "graphics/input/IInputProvider.h"
 
 CFreeFlightCameraController::CFreeFlightCameraController() {}
 
@@ -24,10 +23,7 @@ CFreeFlightCameraController::~CFreeFlightCameraController()
     }
 }
 
-void CFreeFlightCameraController::setCamera(std::shared_ptr<IControllableCamera> camera)
-{
-    m_camera = camera;
-}
+void CFreeFlightCameraController::setCamera(std::shared_ptr<IControllableCamera> camera) { m_camera = camera; }
 
 void CFreeFlightCameraController::setInputProvider(IInputProvider *provider)
 {
@@ -44,7 +40,7 @@ void CFreeFlightCameraController::setInputProvider(IInputProvider *provider)
     }
 }
 
-bool CFreeFlightCameraController::loadSequence(const std::string& file)
+bool CFreeFlightCameraController::loadSequence(const std::string &file)
 {
     m_sequenceTime = 0;
     m_sequencePoints.clear();
@@ -55,14 +51,14 @@ bool CFreeFlightCameraController::loadSequence(const std::string& file)
     // Node empty?
     if (node.empty())
     {
-        LOG_INFO("Missing or empty 'positions' node. No scene objects are loaded.");
+        logi("Missing or empty 'positions' node. No scene objects are loaded.");
         return true;
     }
 
     // Node is array type
     if (!node.is_array())
     {
-        LOG_ERROR("The node 'positions' must be array type.");
+        loge("The node 'positions' must be array type.");
         return false;
     }
 
@@ -78,35 +74,35 @@ bool CFreeFlightCameraController::loadSequence(const std::string& file)
 
         if (!load(node[i], "position", position))
         {
-            LOG_ERROR("Failed loading node 'position' for element #%i.", i);
+            loge("Failed loading node 'position' for element #%i.", i);
             success = false;
             break;
         }
 
         if (!load(node[i], "orientation", orientation))
         {
-            LOG_ERROR("Failed loading node 'orientation' for element #%i.", i);
+            loge("Failed loading node 'orientation' for element #%i.", i);
             success = false;
             break;
         }
 
         if (!load(node[i], "timestamp", timestamp))
         {
-            LOG_ERROR("Failed loading node 'timestamp' for element #%i.", i);
+            loge("Failed loading node 'timestamp' for element #%i.", i);
             success = false;
             break;
         }
 
         if (!load(node[i], "fxaa", fxaaActive))
         {
-            LOG_ERROR("Failed loading node 'fxaa' for element #%i.", i);
+            loge("Failed loading node 'fxaa' for element #%i.", i);
             success = false;
             break;
         }
 
         if (!load(node[i], "fog", fogActive))
         {
-            LOG_ERROR("Failed loading node 'fog' for element #%i.", i);
+            loge("Failed loading node 'fog' for element #%i.", i);
             success = false;
             break;
         }

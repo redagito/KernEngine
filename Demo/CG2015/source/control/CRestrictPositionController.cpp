@@ -2,7 +2,7 @@
 
 #include <glm/ext.hpp>
 
-#include "application/game/CGameObject.h"
+#include "kern/game/GameObject.h"
 
 CRestrictPositionController::CRestrictPositionController(const glm::vec2 &minCoords,
                                                          const glm::vec2 &maxCoords)
@@ -13,7 +13,7 @@ CRestrictPositionController::CRestrictPositionController(const glm::vec2 &minCoo
 
 CRestrictPositionController::~CRestrictPositionController() { return; }
 
-void CRestrictPositionController::attach(CGameObject *object) { m_object = object; }
+void CRestrictPositionController::attach(GameObject *object) { m_object = object; }
 
 void CRestrictPositionController::detach() { m_object = nullptr; }
 

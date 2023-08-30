@@ -11,11 +11,11 @@
 class IResourceManager;
 
 // Game
-class CGameSystem;
+class GameSystem;
 
 // Graphics
 class IGraphicsSystem;
-class CGlfwWindow;
+class GlfwWindow;
 
 // Input
 class IInputProvider;
@@ -60,11 +60,11 @@ class CEngine : public IEngine
     SEngineConfig m_engineConfig;
 
     // TODO Should use interface instead of concrete class.
-    std::shared_ptr<CGameSystem> m_gameSystem;           /**< Game system. */
+    std::shared_ptr<GameSystem> m_gameSystem;           /**< Game system. */
     std::shared_ptr<IGraphicsSystem> m_graphicsSystem;   /**< Graphics system. */
     std::shared_ptr<IResourceManager> m_resourceManager; /**< Resource loader and manager. */
 
     // TODO Should use interface instead of concrete class
-    std::shared_ptr<CGlfwWindow> m_window;           /**< Application window. */
+    std::shared_ptr<GlfwWindow> m_window;           /**< Application window. */
     std::shared_ptr<IInputProvider> m_inputProvider; /**< User input provider. */
 };

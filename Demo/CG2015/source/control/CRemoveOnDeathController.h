@@ -2,7 +2,7 @@
 
 #include <string>
 
-#include "application/game/IController.h"
+#include "kern/game/IGameObjectController.h"
 
 class CGamePlayState;
 
@@ -11,7 +11,7 @@ class CGamePlayState;
  * TODO This should actually react to an onDeath event.
  * TODO This actually can play any sound on death.
  */
-class CRemoveOnDeathController : public IController
+class CRemoveOnDeathController : public IGameObjectController
 {
    public:
     /**
@@ -27,7 +27,7 @@ class CRemoveOnDeathController : public IController
     /**
      * \brief On attach to object.
      */
-    void attach(CGameObject *object);
+    void attach(GameObject *object);
 
     /**
      * \brief On detaching from game object.
@@ -44,7 +44,7 @@ class CRemoveOnDeathController : public IController
     void receiveMessage(Message msg);
 
    private:
-    CGameObject *m_object = nullptr; /**< Controlled game object. */
+    GameObject *m_object = nullptr; /**< Controlled game object. */
     CGamePlayState *m_gameState = nullptr;
     bool m_active = false;
 };

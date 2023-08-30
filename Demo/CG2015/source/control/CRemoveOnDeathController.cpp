@@ -1,6 +1,6 @@
 #include "control/CRemoveOnDeathController.h"
 
-#include "application/game/CGameObject.h"
+#include "kern/game/GameObject.h"
 #include "state/CGamePlayState.h"
 
 CRemoveOnDeathController::CRemoveOnDeathController(CGamePlayState *state)
@@ -11,7 +11,7 @@ CRemoveOnDeathController::CRemoveOnDeathController(CGamePlayState *state)
 
 CRemoveOnDeathController::~CRemoveOnDeathController() { return; }
 
-void CRemoveOnDeathController::attach(CGameObject *object) { m_object = object; }
+void CRemoveOnDeathController::attach(GameObject *object) { m_object = object; }
 
 void CRemoveOnDeathController::detach() { m_object = nullptr; }
 

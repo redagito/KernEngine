@@ -2,15 +2,15 @@
 
 #include <glm/glm.hpp>
 
-#include "application/game/CGameObject.h"
 #include "control/CLinearMovementController.h"
+#include "kern/game/GameObject.h"
 
+#define GLFW_INCLUDE_NONE
 #include <GLFW/glfw3.h>
 
-CWeaponController::CWeaponController(IInputProvider *provider, CGameWorld *gameWorld, IScene *scene,
-                                     ResourceId mesh, ResourceId material,
-                                     IResourceManager *resourceManager,
-                                     CCollisionSystem *collisionSystem, int collisionGroup)
+CWeaponController::CWeaponController(IInputProvider *provider, GameWorld *gameWorld, IScene *scene, ResourceId mesh,
+                                     ResourceId material, IResourceManager *resourceManager,
+                                     CollisionSystem *collisionSystem, int collisionGroup)
     : m_collisionGroup(collisionGroup),
       m_collisionSystem(collisionSystem),
       m_resourceManager(resourceManager),
@@ -25,7 +25,7 @@ CWeaponController::CWeaponController(IInputProvider *provider, CGameWorld *gameW
 
 CWeaponController::~CWeaponController() {}
 
-void CWeaponController::attach(CGameObject *object) { m_object = object; }
+void CWeaponController::attach(GameObject *object) { m_object = object; }
 
 void CWeaponController::detach() { m_object = nullptr; }
 
@@ -44,7 +44,7 @@ void CWeaponController::update(float dtime)
             glm::vec3 position = m_object->getPosition();
 
             // Create game object
-            CGameObject *bullet = new CGameObject;
+            GameObject *bullet = new GameObject;
             bullet->addController(std::make_shared<CLinearMovementController>(direction, 50.f));
             bullet->setPosition(position + direction * 2.f);
             bullet->setRotation(m_object->getRotation());
@@ -55,16 +55,14 @@ void CWeaponController::update(float dtime)
             std::vector<float> bulletNormals;
             std::vector<float> bulletUvs;
             EPrimitiveType bulletType;
-            m_resourceManager->getMesh(m_mesh, bulletVertices, bulletIndices, bulletNormals,
-                                       bulletUvs, bulletType);
-            bullet->setCollidable(
-                m_collisionSystem->add(CAABBox::create(bulletVertices), m_collisionGroup));
+            m_resourceManager->getMesh(m_mesh, bulletVertices, bulletIndices, bulletNormals, bulletUvs, bulletType);
+            bullet->setCollidable(m_collisionSystem->add(AABBox::create(bulletVertices), m_collisionGroup));
             bullet->getCollidable()->setDamage(50.f);
 
             // Create scene proxy
-            CSceneObjectProxy *proxy = new CSceneObjectProxy(
-                m_scene, m_scene->createObject(m_mesh, m_material, glm::vec3(0.f),
-                                               glm::quat(0.f, 0.f, 0.f, 0.f), glm::vec3(1.f)));
+            SceneObjectProxy *proxy =
+                new SceneObjectProxy(m_scene, m_scene->createObject(m_mesh, m_material, glm::vec3(0.f),
+                                                                    glm::quat(0.f, 0.f, 0.f, 0.f), glm::vec3(1.f)));
             bullet->setSceneObject(proxy);
 
             // Add to world

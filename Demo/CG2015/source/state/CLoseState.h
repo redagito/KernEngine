@@ -1,16 +1,16 @@
 #pragma once
 
-#include "graphics/animation/CAnimationWorld.h"
+#include "kern/graphics/animation/AnimationWorld.h"
 
-#include "graphics/ICamera.h"
-#include "graphics/IGraphicsSystem.h"
-#include "graphics/IScene.h"
+#include "kern/graphics/ICamera.h"
+#include "kern/graphics/IGraphicsSystem.h"
+#include "kern/graphics/IScene.h"
 
-#include "graphics/input/IInputProvider.h"
-#include "graphics/resource/IResourceManager.h"
+#include "kern/graphics/input/IInputProvider.h"
+#include "kern/graphics/resource/IResourceManager.h"
 
-#include "application/game/CGameSystem.h"
-#include "application/game/IGameState.h"
+#include "kern/game/GameSystem.h"
+#include "kern/game/IGameState.h"
 
 /**
  * \brief Lose state, similar to demo state with static camera.
@@ -37,7 +37,7 @@ class CLoseState : public IGameState
     IScene *m_scene = nullptr;
     IGraphicsSystem *m_graphicsSystem = nullptr;
     IResourceManager *m_resourceManager = nullptr;
-    CAnimationWorld m_animationWorld;
+    AnimationWorld m_animationWorld;
     std::string m_nextState;             /**< Next state. */
-    CGameSystem *m_gameSystem = nullptr; /**< Game system. */
+    GameSystem *m_gameSystem = nullptr; /**< Game system. */
 };

@@ -1,12 +1,12 @@
 #pragma once
 
-#include "application/game/IController.h"
+#include "kern/game/IGameObjectController.h"
 
 /**
  * \brief Stores health state and marks object for deletion on death.
  * TODO This should actually send an onDeath event to the object.
  */
-class CHealthController : public IController
+class CHealthController : public IGameObjectController
 {
    public:
     /**
@@ -22,7 +22,7 @@ class CHealthController : public IController
     /**
      * \brief On attach to object.
      */
-    void attach(CGameObject *object);
+    void attach(GameObject *object);
 
     /**
      * \brief On dettaching from game object.
@@ -42,7 +42,7 @@ class CHealthController : public IController
     void receiveMessage(Message msg);
 
    private:
-    CGameObject *m_object = nullptr; /**< Controlled game object. */
+    GameObject *m_object = nullptr; /**< Controlled game object. */
     float m_health;                  /**< Health value. */
     bool m_active;                   /**< Cative flag. */
 };

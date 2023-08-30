@@ -1,11 +1,11 @@
 #include "state/CWinState.h"
 
+#define GLFW_INCLUDE_NONE
 #include <GLFW/glfw3.h>
+#include <fmtlog/fmtlog.h>
 
-#include <foundation/debug/Log.h>
-
-#include "graphics/camera/CFirstPersonCamera.h"
-#include "graphics/io/CSceneLoader.h"
+#include "kern/graphics/camera/FirstPersonCamera.h"
+#include "kern/graphics/io/SceneLoader.h"
 
 const std::string gameStr = "game";
 
@@ -16,8 +16,7 @@ CWinState::~CWinState()
     // Empty
 }
 
-bool CWinState::init(IGraphicsSystem *graphicsSystem, IInputProvider *inputProvider,
-                     IResourceManager *resourceManager)
+bool CWinState::init(IGraphicsSystem *graphicsSystem, IInputProvider *inputProvider, IResourceManager *resourceManager)
 {
     m_graphicsSystem = graphicsSystem;
     m_inputProvider = inputProvider;
@@ -25,9 +24,8 @@ bool CWinState::init(IGraphicsSystem *graphicsSystem, IInputProvider *inputProvi
 
     // TODO Refactor, camera movement should be implemented with a single camera
     // and camera controllers.
-    m_camera = std::make_shared<CFirstPersonCamera>(
-        glm::vec3(-4.4f, 5.f, 14.5), glm::vec3(0.f, 0.f, 0.f), glm::vec3(0.f, 1.f, 0.f), 45.f,
-        4.f / 3.f, 0.01f, 1000.f);
+    m_camera = std::make_shared<FirstPersonCamera>(glm::vec3(-4.4f, 5.f, 14.5), glm::vec3(0.f, 0.f, 0.f),
+                                                   glm::vec3(0.f, 1.f, 0.f), 45.f, 4.f / 3.f, 0.01f, 1000.f);
 
     m_camera->getFeatureInfoForWrite().godRayActive = false;
 
@@ -35,11 +33,11 @@ bool CWinState::init(IGraphicsSystem *graphicsSystem, IInputProvider *inputProvi
     m_scene = m_graphicsSystem->createScene();
 
     // Load scene from file
-    LOG_INFO("Loading scene from file %s.", m_sceneFile.c_str());
-    CSceneLoader loader(*resourceManager);
+    logi("Loading scene from file {}.", m_sceneFile.c_str());
+    SceneLoader loader(*resourceManager);
     if (!loader.load(m_sceneFile, *m_scene, m_animationWorld))
     {
-        LOG_ERROR("Failed to load scene file %s.", m_sceneFile.c_str());
+        loge("Failed to load scene file {}.", m_sceneFile.c_str());
         return false;
     }
     return true;

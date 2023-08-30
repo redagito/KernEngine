@@ -16,7 +16,7 @@ set_target_properties (${PROJECT_NAME} PROPERTIES
 )
 
 target_link_libraries (${PROJECT_NAME} 
-	PRIVATE ApplicationLib
+	PRIVATE EngineLib
 )
 
 target_include_directories (${PROJECT_NAME}
