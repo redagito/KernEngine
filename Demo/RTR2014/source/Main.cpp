@@ -1,18 +1,22 @@
-#include "RTRDemo.h"
-
 #include <fmtlog/fmtlog.h>
+
+#include "RTRDemo.h"
 
 int main(int argc, const char** argv)
 {
     fmtlog::startPollingThread();
 
-    RTRDemo demo;
-
-    int result = demo.init("data/demo.ini");
-    if (result != 0)
+    try
     {
-        return result;
-    }
+        RTRDemo demo;
+        if (demo.init("data/demo.ini") != 0)
+            return EXIT_FAILURE;
 
-    return demo.run();
+        return demo.run();
+    }
+    catch (const std::exception& e)
+    {
+        loge("{}", e.what());
+        return EXIT_FAILURE;
+    }
 }

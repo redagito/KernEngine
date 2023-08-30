@@ -1,24 +1,29 @@
-#include <memory>
-
 #include <fmtlog/fmtlog.h>
 
 #include "Engine.h"
 
-int main(int argc, const char **argv)
+int main(int argc, const char** argv)
 {
     fmtlog::startPollingThread();
 
-    // Create engine interface
-    std::unique_ptr<IEngine> engine(createEngine());
-
-    // TODO Parse program arguments
-
-    // Initialize from config file
-    if (!engine->init("data/startup.ini"))
+    try
     {
-        return 1;
+        // Create engine interface
+        Engine engine;
+
+        // Initialize from config file
+        if (!engine.init("data/startup.ini"))
+        {
+            return EXIT_FAILURE;
+        }
+        // Run engine
+        engine.run();
+
+        return EXIT_SUCCESS;
     }
-    // Run engine
-    engine->run();
-    return 0;
+    catch (const std::exception& e)
+    {
+        loge("{}", e.what());
+        return EXIT_FAILURE;
+    }
 }

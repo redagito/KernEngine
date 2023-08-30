@@ -11,8 +11,8 @@
 #include "kern/foundation/JsonUtil.h"
 #include "kern/game/GameSystem.h"
 #include "kern/game/IGameState.h"
-// #include "kern/graphics/game/state/CTitleState.h"
-// #include "kern/graphics/game/state/CGamePlayState.h"
+// #include "kern/graphics/game/state/TitleState.h"
+// #include "kern/graphics/game/state/GamePlayState.h"
 
 bool load(const std::string &file, IResourceManager &manager, GameSystem &system)
 {
@@ -129,11 +129,11 @@ bool loadGameState(const std::string &file, const std::string &name, IResourceMa
     IGameState *state = nullptr;
     if (type == "title")
     {
-        // state = new CTitleState;
+        // state = new TitleState;
     }
     else if (type == "game")
     {
-        // state = new CGamePlayState;
+        // state = new GamePlayState;
     }
 
     // TODO Remove
