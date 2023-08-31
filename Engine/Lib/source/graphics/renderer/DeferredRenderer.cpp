@@ -227,7 +227,7 @@ void DeferredRenderer::geometryPass(const IScene &scene, const ICamera &camera, 
         if (!scene.getObject(id, meshId, materialId, position, rotation, scale, visible))
         {
             // Invalid id
-            loge("Invalid scene object id %l.", id);
+            loge("Invalid scene object id {}.", id);
         }
         else
         {
@@ -310,7 +310,7 @@ void DeferredRenderer::shadowMapPass(const IScene &scene, const ICamera &camera,
         if (!scene.getObject(id, meshId, materialId, position, rotation, scale, visible))
         {
             // Invalid id
-            loge("Invalid scene object id %l.", id);
+            loge("Invalid scene object id {}.", id);
         }
         else
         {
@@ -417,7 +417,7 @@ void DeferredRenderer::shadowCubePass(const IScene &scene, const ICamera &camera
             if (!scene.getObject(id, meshId, materialId, position, rotation, scale, visible))
             {
                 // Invalid id
-                loge("Invalid scene object id %l.", id);
+                loge("Invalid scene object id {}.", id);
             }
             else
             {
@@ -514,7 +514,7 @@ void DeferredRenderer::pointLightPass(const IScene &scene, const ICamera &camera
 
         if (!scene.getPointLight(pointLightId, position, radius, color, intensity, castsShadow))
         {
-            loge("Failed to retrieve point light data from point light id %i.", pointLightId);
+            loge("Failed to retrieve point light data from point light id {}.", pointLightId);
         }
         else
         {
@@ -620,7 +620,7 @@ void DeferredRenderer::directionalLightPass(const IScene &scene, const ICamera &
 
         if (!scene.getDirectionalLight(directionalLightId, direction, color, intensity, castsShadow))
         {
-            loge("Failed to retrieve directional light data from point light id %i.", directionalLightId);
+            loge("Failed to retrieve directional light data from point light id {}.", directionalLightId);
         }
         else
         {

@@ -7,7 +7,6 @@
 #include <kern/foundation/IniFile.h>
 #include <kern/foundation/JsonUtil.h>
 #include <kern/foundation/StringUtil.h>
-#include <kern/foundation/TimeStamp.h>
 #include <kern/game/GameSystem.h>
 #include <kern/graphics/animation/AnimationWorld.h>
 #include <kern/graphics/camera/FirstPersonCamera.h>
@@ -311,7 +310,8 @@ bool Engine::initGameSystem(const std::string &gameFile)
     m_gameSystem->addState("game", new GamePlayState());
     m_gameSystem->addState("lose", new LoseState("data/world/lose.json"));
     m_gameSystem->addState("win", new WinState("data/world/win.json"));
-    if (!m_gameSystem->init("load", m_graphicsSystem.get(), m_inputProvider.get(), m_resourceManager.get(), m_soundSystem.get()))
+    if (!m_gameSystem->init("load", m_graphicsSystem.get(), m_inputProvider.get(), m_resourceManager.get(),
+                            m_soundSystem.get()))
     {
         loge("Failed to initialize game system.");
         return false;
@@ -327,7 +327,8 @@ bool Engine::initDemo(const std::string &sceneFile)
 
     // Create demo state from with scene file
     m_gameSystem->addState("demo", new DemoState(sceneFile));
-    if (!m_gameSystem->init("demo", m_graphicsSystem.get(), m_inputProvider.get(), m_resourceManager.get(), m_soundSystem.get()))
+    if (!m_gameSystem->init("demo", m_graphicsSystem.get(), m_inputProvider.get(), m_resourceManager.get(),
+                            m_soundSystem.get()))
     {
         loge("Failed to initialize game system.");
         return false;

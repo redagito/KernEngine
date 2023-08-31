@@ -30,7 +30,7 @@ Collidable *CollisionSystem::add(const AABBox &box, unsigned int groupId)
 {
     if (groupId >= m_entities.size())
     {
-        loge("Group id %i does not exist", groupId);
+        loge("Group id {} does not exist", groupId);
         throw std::runtime_error("CollisionSystem.add: Invalid goup id");
     }
     // Create new entity and add to the collision group

@@ -8,6 +8,7 @@
 
 class IScene;
 
+// Performs a sine translation on the object
 class SineTranslationController : public IAnimationController
 {
    public:

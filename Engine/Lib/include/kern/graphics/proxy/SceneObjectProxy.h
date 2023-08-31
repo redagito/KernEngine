@@ -41,5 +41,5 @@ class SceneObjectProxy
 
     bool m_init = false;
     IScene *m_scene = nullptr;
-    SceneObjectId m_objectId = invalidObject;
+    SceneObjectId m_objectId = InvalidObject;
 };

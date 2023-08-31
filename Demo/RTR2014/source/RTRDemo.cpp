@@ -1,31 +1,32 @@
 #include "RTRDemo.h"
 
-#include <string>
-#include <vector>
-
-// Debug
 #include <fmtlog/fmtlog.h>
 
-#include "kern/foundation/TimeStamp.h"
-
-// Graphics
+#include <string>
+#include <vector>
 #define GLFW_INCLUDE_NONE
 #include <GLFW/glfw3.h>
+#include <kern/audio/SoundSystem.h>
+#include <kern/graphics/animation/AnimationWorld.h>
+#include <kern/graphics/camera/FirstPersonCamera.h>
+#include <kern/graphics/input/GlfwInputProvider.h>
+#include <kern/graphics/io/SceneLoader.h>
+#include <kern/graphics/renderer/DeferredRenderer.h>
+#include <kern/graphics/renderer/ForwardRenderer.h>
+#include <kern/graphics/renderer/RendererCoreConfig.h>
+#include <kern/graphics/resource/GraphicsResourceManager.h>
+#include <kern/graphics/scene/Scene.h>
+#include <kern/graphics/window/GlfwWindow.h>
+#include <kern/resource/ResourceManager.h>
 
 #include "CameraController.h"
-#include "kern/graphics/animation/AnimationWorld.h"
-#include "kern/graphics/camera/FirstPersonCamera.h"
-#include "kern/graphics/input/GlfwInputProvider.h"
-#include "kern/graphics/io/SceneLoader.h"
-#include "kern/graphics/renderer/DeferredRenderer.h"
-#include "kern/graphics/renderer/ForwardRenderer.h"
-#include "kern/graphics/renderer/RendererCoreConfig.h"
-#include "kern/graphics/resource/GraphicsResourceManager.h"
-#include "kern/graphics/scene/Scene.h"
-#include "kern/graphics/window/GlfwWindow.h"
-#include "kern/resource/ResourceManager.h"
 
-RTRDemo::RTRDemo() {}
+RTRDemo::RTRDemo() 
+{ 
+    m_soundSystem = std::make_unique<SoundSystem>("data/audio");
+    m_bgMusic = m_soundSystem->createEmitter();
+    m_bgSfx = m_soundSystem->createEmitter();
+}
 
 RTRDemo::~RTRDemo() {}
 
@@ -83,6 +84,19 @@ int RTRDemo::init(const std::string& configFile)
 
     m_window->addListener(m_cameraController.get());
 
+    // Sound
+    m_soundSystem->getManager()->registerSound("demobgm", "inspiring-cinematic-ambient-116199.mp3");
+    auto soundBgm = m_soundSystem->getManager()->getSound("demobgm");
+    m_bgMusic->setSound(soundBgm);
+    m_bgMusic->setVolume(0.8);
+    m_bgMusic->setLooping(true);
+    
+    m_soundSystem->getManager()->registerSound("demosfx", "electric-windmill-74468.mp3");
+    auto soundSfx = m_soundSystem->getManager()->getSound("demosfx");
+    m_bgSfx->setSound(soundSfx);
+    m_bgSfx->setVolume(0.3);
+    m_bgSfx->setLooping(true);
+
     return 0;
 }
 
@@ -102,6 +116,8 @@ int RTRDemo::run()
     bool displayDebugInfo = false;
 
     m_window->toggleMouseCapture();
+    m_bgMusic->play();
+    m_bgSfx->play();
 
     do
     {

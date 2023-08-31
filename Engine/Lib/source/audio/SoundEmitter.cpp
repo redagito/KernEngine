@@ -1,19 +1,30 @@
 #include "kern/audio/SoundEmitter.h"
 
-SoundEmitter::SoundEmitter() { alGenSources(1, &source); }
+SoundEmitter::SoundEmitter() : SoundEmitter(nullptr) {}
+
+SoundEmitter::SoundEmitter(const std::shared_ptr<Sound>& sound) : sound(sound) { alGenSources(1, &source); }
+
 SoundEmitter::~SoundEmitter() { alDeleteSources(1, &source); }
 
-void SoundEmitter::play(const std::shared_ptr<Sound>& sound) 
-{ 
+void SoundEmitter::play()
+{
+    stop();
     alSourcei(source, AL_BUFFER, sound->getBuffer());
     alSourcePlay(source);
 }
 
+void SoundEmitter::play(const std::shared_ptr<Sound>& sound)
+{
+    setSound(sound);
+    play();
+}
+
 void SoundEmitter::stop() { alSourceStop(source); }
 
-void SoundEmitter::reset()
+void SoundEmitter::setSound(const std::shared_ptr<Sound>& sound)
 {
-
+    stop();
+    this->sound = sound;
 }
 
 void SoundEmitter::setPosition(const glm::vec3& pos)
@@ -38,7 +49,11 @@ void SoundEmitter::setPriority(SoundPriority prio) { priority = prio; }
 
 float SoundEmitter::getVolume() const { return volume; }
 
-void SoundEmitter::setVolume(float vol) { volume = vol; }
+void SoundEmitter::setVolume(float vol)
+{
+    alSourcef(source, AL_GAIN, vol);
+    volume = vol;
+}
 
 bool SoundEmitter::getLooping() const { return looping; }
 

@@ -8,6 +8,7 @@
 
 class IScene;
 
+// Rotates the controlled object
 class RotationController : public IAnimationController
 {
    public:

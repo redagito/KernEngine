@@ -1,21 +1,17 @@
 #pragma once
 
-#include "kern/graphics/animation/AnimationWorld.h"
-
-#include "kern/graphics/IGraphicsSystem.h"
-#include "kern/graphics/IScene.h"
-#include "kern/graphics/camera/IControllableCamera.h"
-
-#include "kern/resource/IResourceManager.h"
-
-#include "kern/graphics/input/IInputProvider.h"
-
-#include "kern/graphics/collision/AABBox.h"
-#include "kern/graphics/collision/CollisionSystem.h"
-
-#include "kern/game/AGameState.h"
-#include "kern/game/GameObject.h"
-#include "kern/game/GameWorld.h"
+#include <kern/audio/SoundSystem.h>
+#include <kern/game/AGameState.h>
+#include <kern/game/GameObject.h>
+#include <kern/game/GameWorld.h>
+#include <kern/graphics/IGraphicsSystem.h>
+#include <kern/graphics/IScene.h>
+#include <kern/graphics/animation/AnimationWorld.h>
+#include <kern/graphics/camera/IControllableCamera.h>
+#include <kern/graphics/collision/AABBox.h>
+#include <kern/graphics/collision/CollisionSystem.h>
+#include <kern/graphics/input/IInputProvider.h>
+#include <kern/resource/IResourceManager.h>
 
 class GamePlayState : public AGameState
 {
@@ -38,6 +34,7 @@ class GamePlayState : public AGameState
     IInputProvider *m_inputProvider = nullptr;
     std::shared_ptr<IControllableCamera> m_camera = nullptr;
     CollisionSystem *m_collisionSystem = nullptr; /**< Collision system. */
+    SoundSystem *m_soundSystem = nullptr;
 
     GameObject *m_player = nullptr;     /**< Player object. */
     GameObject *m_mothership = nullptr; /**< Mothership object. */
@@ -58,6 +55,8 @@ class GamePlayState : public AGameState
     ResourceId bossShipMaterial = InvalidResource;
     ResourceId bossRing = InvalidResource;
     ResourceId bossRingMaterial = InvalidResource;
+    std::shared_ptr<Sound> m_bgmSound;
+    std::shared_ptr<SoundEmitter> m_bgmEmitter;
 
     int m_winCounter = 0;
 };

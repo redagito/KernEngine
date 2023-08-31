@@ -1,4 +1,4 @@
 {
-	"base" : "data/image/lava_ground.png",
+	"base" : "data/image/lava_ground.jpg",
 	"glow" : "data/image/lava_ground_glow.png"
 }

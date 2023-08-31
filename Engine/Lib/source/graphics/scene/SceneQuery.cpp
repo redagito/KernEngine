@@ -56,7 +56,7 @@ SceneObjectId SceneQuery::getNextDirectionalLight()
     if (!hasNextDirectionalLight())
     {
         // Invalid object id
-        return invalidObject;
+        return InvalidObject;
     }
     // Get id
     SceneObjectId id = m_visibleDirectionalLights.at(m_nextDirectionalLightIndex);

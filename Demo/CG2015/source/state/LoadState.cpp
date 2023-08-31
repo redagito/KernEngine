@@ -49,7 +49,7 @@ bool LoadState::init(IGraphicsSystem *graphicsSystem, IInputProvider *inputProvi
     // Load sound
     soundSystem->getManager()->registerSound("loadbgm", "bgm/sion_-_ambients_-_stars_at_night.mp3");
     m_bgmSound = soundSystem->getManager()->getSound("loadbgm");
-    m_bgmEmitter = soundSystem->createEmitter();
+    m_bgmEmitter = soundSystem->getGlobalSoundEmitter();
     return true;
 }
 
@@ -79,7 +79,6 @@ bool LoadState::update(float dtime)
 
 void LoadState::onExit()
 {
-    m_bgmEmitter->stop();
 }
 
 const std::string &LoadState::getNextState() const { return titleStr; }

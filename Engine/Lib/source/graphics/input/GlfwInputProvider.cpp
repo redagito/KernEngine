@@ -79,7 +79,7 @@ void GlfwInputProvider::glfwMouseButtonCallback(GLFWwindow *window, int button, 
             eventType = EMouseButtonEventType::MOUSE_BUTTON_RELEASED;
             break;
         default:
-            logw("Ignored unknown action '%{}' for glfwMouseButtonCallback.", action);
+            logw("Ignored unknown action '{}' for glfwMouseButtonCallback.", action);
             return;
         }
 

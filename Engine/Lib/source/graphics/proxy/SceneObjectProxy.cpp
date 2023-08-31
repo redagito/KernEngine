@@ -11,7 +11,7 @@ SceneObjectProxy::SceneObjectProxy(IScene *scene, SceneObjectId id) { init(scene
 
 bool SceneObjectProxy::init(IScene *scene, SceneObjectId id)
 {
-    if (scene != nullptr && id != invalidObject)
+    if (scene != nullptr && id != InvalidObject)
     {
         m_scene = scene;
         m_objectId = id;

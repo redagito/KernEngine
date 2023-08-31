@@ -69,7 +69,7 @@ ResourceId ResourceManager::loadMesh(const std::string &file)
     if (!load(file, mesh))
     {
         loge("Failed to load mesh from file {}.", file.c_str());
-        return InvalidResource;
+        throw std::runtime_error("Failed to load mesh");
     }
 
     // Create mesh resource
@@ -77,7 +77,7 @@ ResourceId ResourceManager::loadMesh(const std::string &file)
     if (meshId == InvalidResource)
     {
         loge("Failed to create mesh resource id from file {}.", file.c_str());
-        return InvalidResource;
+        throw std::runtime_error("Failed to create mesh");
     }
     m_meshFiles[file] = meshId;
     return meshId;
@@ -130,7 +130,7 @@ ResourceId ResourceManager::loadImage(const std::string &file, ColorFormat forma
     if (!load(file, format, image))
     {
         loge("Failed to load image from file {}.", file.c_str());
-        return InvalidResource;
+        throw std::runtime_error("Failed to load image");
     }
 
     // Create managed resource
@@ -138,7 +138,7 @@ ResourceId ResourceManager::loadImage(const std::string &file, ColorFormat forma
     if (imageId == InvalidResource)
     {
         loge("Failed to create image resource id from file {}.", file.c_str());
-        return InvalidResource;
+        throw std::runtime_error("Failed to create image");
     }
     m_imageFiles[file] = imageId;
     return imageId;
@@ -189,7 +189,7 @@ ResourceId ResourceManager::loadMaterial(const std::string &file)
     if (!load(file, *this, material))
     {
         loge("Failed to load material from file {}.", file.c_str());
-        return InvalidResource;
+        throw std::runtime_error("Failed to load material");
     }
 
     ResourceId materialId =
@@ -197,7 +197,7 @@ ResourceId ResourceManager::loadMaterial(const std::string &file)
     if (materialId == InvalidResource)
     {
         loge("Failed to create material resource id for material file {}.", file.c_str());
-        return InvalidResource;
+        throw std::runtime_error("Failed to create material");
     }
     m_materialFiles[file] = materialId;
     return materialId;
@@ -248,14 +248,14 @@ ResourceId ResourceManager::loadModel(const std::string &file)
     if (!load(file, *this, model))
     {
         loge("Failed to load model from file {}.", file.c_str());
-        return InvalidResource;
+        throw std::runtime_error("Failed to load model");
     }
 
     ResourceId modelId = createModel(model.m_mesh, model.m_material);
     if (modelId == InvalidResource)
     {
         loge("Failed to create model resource id for model file {}.", file.c_str());
-        return InvalidResource;
+        throw std::runtime_error("Failed to create model");
     }
     m_modelFiles[file] = modelId;
     return modelId;
@@ -309,7 +309,7 @@ ResourceId ResourceManager::createShader(ResourceId vertex, ResourceId tessCtrl,
     if (vertex == InvalidResource || fragment == InvalidResource)
     {
         loge("Failed to create shader, resource id for vertex or fragment shader is invalid.");
-        return InvalidResource;
+        throw std::runtime_error("Failed to create shader: one or more ids invalid");
     }
 
     // Create shader
@@ -356,7 +356,7 @@ ResourceId ResourceManager::loadShader(const std::string &file)
     if (!load(file, *this, shader))
     {
         loge("Failed to load shader from file {}.", file.c_str());
-        return InvalidResource;
+        throw std::runtime_error("Failed to load shader file");
     }
 
     ResourceId shaderId = InvalidResource;
@@ -365,7 +365,7 @@ ResourceId ResourceManager::loadShader(const std::string &file)
     if (shaderId == InvalidResource)
     {
         loge("Failed to create reasource id for shader file {}.", file.c_str());
-        return InvalidResource;
+        throw std::runtime_error("Failed to create shader");
     }
 
     m_shaderFiles[file] = shaderId;
@@ -415,7 +415,7 @@ ResourceId ResourceManager::loadString(const std::string &file)
     if (!ifs.is_open())
     {
         loge("Failed to open the text file {}.", file.c_str());
-        return -1;
+        throw std::runtime_error("Failed to load text file");
     }
 
     // Load file
@@ -429,7 +429,7 @@ ResourceId ResourceManager::loadString(const std::string &file)
     if (stringId == -1)
     {
         loge("Failed to create string id for text file {}.", file.c_str());
-        return -1;
+        throw std::runtime_error("Failed to create text from file");
     }
 
     m_textFiles[file] = stringId;

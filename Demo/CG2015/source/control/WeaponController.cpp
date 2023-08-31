@@ -1,16 +1,18 @@
 #include "control/WeaponController.h"
 
+#include <kern/game/GameObject.h>
+
 #include <glm/glm.hpp>
 
 #include "control/LinearMovementController.h"
-#include "kern/game/GameObject.h"
 
 #define GLFW_INCLUDE_NONE
 #include <GLFW/glfw3.h>
 
 WeaponController::WeaponController(IInputProvider *provider, GameWorld *gameWorld, IScene *scene, ResourceId mesh,
-                                     ResourceId material, IResourceManager *resourceManager,
-                                     CollisionSystem *collisionSystem, int collisionGroup)
+                                   ResourceId material, IResourceManager *resourceManager,
+                                   CollisionSystem *collisionSystem, int collisionGroup,
+                                   std::shared_ptr<SoundEmitter> emitter)
     : m_collisionGroup(collisionGroup),
       m_collisionSystem(collisionSystem),
       m_resourceManager(resourceManager),
@@ -18,7 +20,8 @@ WeaponController::WeaponController(IInputProvider *provider, GameWorld *gameWorl
       m_gameWorld(gameWorld),
       m_scene(scene),
       m_mesh(mesh),
-      m_material(material)
+      m_material(material),
+      m_emitter(emitter)
 {
     return;
 }
@@ -67,6 +70,8 @@ void WeaponController::update(float dtime)
 
             // Add to world
             m_gameWorld->addObject(bullet);
+            // Play sound
+            m_emitter->play();
         }
     }
 }

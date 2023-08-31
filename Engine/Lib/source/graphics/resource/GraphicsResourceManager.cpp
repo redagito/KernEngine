@@ -166,7 +166,7 @@ ShaderProgram *GraphicsResourceManager::getShaderProgram(ResourceId id) const
     // TODO Allow shader loading if not found?
     if (iter == m_shaderPrograms.end())
     {
-        loge("The requested shader program id %i has not been loaded.", id);
+        loge("The requested shader program id {} has not been loaded.", id);
         return nullptr;
     }
     return iter->second.get();

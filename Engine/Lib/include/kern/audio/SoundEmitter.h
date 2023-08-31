@@ -13,11 +13,14 @@ class SoundEmitter
 {
    public:
     SoundEmitter();
+    SoundEmitter(const std::shared_ptr<Sound>& sound);
     ~SoundEmitter();
 
+    void play();
     void play(const std::shared_ptr<Sound>& sound);
     void stop();
-    void reset();
+
+    void setSound(const std::shared_ptr<Sound>& sound);
 
     void setPosition(const glm::vec3& position);
     const glm::vec3& getPosition() const;

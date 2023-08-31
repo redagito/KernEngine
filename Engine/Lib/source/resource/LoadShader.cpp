@@ -58,7 +58,7 @@ bool load(const std::string &file, ResourceManager &manager, SShader &shader)
     {
         loge(
             "The vertex shader source file {}, specified in the shader "
-            "program file %s could not "
+            "program file {} could not "
             "be loaded.",
             vertex.c_str(), file.c_str());
         return false;
@@ -97,7 +97,7 @@ bool load(const std::string &file, ResourceManager &manager, SShader &shader)
         if (tessEvalId == InvalidResource)
         {
             loge(
-                "The tessellation evaluation shader source file %s, specified "
+                "The tessellation evaluation shader source file {}, specified "
                 "in the shader "
                 "program file {} could not be loaded.",
                 tessEval.c_str(), file.c_str());

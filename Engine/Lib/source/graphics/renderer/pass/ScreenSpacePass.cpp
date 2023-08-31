@@ -48,7 +48,7 @@ void ScreenSpacePass::draw(const IGraphicsResourceManager *manager, FrameBuffer 
     ShaderProgram *shader = manager->getShaderProgram(m_shaderId);
     if (shader == nullptr)
     {
-        loge("Failed to load screen space pass shader with id %.");
+        loge("Failed to load screen space pass shader with id {}.", m_shaderId);
         return;
     }
 

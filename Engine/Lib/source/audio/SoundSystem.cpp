@@ -18,6 +18,9 @@ SoundSystem::SoundSystem(const std::string& directory) : manager(std::make_share
     }
 
     alcMakeContextCurrent(context);
+
+    // bgm emitter
+    bgmEmitter = createEmitter();
 }
 
 SoundSystem::~SoundSystem()
@@ -40,9 +43,13 @@ std::shared_ptr<SoundManager>& SoundSystem::getManager() { return manager; }
 
 void SoundSystem::update(float dtime) { return; }
 
-std::shared_ptr<SoundEmitter> SoundSystem::createEmitter()
+std::shared_ptr<SoundEmitter> SoundSystem::createEmitter() { return createEmitter(nullptr); }
+
+std::shared_ptr<SoundEmitter> SoundSystem::createEmitter(const std::shared_ptr<Sound> sound)
 {
-    auto emitter = std::make_shared<SoundEmitter>();
+    auto emitter = std::make_shared<SoundEmitter>(sound);
     emitters.insert(emitter);
     return emitter;
 }
+
+std::shared_ptr<SoundEmitter>& SoundSystem::getGlobalSoundEmitter() { return bgmEmitter; }

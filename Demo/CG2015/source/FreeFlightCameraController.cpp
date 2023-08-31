@@ -74,35 +74,35 @@ bool FreeFlightCameraController::loadSequence(const std::string &file)
 
         if (!load(node[i], "position", position))
         {
-            loge("Failed loading node 'position' for element #%i.", i);
+            loge("Failed loading node 'position' for element #{}.", i);
             success = false;
             break;
         }
 
         if (!load(node[i], "orientation", orientation))
         {
-            loge("Failed loading node 'orientation' for element #%i.", i);
+            loge("Failed loading node 'orientation' for element #{}.", i);
             success = false;
             break;
         }
 
         if (!load(node[i], "timestamp", timestamp))
         {
-            loge("Failed loading node 'timestamp' for element #%i.", i);
+            loge("Failed loading node 'timestamp' for element #{}.", i);
             success = false;
             break;
         }
 
         if (!load(node[i], "fxaa", fxaaActive))
         {
-            loge("Failed loading node 'fxaa' for element #%i.", i);
+            loge("Failed loading node 'fxaa' for element #{}.", i);
             success = false;
             break;
         }
 
         if (!load(node[i], "fog", fogActive))
         {
-            loge("Failed loading node 'fog' for element #%i.", i);
+            loge("Failed loading node 'fog' for element #{}.", i);
             success = false;
             break;
         }

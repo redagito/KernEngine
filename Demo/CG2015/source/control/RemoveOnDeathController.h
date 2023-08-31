@@ -2,7 +2,8 @@
 
 #include <string>
 
-#include "kern/game/IGameObjectController.h"
+#include <kern/game/IGameObjectController.h>
+#include <kern/audio/SoundEmitter.h>
 
 class GamePlayState;
 
@@ -17,7 +18,7 @@ class RemoveOnDeathController : public IGameObjectController
     /**
      * \brief Sets sound system and sound name.
      */
-    RemoveOnDeathController(GamePlayState *state);
+    RemoveOnDeathController(GamePlayState *state, const std::shared_ptr<SoundEmitter>& emitter);
 
     /**
      * \brief Destructor for cleanup.
@@ -47,4 +48,5 @@ class RemoveOnDeathController : public IGameObjectController
     GameObject *m_object = nullptr; /**< Controlled game object. */
     GamePlayState *m_gameState = nullptr;
     bool m_active = false;
+    std::shared_ptr<SoundEmitter> m_emitter;
 };

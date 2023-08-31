@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.25.0)
 project(KernEngine)
 
 # Demo project as default startup
-set_property(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY VS_STARTUP_PROJECT RenderTest)
+set_property(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY VS_STARTUP_PROJECT RenderDemo)
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 set(CXX_STANDARD_REQUIRED ON)
 

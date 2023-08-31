@@ -35,6 +35,16 @@ GamePlayState::~GamePlayState()
 bool GamePlayState::init(IGraphicsSystem *graphicsSystem, IInputProvider *inputProvider,
                          IResourceManager *resourceManager, SoundSystem *soundSystem)
 {
+    // Sound
+    m_soundSystem = soundSystem;
+    m_soundSystem->getManager()->registerSound("playbgm", "bgm/kim-lightyear-stardust-vision-ii-135754.mp3");
+    m_soundSystem->getManager()->registerSound("shotsfx", "sfx/shoot02wav-14562.mp3");
+    m_soundSystem->getManager()->registerSound("explosfx", "sfx/explosion-91872.mp3");
+
+    m_bgmSound = m_soundSystem->getManager()->getSound("playbgm");
+    m_bgmEmitter = m_soundSystem->getGlobalSoundEmitter();
+    auto shotEmitter = m_soundSystem->createEmitter(soundSystem->getManager()->getSound("shotsfx"));
+
     m_collisionSystem = new CollisionSystem();
     m_graphicsSystem = graphicsSystem;
     m_inputProvider = inputProvider;
@@ -69,7 +79,7 @@ bool GamePlayState::init(IGraphicsSystem *graphicsSystem, IInputProvider *inputP
     {
         return false;
     }
-    ResourceId bulletMaterial = m_resourceManager->loadMaterial("data/material/white.json");
+    ResourceId bulletMaterial = m_resourceManager->loadMaterial("data/material/white_glowing.json");
     if (bulletMaterial == InvalidResource)
     {
         return false;
@@ -77,7 +87,7 @@ bool GamePlayState::init(IGraphicsSystem *graphicsSystem, IInputProvider *inputP
 
     m_player->addController(std::make_shared<WeaponController>(m_inputProvider, &getGameWorld(), m_scene, bulletMesh,
                                                                bulletMaterial, m_resourceManager, m_collisionSystem,
-                                                               m_playerGroup));
+                                                               m_playerGroup, shotEmitter));
     m_player->setPosition(glm::vec3(0.f, 20.f, -100.f));
     m_player->setRotation(glm::vec3(0.f));
     m_player->setScale(glm::vec3(0.5f));
@@ -182,6 +192,9 @@ bool GamePlayState::init(IGraphicsSystem *graphicsSystem, IInputProvider *inputP
         return false;
     }
 
+    // Explosion sound
+    auto exploSound = soundSystem->getManager()->getSound("explosfx");
+
     // Load boss Enemy resources
     // Add enemy with rotating ring
     m_bossEnemy = new GameObject();
@@ -192,7 +205,8 @@ bool GamePlayState::init(IGraphicsSystem *graphicsSystem, IInputProvider *inputP
         std::make_shared<RestrictPositionController>(glm::vec2(-100.f, -100.f), glm::vec2(100.f, 100.f)));
     m_bossEnemy->addController(std::make_shared<LinearMovementController>(m_bossEnemy->getForward(), 17.f));
     m_bossEnemy->addController(std::make_shared<HealthController>(300.f));
-    m_bossEnemy->addController(std::make_shared<RemoveOnDeathController>(this));
+    m_bossEnemy->addController(
+        std::make_shared<RemoveOnDeathController>(this, m_soundSystem->createEmitter(exploSound)));
 
     bossShip = m_resourceManager->loadMesh("data/mesh/ship_2.obj");
     if (bossShip == InvalidResource)
@@ -241,7 +255,6 @@ bool GamePlayState::init(IGraphicsSystem *graphicsSystem, IInputProvider *inputP
     m_ring->setSceneObject(bossRingObject);
 
     getGameWorld().addObject(m_ring);
-
     return true;
 }
 
@@ -249,6 +262,7 @@ void GamePlayState::onEnter()
 {
     m_graphicsSystem->setActiveCamera(m_camera.get());
     m_graphicsSystem->setActiveScene(m_scene);
+    m_bgmEmitter->play(m_bgmSound);
 }
 
 bool GamePlayState::update(float dtime)
@@ -256,6 +270,8 @@ bool GamePlayState::update(float dtime)
     m_enemyTime -= dtime;
     if (m_enemyCount > 0.f && m_enemyTime <= 0.f)
     {
+        auto exploSound = m_soundSystem->getManager()->getSound("explosfx");
+
         m_enemyTime = 2.f;
         m_enemyId++;
         // Create new enemy
@@ -269,7 +285,8 @@ bool GamePlayState::update(float dtime)
                 std::make_shared<RestrictPositionController>(glm::vec2(-100.f, -100.f), glm::vec2(100.f, 100.f)));
             enemy->addController(std::make_shared<LinearMovementController>(enemy->getForward(), 15.f));
             enemy->addController(std::make_shared<HealthController>(100.f));
-            enemy->addController(std::make_shared<RemoveOnDeathController>(this));
+            enemy->addController(
+                std::make_shared<RemoveOnDeathController>(this, m_soundSystem->createEmitter(exploSound)));
         }
 
         if (m_enemyId == 2)
@@ -281,7 +298,8 @@ bool GamePlayState::update(float dtime)
                 std::make_shared<RestrictPositionController>(glm::vec2(-100.f, -100.f), glm::vec2(100.f, 100.f)));
             enemy->addController(std::make_shared<LinearMovementController>(enemy->getForward(), 15.f));
             enemy->addController(std::make_shared<HealthController>(100.f));
-            enemy->addController(std::make_shared<RemoveOnDeathController>(this));
+            enemy->addController(
+                std::make_shared<RemoveOnDeathController>(this, m_soundSystem->createEmitter(exploSound)));
         }
 
         if (m_enemyId == 3)
@@ -293,7 +311,8 @@ bool GamePlayState::update(float dtime)
                 std::make_shared<RestrictPositionController>(glm::vec2(-100.f, -100.f), glm::vec2(100.f, 100.f)));
             enemy->addController(std::make_shared<LinearMovementController>(enemy->getForward(), 15.f));
             enemy->addController(std::make_shared<HealthController>(100.f));
-            enemy->addController(std::make_shared<RemoveOnDeathController>(this));
+            enemy->addController(
+                std::make_shared<RemoveOnDeathController>(this, m_soundSystem->createEmitter(exploSound)));
         }
 
         if (m_enemyId == 4)
@@ -305,7 +324,8 @@ bool GamePlayState::update(float dtime)
                 std::make_shared<RestrictPositionController>(glm::vec2(-100.f, -100.f), glm::vec2(100.f, 100.f)));
             enemy->addController(std::make_shared<SimpleWaypointController>(glm::vec3(-101.f, 25.f, 0.f), 15.f, this));
             enemy->addController(std::make_shared<HealthController>(100.f));
-            enemy->addController(std::make_shared<RemoveOnDeathController>(this));
+            enemy->addController(
+                std::make_shared<RemoveOnDeathController>(this, m_soundSystem->createEmitter(exploSound)));
         }
 
         if (m_enemyId == 5)
@@ -318,7 +338,8 @@ bool GamePlayState::update(float dtime)
             enemy->addController(
                 std::make_shared<SimpleWaypointController>(glm::vec3(-101.f, 40.f, -50.f), 15.f, this));
             enemy->addController(std::make_shared<HealthController>(100.f));
-            enemy->addController(std::make_shared<RemoveOnDeathController>(this));
+            enemy->addController(
+                std::make_shared<RemoveOnDeathController>(this, m_soundSystem->createEmitter(exploSound)));
         }
 
         if (m_enemyId == 6)
@@ -330,7 +351,8 @@ bool GamePlayState::update(float dtime)
                 std::make_shared<RestrictPositionController>(glm::vec2(-100.f, -100.f), glm::vec2(100.f, 100.f)));
             enemy->addController(std::make_shared<SimpleWaypointController>(glm::vec3(-101.f, 50.f, 50.f), 15.f, this));
             enemy->addController(std::make_shared<HealthController>(100.f));
-            enemy->addController(std::make_shared<RemoveOnDeathController>(this));
+            enemy->addController(
+                std::make_shared<RemoveOnDeathController>(this, m_soundSystem->createEmitter(exploSound)));
         }
 
         // Player collidable added to player collision group

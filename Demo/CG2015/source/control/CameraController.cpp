@@ -23,7 +23,7 @@ void CameraController::update(float dtime)
         glm::vec3 forward = m_object->getForward();
 
         // Where the camera should be
-        glm::vec3 camPos(pos.x - forward.x * 8.f, pos.y * 0.95f + 3.f, pos.z - forward.z * 8.f);
+        glm::vec3 camPos(pos.x - forward.x * 8.f, pos.y * 0.95f + 5.f, pos.z - forward.z * 8.f);
         m_camera->setPosition(camPos);
 
         // Init on first update

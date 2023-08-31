@@ -98,7 +98,7 @@ void ForwardRenderer::draw(const IScene &scene, const ICamera &camera, const IWi
         if (!scene.getObject(id, meshId, materialId, position, rotation, scale, visible))
         {
             // Invalid id
-            loge("Invalid scene object id %l.", id);
+            loge("Invalid scene object id {}.", id);
         }
         else
         {

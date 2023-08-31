@@ -3,8 +3,8 @@
 #include "kern/game/GameObject.h"
 #include "state/GamePlayState.h"
 
-RemoveOnDeathController::RemoveOnDeathController(GamePlayState *state)
-    : m_object(nullptr), m_gameState(state), m_active(true)
+RemoveOnDeathController::RemoveOnDeathController(GamePlayState *state, const std::shared_ptr<SoundEmitter> &emitter)
+    : m_object(nullptr), m_gameState(state), m_active(true), m_emitter(emitter)
 {
     return;
 }
@@ -22,6 +22,7 @@ void RemoveOnDeathController::update(float dtime)
         // Mark for deletion
         m_gameState->winCount();
         m_object->markDeleted();
+        m_emitter->play();
     }
 }
 

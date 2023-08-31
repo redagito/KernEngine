@@ -8,6 +8,7 @@
 
 class IScene;
 
+// Moves the controlled object in a direction
 class MovementController : public IAnimationController
 {
    public:
