@@ -4,12 +4,12 @@
 #include <fmtlog/fmtlog.h>
 
 // Resource management
-#include "kern/graphics/resource/IResourceManager.h"
+#include "kern/resource/IResourceManager.h"
 
 // Graphics API
 #include "kern/graphics/IGraphicsResourceManager.h"
 #include "kern/graphics/renderer/FrameBuffer.h"
-#include "kern/graphics/renderer/core/RendererCoreConfig.h"
+#include "kern/graphics/renderer/RendererCoreConfig.h"
 #include "kern/graphics/resource/ShaderProgram.h"
 #include "kern/graphics/resource/Texture.h"
 
@@ -19,14 +19,14 @@ ScreenSpacePass::ScreenSpacePass()
     std::vector<unsigned int> indices = {1};
     std::vector<float> normals = {0.f, 1.f, 0.f};
     std::vector<float> uvs = {0.f, 0.f, 0.f};
-    m_quad.reset(new Mesh(vertices, indices, normals, uvs, EPrimitiveType::Point));
+    m_quad.reset(new Mesh(vertices, indices, normals, uvs, PrimitiveType::Point));
 }
 
 bool ScreenSpacePass::init(const std::string &shaderFile, IResourceManager *manager)
 {
     logi("Initializing screen space pass with shader {}.", shaderFile.c_str());
     m_shaderId = manager->loadShader(shaderFile);
-    if (m_shaderId == invalidResource)
+    if (m_shaderId == InvalidResource)
     {
         loge("Failed to initialize the screen space pass from shader {}.", shaderFile.c_str());
         return false;
@@ -37,7 +37,7 @@ bool ScreenSpacePass::init(const std::string &shaderFile, IResourceManager *mana
 void ScreenSpacePass::draw(const IGraphicsResourceManager *manager, FrameBuffer *fbo, Texture *texture0,
                            Texture *texture1, Texture *texture2, Texture *texture3)
 {
-    if (m_shaderId == invalidResource)
+    if (m_shaderId == InvalidResource)
     {
         loge("The screen space pass shader id is not valid.");
         return;

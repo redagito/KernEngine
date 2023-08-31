@@ -1,14 +1,13 @@
 #pragma once
 
+#include <glm/glm.hpp>
 #include <memory>
+#include <nlohmann/json.hpp>
 #include <string>
 #include <vector>
 
-#include <nlohmann/json.hpp>
-#include <glm/glm.hpp>
-
-#include "kern/graphics/animation/Animation.h"
 #include "kern/graphics/SceneConfig.h"
+#include "kern/graphics/animation/AnimationObjectType.h"
 
 class IScene;
 class IResourceManager;
@@ -36,20 +35,16 @@ class SceneLoader
     bool loadPointLights(const nlohmann::json &node, IScene &scene, AnimationWorld &animationWorld);
     bool loadPointLight(const nlohmann::json &node, IScene &scene, AnimationWorld &animationWorld);
 
-    bool loadDirectionalLights(const nlohmann::json &node, IScene &scene,
-                               AnimationWorld &animationWorld);
-    bool loadDirectionalLight(const nlohmann::json &node, IScene &scene,
-                              AnimationWorld &animationWorld);
+    bool loadDirectionalLights(const nlohmann::json &node, IScene &scene, AnimationWorld &animationWorld);
+    bool loadDirectionalLight(const nlohmann::json &node, IScene &scene, AnimationWorld &animationWorld);
 
     bool loadAmbientLight(const nlohmann::json &node, IScene &scene);
 
-    bool loadAnimationControllers(const nlohmann::json &node, IScene &scene,
-                                  AnimationWorld &animationWorld, SceneObjectId id,
-                                  AnimationObjectType type);
+    bool loadAnimationControllers(const nlohmann::json &node, IScene &scene, AnimationWorld &animationWorld,
+                                  SceneObjectId id, AnimationObjectType type);
 
-    bool loadAnimationController(const nlohmann::json &node, IScene &scene,
-                                 AnimationWorld &animationWorld, SceneObjectId id,
-                                 AnimationObjectType type);
+    bool loadAnimationController(const nlohmann::json &node, IScene &scene, AnimationWorld &animationWorld,
+                                 SceneObjectId id, AnimationObjectType type);
 
    private:
     IResourceManager &m_resourceManager;

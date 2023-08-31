@@ -13,9 +13,8 @@
 #include "kern/graphics/camera/StaticCamera.h"
 #include "kern/graphics/renderer/Draw.h"
 #include "kern/graphics/renderer/RenderBuffer.h"
-#include "kern/graphics/renderer/core/RendererCoreConfig.h"
-#include "kern/graphics/renderer/debug/RendererDebug.h"
-#include "kern/graphics/resource/IResourceManager.h"
+#include "kern/graphics/renderer/RendererCoreConfig.h"
+#include "kern/resource/IResourceManager.h"
 #include "kern/graphics/resource/Material.h"
 #include "kern/graphics/resource/Mesh.h"
 #include "kern/graphics/resource/ShaderProgram.h"
@@ -29,14 +28,6 @@ DeferredRenderer::~DeferredRenderer() { return; }
 bool DeferredRenderer::init(IResourceManager &manager)
 {
     logi("Initializing deferred renderer.");
-
-    // Error check
-    std::string error;
-    if (hasGLError(error))
-    {
-        loge("GL Error: {}", error.c_str());
-        return false;
-    }
 
     // Init geometry pass resources
     if (!initGeometryPass(manager))
@@ -156,15 +147,6 @@ void DeferredRenderer::draw(const IScene &scene, const ICamera &camera, const IW
         // Final display pass
         displayPass(window, manager, m_postProcessPassOutputTexture);
     }
-
-#ifndef NDEBUG
-    // Post draw error check
-    std::string error;
-    if (hasGLError(error))
-    {
-        loge("GL Error: {}", error.c_str());
-    }
-#endif
 }
 
 DeferredRenderer *DeferredRenderer::create(IResourceManager &manager)
@@ -264,15 +246,6 @@ void DeferredRenderer::geometryPass(const IScene &scene, const ICamera &camera, 
         }
     }
 
-#ifndef NDEBUG
-    // Post draw error check
-    std::string error;
-    if (hasGLError(error))
-    {
-        loge("GL Error: {}", error.c_str());
-    }
-#endif
-
     // Disable geometry buffer
     m_geometryBuffer.setInactive(GL_FRAMEBUFFER);
 }
@@ -355,15 +328,6 @@ void DeferredRenderer::shadowMapPass(const IScene &scene, const ICamera &camera,
                  transformer.getScaleMatrix(), material, manager, shadowMapPassShader);
         }
     }
-
-#ifndef NDEBUG
-    // Post draw error check
-    std::string error;
-    if (hasGLError(error))
-    {
-        loge("GL Error: {}", error.c_str());
-    }
-#endif
 
     // Disable geometry buffer
     m_shadowMapBuffer.setInactive(GL_FRAMEBUFFER);
@@ -474,15 +438,6 @@ void DeferredRenderer::shadowCubePass(const IScene &scene, const ICamera &camera
             }
         }
     }
-
-#ifndef NDEBUG
-    // Post draw error check
-    std::string error;
-    if (hasGLError(error))
-    {
-        loge("GL Error: {}", error.c_str());
-    }
-#endif
 
     // Disable buffer
     m_shadowCubeBuffer.setInactive(GL_FRAMEBUFFER);
@@ -1610,13 +1565,6 @@ void DeferredRenderer::draw(Mesh *mesh, const glm::mat4 &translation, const glm:
     // TODO Consider custom shader bindings for meshes
     ::draw(*mesh);
 
-#ifndef NDEBUG
-    std::string error;
-    if (hasGLError(error))
-    {
-        loge("GL Error: {}", error.c_str());
-    }
-#endif
     // TODO Cleanup?
 }
 
@@ -1629,7 +1577,7 @@ bool DeferredRenderer::initGeometryPass(IResourceManager &manager)
     m_geometryPassShaderId = manager.loadShader(geometryPassShaderFile);
 
     // Check if ok
-    if (m_geometryPassShaderId == invalidResource)
+    if (m_geometryPassShaderId == InvalidResource)
     {
         loge("Failed to initialize the shader from file {}.", geometryPassShaderFile.c_str());
         return false;
@@ -1648,37 +1596,14 @@ bool DeferredRenderer::initGeometryPass(IResourceManager &manager)
     m_depthTexture = std::make_shared<Texture>();
     m_depthTexture->init(800, 600, GL_DEPTH_COMPONENT24);
 
-    // Error check
-    std::string error;
-    if (hasGLError(error))
-    {
-        loge("GL Error: {}", error.c_str());
-        return false;
-    }
-
     // Total 96 bit per pixel
     m_geometryBuffer.attach(m_depthTexture, GL_DEPTH_ATTACHMENT);
     m_geometryBuffer.attach(m_diffuseGlowTexture, GL_COLOR_ATTACHMENT0);
     m_geometryBuffer.attach(m_normalSpecularTexture, GL_COLOR_ATTACHMENT1);
-
-    // Error check
-    if (hasGLError(error))
-    {
-        loge("GL Error: {}", error.c_str());
-        return false;
-    }
-
-    logi("GBuffer state: {}.", m_geometryBuffer.getState().c_str());
+    logi("GBuffer state: {}.", m_geometryBuffer.getState());
 
     // Reset framebuffer
     m_geometryBuffer.setInactive(GL_FRAMEBUFFER);
-
-    // Error check
-    if (hasGLError(error))
-    {
-        loge("GL Error: {}", error.c_str());
-        return false;
-    }
     return true;
 }
 
@@ -1687,7 +1612,7 @@ bool DeferredRenderer::initShadowCubePass(IResourceManager &manager)
     std::string shaderFile("data/shader/shadow_cube_pass.ini");
     m_shadowCubePassShaderId = manager.loadShader(shaderFile);
 
-    if (m_shadowCubePassShaderId == invalidResource)
+    if (m_shadowCubePassShaderId == InvalidResource)
     {
         loge("Failed to initialize the shader from file {}.", shaderFile.c_str());
         return false;
@@ -1727,39 +1652,16 @@ bool DeferredRenderer::initShadowCubePass(IResourceManager &manager)
     m_shadowCubeTexture =
         std::make_shared<Texture>(textureId, false, 1024, 1024, GL_DEPTH_COMPONENT24, GL_DEPTH_COMPONENT);
 
-    // Error check
-    std::string error;
-    if (hasGLError(error))
-    {
-        loge("GL Error: {}", error.c_str());
-        return false;
-    }
-
     glBindFramebuffer(GL_FRAMEBUFFER, m_shadowCubeBuffer.getId());
     glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D, m_shadowCubeDepthTexture->getId(), 0);
 
     glDrawBuffer(GL_NONE);
     glReadBuffer(GL_NONE);
     m_shadowCubeBuffer.setInactive(GL_FRAMEBUFFER);
-
-    // Error check
-    if (hasGLError(error))
-    {
-        loge("GL Error: {}", error.c_str());
-        return false;
-    }
-
     logi("Shadow cube buffer state: {}.", m_shadowCubeBuffer.getState().c_str());
 
     // Reset framebuffer
     m_shadowCubeBuffer.setInactive(GL_FRAMEBUFFER);
-
-    // Error check
-    if (hasGLError(error))
-    {
-        loge("GL Error: {}", error.c_str());
-        return false;
-    }
     return true;
 }
 
@@ -1768,7 +1670,7 @@ bool DeferredRenderer::initShadowMapPass(IResourceManager &manager)
     std::string shaderFile("data/shader/shadow_map_pass.ini");
     m_shadowMapPassShaderId = manager.loadShader(shaderFile);
 
-    if (m_shadowMapPassShaderId == invalidResource)
+    if (m_shadowMapPassShaderId == InvalidResource)
     {
         loge("Failed to initialize the shader from file {}.", shaderFile.c_str());
         return false;
@@ -1788,38 +1690,15 @@ bool DeferredRenderer::initShadowMapPass(IResourceManager &manager)
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_COMPARE_MODE, GL_COMPARE_REF_TO_TEXTURE);
     glBindTexture(GL_TEXTURE_2D, 0);
 
-    // Error check
-    std::string error;
-    if (hasGLError(error))
-    {
-        loge("GL Error: {}", error.c_str());
-        return false;
-    }
-
     // Total 96 bit per pixel
     m_shadowMapBuffer.attach(m_shadowDepthTexture, GL_DEPTH_ATTACHMENT);
     m_shadowMapBuffer.setActive(GL_FRAMEBUFFER);
     glDrawBuffer(GL_NONE);
     m_shadowMapBuffer.setInactive(GL_FRAMEBUFFER);
-
-    // Error check
-    if (hasGLError(error))
-    {
-        loge("GL Error: {}", error.c_str());
-        return false;
-    }
-
     logi("Shadow map buffer state: {}.", m_shadowMapBuffer.getState().c_str());
 
     // Reset framebuffer
     m_shadowMapBuffer.setInactive(GL_FRAMEBUFFER);
-
-    // Error check
-    if (hasGLError(error))
-    {
-        loge("GL Error: {}", error.c_str());
-        return false;
-    }
     return true;
 }
 
@@ -1830,7 +1709,7 @@ bool DeferredRenderer::initPointLightPass(IResourceManager &manager)
     m_pointLightPassShaderId = manager.loadShader(pointLightPassShaderFile);
 
     // Check if ok
-    if (m_pointLightPassShaderId == invalidResource)
+    if (m_pointLightPassShaderId == InvalidResource)
     {
         loge("Failed to initialize the shader from file {}.", pointLightPassShaderFile.c_str());
         return false;
@@ -1839,7 +1718,7 @@ bool DeferredRenderer::initPointLightPass(IResourceManager &manager)
     // Load sphere mesh for point light representation
     std::string sphereMesh = "data/mesh/sphere.obj";
     m_pointLightSphereId = manager.loadMesh(sphereMesh);
-    if (m_pointLightSphereId == invalidResource)
+    if (m_pointLightSphereId == InvalidResource)
     {
         loge("Failed to load point light volume mesh {}.", sphereMesh.c_str());
         return false;
@@ -1874,7 +1753,7 @@ bool DeferredRenderer::initDirectionalLightPass(IResourceManager &manager)
     m_directionalLightPassShaderId = manager.loadShader(directionalLightPassShaderFile);
 
     // Check if ok
-    if (m_directionalLightPassShaderId == invalidResource)
+    if (m_directionalLightPassShaderId == InvalidResource)
     {
         loge("Failed to initialize the shader from file {}.", directionalLightPassShaderFile.c_str());
         return false;
@@ -1883,7 +1762,7 @@ bool DeferredRenderer::initDirectionalLightPass(IResourceManager &manager)
     // Load quad mesh for directional light representation
     std::string quadMesh = "data/mesh/screen_quad.obj";
     m_directionalLightScreenQuadId = manager.loadMesh(quadMesh);
-    if (m_directionalLightScreenQuadId == invalidResource)
+    if (m_directionalLightScreenQuadId == InvalidResource)
     {
         loge("Failed to load screen quad mesh {}.", quadMesh.c_str());
         return false;
@@ -1894,27 +1773,13 @@ bool DeferredRenderer::initDirectionalLightPass(IResourceManager &manager)
 
 bool DeferredRenderer::initIlluminationPass(IResourceManager &manager)
 {
-    // Error check
-    std::string error;
-    if (hasGLError(error))
-    {
-        loge("GL Error: {}", error.c_str());
-        return false;
-    }
     // Load illumination shader
     std::string illuminationPassShaderFile = "data/shader/deferred/illumination_pass.ini";
     m_illuminationPassShaderId = manager.loadShader(illuminationPassShaderFile);
     // Check if ok
-    if (m_illuminationPassShaderId == invalidResource)
+    if (m_illuminationPassShaderId == InvalidResource)
     {
         loge("Failed to initialize the shader from file {}.", illuminationPassShaderFile.c_str());
-        return false;
-    }
-
-    // Error check
-    if (hasGLError(error))
-    {
-        loge("GL Error: {}", error.c_str());
         return false;
     }
 
@@ -1922,16 +1787,9 @@ bool DeferredRenderer::initIlluminationPass(IResourceManager &manager)
     std::string quadMesh = "data/mesh/screen_quad.obj";
     m_illuminationPassScreenQuadId = manager.loadMesh(quadMesh);
     // Check if ok
-    if (m_illuminationPassScreenQuadId == invalidResource)
+    if (m_illuminationPassScreenQuadId == InvalidResource)
     {
         loge("Failed to load screen quad mesh {}.", quadMesh.c_str());
-        return false;
-    }
-
-    // Error check
-    if (hasGLError(error))
-    {
-        loge("GL Error: {}", error.c_str());
         return false;
     }
 
@@ -1945,13 +1803,6 @@ bool DeferredRenderer::initIlluminationPass(IResourceManager &manager)
     m_illumationPassFrameBuffer.attach(m_illuminationPassTexture, GL_COLOR_ATTACHMENT0);
 
     // TODO Check FBO
-
-    // Error check
-    if (hasGLError(error))
-    {
-        loge("GL Error: {}", error.c_str());
-        return false;
-    }
 
     return true;
 }
@@ -2059,7 +1910,7 @@ bool DeferredRenderer::initPostProcessPass(IResourceManager &manager)
     // Screen quad mesh
     std::string quadMesh = "data/mesh/screen_quad.obj";
     m_postProcessScreenQuadId = manager.loadMesh(quadMesh);
-    if (m_directionalLightScreenQuadId == invalidResource)
+    if (m_directionalLightScreenQuadId == InvalidResource)
     {
         loge("Failed to load screen quad mesh {}.", quadMesh.c_str());
         return false;
@@ -2112,7 +1963,7 @@ bool DeferredRenderer::initDepthOfFieldPass(IResourceManager &manager)
     std::string depthOfFieldShaderFile = "data/shader/post/depth_of_field_pass.ini";
     m_depthOfFieldPassShaderId = manager.loadShader(depthOfFieldShaderFile);
     // Check if ok
-    if (m_depthOfFieldPassShaderId == invalidResource)
+    if (m_depthOfFieldPassShaderId == InvalidResource)
     {
         loge("Failed to initialize the shader from file {}.", depthOfFieldShaderFile.c_str());
         return false;
@@ -2126,7 +1977,7 @@ bool DeferredRenderer::initGaussBlurVerticalPass(IResourceManager &manager)
     std::string gaussBlurVerticalShaderFile = "data/shader/post/gauss_blur_vertical_pass.ini";
     m_gaussBlurVerticalShaderId = manager.loadShader(gaussBlurVerticalShaderFile);
     // Check if ok
-    if (m_gaussBlurVerticalShaderId == invalidResource)
+    if (m_gaussBlurVerticalShaderId == InvalidResource)
     {
         loge("Failed to initialize the shader from file {}.", gaussBlurVerticalShaderFile.c_str());
         return false;
@@ -2140,7 +1991,7 @@ bool DeferredRenderer::initGaussBlurHorizontalPass(IResourceManager &manager)
     std::string gaussBlurHorizontalShaderFile = "data/shader/post/gauss_blur_horizontal_pass.ini";
     m_gaussBlurHorizontalShaderId = manager.loadShader(gaussBlurHorizontalShaderFile);
     // Check if ok
-    if (m_gaussBlurHorizontalShaderId == invalidResource)
+    if (m_gaussBlurHorizontalShaderId == InvalidResource)
     {
         loge("Failed to initialize the shader from file {}.", gaussBlurHorizontalShaderFile.c_str());
         return false;
@@ -2154,7 +2005,7 @@ bool DeferredRenderer::initFxaaPass(IResourceManager &manager)
     std::string fxaaShaderFile = "data/shader/post/fxaa_pass.ini";
     m_fxaaPassShaderId = manager.loadShader(fxaaShaderFile);
     // Check if ok
-    if (m_fxaaPassShaderId == invalidResource)
+    if (m_fxaaPassShaderId == InvalidResource)
     {
         loge("Failed to initialize the shader from file {}.", fxaaShaderFile.c_str());
         return false;
@@ -2168,7 +2019,7 @@ bool DeferredRenderer::initFogPass(IResourceManager &manager)
     std::string fogShaderFile = "data/shader/post/fog_pass.ini";
     m_fogPassShaderId = manager.loadShader(fogShaderFile);
     // Check if ok
-    if (m_fogPassShaderId == invalidResource)
+    if (m_fogPassShaderId == InvalidResource)
     {
         loge("Failed to initialize the shader from file {}.", fogShaderFile.c_str());
         return false;
@@ -2182,7 +2033,7 @@ bool DeferredRenderer::initGodRayPass1(IResourceManager &manager)
     std::string shader = "data/shader/post/god_ray_1_pass.ini";
     m_godRayPass1ShaderId = manager.loadShader(shader);
     // Check if ok
-    if (m_godRayPass1ShaderId == invalidResource)
+    if (m_godRayPass1ShaderId == InvalidResource)
     {
         loge("Failed to initialize the shader from file {}.", shader.c_str());
         return false;
@@ -2196,7 +2047,7 @@ bool DeferredRenderer::initGodRayPass2(IResourceManager &manager)
     std::string shader = "data/shader/post/god_ray_2_pass.ini";
     m_godRayPass2ShaderId = manager.loadShader(shader);
     // Check if ok
-    if (m_godRayPass2ShaderId == invalidResource)
+    if (m_godRayPass2ShaderId == InvalidResource)
     {
         loge("Failed to initialize the shader from file {}.", shader.c_str());
         return false;
@@ -2210,7 +2061,7 @@ bool DeferredRenderer::initDisplayPass(IResourceManager &manager)
     std::string displayPassShaderFile = "data/shader/display_pass.ini";
     m_displayPassShaderId = manager.loadShader(displayPassShaderFile);
     // Check if ok
-    if (m_displayPassShaderId == invalidResource)
+    if (m_displayPassShaderId == InvalidResource)
     {
         loge("Failed to initialize the shader from file {}.", displayPassShaderFile.c_str());
         return false;
@@ -2224,7 +2075,7 @@ bool DeferredRenderer::initVisualizeDepthPass(IResourceManager &manager)
     std::string shaderFile = "data/shader/debug/visualize_depth_buffer_pass.ini";
     m_visualizeDepthPassShaderId = manager.loadShader(shaderFile);
     // Check if ok
-    if (m_visualizeDepthPassShaderId == invalidResource)
+    if (m_visualizeDepthPassShaderId == InvalidResource)
     {
         loge("Failed to initialize the shader from file {}.", shaderFile.c_str());
         return false;
@@ -2238,7 +2089,7 @@ bool DeferredRenderer::initVignetteBlurPass(IResourceManager &manager)
     std::string shaderFile = "data/shader/post/vignette_blur_pass.ini";
     m_vignetteBlurPassShaderId = manager.loadShader(shaderFile);
     // Check if ok
-    if (m_vignetteBlurPassShaderId == invalidResource)
+    if (m_vignetteBlurPassShaderId == InvalidResource)
     {
         loge("Failed to initialize the shader from file {}.", shaderFile.c_str());
         return false;
@@ -2252,7 +2103,7 @@ bool DeferredRenderer::initBloomPass1(IResourceManager &manager)
     std::string shaderFile = "data/shader/post/bloom_1_pass.ini";
     m_bloomPass1ShaderId = manager.loadShader(shaderFile);
     // Check if ok
-    if (m_bloomPass1ShaderId == invalidResource)
+    if (m_bloomPass1ShaderId == InvalidResource)
     {
         loge("Failed to initialize the shader from file {}.", shaderFile.c_str());
         return false;
@@ -2266,7 +2117,7 @@ bool DeferredRenderer::initBloomPass2(IResourceManager &manager)
     std::string shaderFile = "data/shader/post/bloom_2_pass.ini";
     m_bloomPass2ShaderId = manager.loadShader(shaderFile);
     // Check if ok
-    if (m_bloomPass2ShaderId == invalidResource)
+    if (m_bloomPass2ShaderId == InvalidResource)
     {
         loge("Failed to initialize the shader from file {}.", shaderFile.c_str());
         return false;
@@ -2280,7 +2131,7 @@ bool DeferredRenderer::initLensFlarePass(IResourceManager &manager)
     std::string shaderFile = "data/shader/post/lens_flare_pass.ini";
     m_lensFlarePassShaderId = manager.loadShader(shaderFile);
     // Check if ok
-    if (m_lensFlarePassShaderId == invalidResource)
+    if (m_lensFlarePassShaderId == InvalidResource)
     {
         loge("Failed to initialize the shader from file {}.", shaderFile.c_str());
         return false;
@@ -2294,7 +2145,7 @@ bool DeferredRenderer::initLensFlarePass2(IResourceManager &manager)
     std::string shaderFile = "data/shader/post/lens_flare_pass2.ini";
     m_lensFlarePass2ShaderId = manager.loadShader(shaderFile);
     // Check if ok
-    if (m_lensFlarePass2ShaderId == invalidResource)
+    if (m_lensFlarePass2ShaderId == InvalidResource)
     {
         loge("Failed to initialize the shader from file {}.", shaderFile.c_str());
         return false;
@@ -2308,7 +2159,7 @@ bool DeferredRenderer::initLensFlarePass3(IResourceManager &manager)
     std::string shaderFile = "data/shader/post/lens_flare_pass3.ini";
     m_lensFlarePass3ShaderId = manager.loadShader(shaderFile);
     // Check if ok
-    if (m_lensFlarePass3ShaderId == invalidResource)
+    if (m_lensFlarePass3ShaderId == InvalidResource)
     {
         loge("Failed to initialize the shader from file {}.", shaderFile.c_str());
         return false;
@@ -2322,7 +2173,7 @@ bool DeferredRenderer::initCelPass(IResourceManager &manager)
     std::string shaderFile = "data/shader/post/cel_pass.ini";
     m_celPassShaderId = manager.loadShader(shaderFile);
     // Check if ok
-    if (m_celPassShaderId == invalidResource)
+    if (m_celPassShaderId == InvalidResource)
     {
         loge("Failed to initialize the shader from file {}.", shaderFile.c_str());
         return false;
@@ -2336,7 +2187,7 @@ bool DeferredRenderer::initToneMapPass(IResourceManager &manager)
     std::string shaderFile = "data/shader/post/tonemap_pass.ini";
     m_toneMapPassShaderId = manager.loadShader(shaderFile);
     // Check if ok
-    if (m_toneMapPassShaderId == invalidResource)
+    if (m_toneMapPassShaderId == InvalidResource)
     {
         loge("Failed to initialize the shader from file {}.", shaderFile.c_str());
         return false;

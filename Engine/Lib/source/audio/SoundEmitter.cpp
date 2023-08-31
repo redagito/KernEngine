@@ -9,6 +9,8 @@ void SoundEmitter::play(const std::shared_ptr<Sound>& sound)
     alSourcePlay(source);
 }
 
+void SoundEmitter::stop() { alSourceStop(source); }
+
 void SoundEmitter::reset()
 {
 

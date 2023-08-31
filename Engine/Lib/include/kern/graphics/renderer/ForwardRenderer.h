@@ -2,7 +2,7 @@
 
 #include <list>
 
-#include "kern/graphics/resource/ResourceConfig.h"
+#include "kern/resource/ResourceId.h"
 
 #include "kern/graphics/IRenderer.h"
 #include "kern/graphics/renderer/RenderRequest.h"

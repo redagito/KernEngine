@@ -2,8 +2,9 @@
 
 #include <vector>
 
-#include "kern/graphics/renderer/core/RendererCoreConfig.h"
-#include "kern/graphics/resource/ResourceConfig.h"
+#include "kern/graphics/renderer/RendererCoreConfig.h"
+#include "kern/resource/ResourceId.h"
+#include "kern/resource/ColorFormat.h"
 
 /**
  * \brief Texture class.
@@ -17,12 +18,12 @@ class Texture
      * \brief Create from image data.
      */
     Texture(const std::vector<unsigned char> &imageData, unsigned int width, unsigned int height,
-             EColorFormat format, bool createMipmaps = true);
+             ColorFormat format, bool createMipmaps = true);
 
     /**
      * \brief Creates empty texture.
      */
-    Texture(unsigned int width, unsigned int height, EColorFormat format,
+    Texture(unsigned int width, unsigned int height, ColorFormat format,
              bool createMipmaps = true);
 
     // TODO remove this and introduce ability to create cubetextures (necessary
@@ -37,7 +38,7 @@ class Texture
      * \brief Initializes texture data.
      */
     bool init(const std::vector<unsigned char> &imageData, unsigned int width, unsigned int height,
-              EColorFormat format, bool createMipmaps = true);
+              ColorFormat format, bool createMipmaps = true);
 
     bool init(unsigned int width, unsigned int height, GLint format);
 

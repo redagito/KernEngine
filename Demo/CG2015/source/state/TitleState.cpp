@@ -17,8 +17,8 @@ TitleState::~TitleState()
     // Empty
 }
 
-bool TitleState::init(IGraphicsSystem *graphicsSystem, IInputProvider *inputProvider,
-                       IResourceManager *resourceManager)
+bool TitleState::init(IGraphicsSystem *graphicsSystem, IInputProvider *inputProvider, IResourceManager *resourceManager,
+                      SoundSystem *soundSystem)
 {
     m_graphicsSystem = graphicsSystem;
     m_inputProvider = inputProvider;

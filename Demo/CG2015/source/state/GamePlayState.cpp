@@ -33,7 +33,7 @@ GamePlayState::~GamePlayState()
 }
 
 bool GamePlayState::init(IGraphicsSystem *graphicsSystem, IInputProvider *inputProvider,
-                         IResourceManager *resourceManager)
+                         IResourceManager *resourceManager, SoundSystem *soundSystem)
 {
     m_collisionSystem = new CollisionSystem();
     m_graphicsSystem = graphicsSystem;
@@ -65,12 +65,12 @@ bool GamePlayState::init(IGraphicsSystem *graphicsSystem, IInputProvider *inputP
 
     // Load bullet
     ResourceId bulletMesh = m_resourceManager->loadMesh("data/mesh/bullet.obj");
-    if (bulletMesh == invalidResource)
+    if (bulletMesh == InvalidResource)
     {
         return false;
     }
     ResourceId bulletMaterial = m_resourceManager->loadMaterial("data/material/white.json");
-    if (bulletMaterial == invalidResource)
+    if (bulletMaterial == InvalidResource)
     {
         return false;
     }
@@ -84,7 +84,7 @@ bool GamePlayState::init(IGraphicsSystem *graphicsSystem, IInputProvider *inputP
 
     // Get model resources
     ResourceId playerShip = m_resourceManager->loadMesh("data/mesh/ship_2.obj");
-    if (playerShip == invalidResource)
+    if (playerShip == InvalidResource)
     {
         return false;
     }
@@ -94,13 +94,13 @@ bool GamePlayState::init(IGraphicsSystem *graphicsSystem, IInputProvider *inputP
     std::vector<unsigned int> playerIndices;
     std::vector<float> playerNormals;
     std::vector<float> playerUvs;
-    EPrimitiveType playerType;
+    PrimitiveType playerType;
     m_resourceManager->getMesh(playerShip, playerVertices, playerIndices, playerNormals, playerUvs, playerType);
     m_player->setCollidable(m_collisionSystem->add(AABBox::create(playerVertices), m_playerGroup));
     m_player->getCollidable()->setDamage(50.f);
 
     ResourceId playerShipMaterial = m_resourceManager->loadMaterial("data/material/line_metal.json");
-    if (playerShipMaterial == invalidResource)
+    if (playerShipMaterial == InvalidResource)
     {
         return false;
     }
@@ -122,12 +122,12 @@ bool GamePlayState::init(IGraphicsSystem *graphicsSystem, IInputProvider *inputP
 
     // Get model resources
     ResourceId motherShip = m_resourceManager->loadMesh("data/mesh/mothership.obj");
-    if (motherShip == invalidResource)
+    if (motherShip == InvalidResource)
     {
         return false;
     }
     ResourceId motherShipMaterial = m_resourceManager->loadMaterial("data/material/mothership.json");
-    if (motherShipMaterial == invalidResource)
+    if (motherShipMaterial == InvalidResource)
     {
         return false;
     }
@@ -148,13 +148,13 @@ bool GamePlayState::init(IGraphicsSystem *graphicsSystem, IInputProvider *inputP
 
     // Get model resources
     ResourceId pyramide = m_resourceManager->loadMesh("data/mesh/piramyde.obj");
-    if (pyramide == invalidResource)
+    if (pyramide == InvalidResource)
     {
         return false;
     }
 
     ResourceId pyramideMaterial = m_resourceManager->loadMaterial("data/material/sand.json");
-    if (pyramideMaterial == invalidResource)
+    if (pyramideMaterial == InvalidResource)
     {
         return false;
     }
@@ -171,13 +171,13 @@ bool GamePlayState::init(IGraphicsSystem *graphicsSystem, IInputProvider *inputP
     // LOAD ENEMY RESOURCE
     // Get model resources
     enemyShip = m_resourceManager->loadMesh("data/mesh/enemy.obj");
-    if (enemyShip == invalidResource)
+    if (enemyShip == InvalidResource)
     {
         return false;
     }
 
     enemyShipMaterial = m_resourceManager->loadMaterial("data/material/enemy.json");
-    if (enemyShipMaterial == invalidResource)
+    if (enemyShipMaterial == InvalidResource)
     {
         return false;
     }
@@ -195,13 +195,13 @@ bool GamePlayState::init(IGraphicsSystem *graphicsSystem, IInputProvider *inputP
     m_bossEnemy->addController(std::make_shared<RemoveOnDeathController>(this));
 
     bossShip = m_resourceManager->loadMesh("data/mesh/ship_2.obj");
-    if (bossShip == invalidResource)
+    if (bossShip == InvalidResource)
     {
         return false;
     }
 
     bossShipMaterial = m_resourceManager->loadMaterial("data/material/metallic_galvanized.json");
-    if (enemyShipMaterial == invalidResource)
+    if (enemyShipMaterial == InvalidResource)
     {
         return false;
     }
@@ -223,13 +223,13 @@ bool GamePlayState::init(IGraphicsSystem *graphicsSystem, IInputProvider *inputP
     m_ring->addController(std::make_shared<LinearMovementController>(m_ring->getForward(), 17.f));
 
     bossRing = m_resourceManager->loadMesh("data/mesh/ring_animation.obj");
-    if (bossRing == invalidResource)
+    if (bossRing == InvalidResource)
     {
         return false;
     }
 
     bossRingMaterial = m_resourceManager->loadMaterial("data/material/metallic_galvanized.json");
-    if (bossRingMaterial == invalidResource)
+    if (bossRingMaterial == InvalidResource)
     {
         return false;
     }
@@ -338,7 +338,7 @@ bool GamePlayState::update(float dtime)
         std::vector<unsigned int> enemyIndices;
         std::vector<float> enemyNormals;
         std::vector<float> enemyUvs;
-        EPrimitiveType enemyType;
+        PrimitiveType enemyType;
         m_resourceManager->getMesh(enemyShip, enemyVertices, enemyIndices, enemyNormals, enemyUvs, enemyType);
         enemy->setCollidable(m_collisionSystem->add(AABBox::create(enemyVertices), m_enemyGroup));
 

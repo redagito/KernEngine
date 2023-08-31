@@ -19,6 +19,7 @@ class GlfwWindow;
 
 // Input
 class IInputProvider;
+class SoundSystem;
 
 /**
  * \brief Demo application class.
@@ -67,4 +68,5 @@ class Engine : public IEngine
     // TODO Should use interface instead of concrete class
     std::shared_ptr<GlfwWindow> m_window;           /**< Application window. */
     std::shared_ptr<IInputProvider> m_inputProvider; /**< User input provider. */
+    std::shared_ptr<SoundSystem> m_soundSystem;
 };

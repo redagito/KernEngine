@@ -2,7 +2,7 @@
 
 #include <glm/glm.hpp>
 
-#include "kern/graphics/animation/Animation.h"
+#include "kern/graphics/animation/AnimationObjectType.h"
 #include "kern/graphics/animation/IAnimationController.h"
 #include "kern/graphics/SceneConfig.h"
 

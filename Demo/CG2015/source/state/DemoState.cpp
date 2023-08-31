@@ -14,8 +14,8 @@ DemoState::~DemoState()
     // Empty
 }
 
-bool DemoState::init(IGraphicsSystem *graphicsSystem, IInputProvider *inputProvider,
-                      IResourceManager *resourceManager)
+bool DemoState::init(IGraphicsSystem *graphicsSystem, IInputProvider *inputProvider, IResourceManager *resourceManager,
+                     SoundSystem *soundSystem)
 {
     m_graphicsSystem = graphicsSystem;
     // TODO Refactor, camera movement should be implemented with a single camera

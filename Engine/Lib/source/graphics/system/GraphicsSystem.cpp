@@ -6,9 +6,9 @@
 #include "kern/graphics/camera/Camera.h"
 #include "kern/graphics/renderer/DeferredRenderer.h"
 #include "kern/graphics/renderer/ForwardRenderer.h"
-#include "kern/graphics/renderer/core/RendererCoreConfig.h"
+#include "kern/graphics/renderer/RendererCoreConfig.h"
 #include "kern/graphics/resource/GraphicsResourceManager.h"
-#include "kern/graphics/resource/IResourceManager.h"
+#include "kern/resource/IResourceManager.h"
 #include "kern/graphics/scene/Scene.h"
 
 GraphicsSystem::GraphicsSystem() {}

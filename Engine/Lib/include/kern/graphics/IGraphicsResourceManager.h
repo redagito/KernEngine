@@ -1,6 +1,6 @@
 #pragma once
 
-#include "kern/graphics/resource/ResourceConfig.h"
+#include "kern/resource/ResourceId.h"
 
 class Mesh;
 class Material;

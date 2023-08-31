@@ -8,15 +8,13 @@
 
 #include <fmtlog/fmtlog.h>
 
-#include "kern/graphics/renderer/debug/RendererDebug.h"
-
 Texture::Texture()
 {
     // empty
 }
 
 Texture::Texture(const std::vector<unsigned char> &image, unsigned int width, unsigned int height,
-                   EColorFormat format, bool createMipmaps)
+                   ColorFormat format, bool createMipmaps)
 {
     // Init texture with data
     if (!init(image, width, height, format, createMipmaps))
@@ -25,7 +23,7 @@ Texture::Texture(const std::vector<unsigned char> &image, unsigned int width, un
     }
 }
 
-Texture::Texture(unsigned int width, unsigned int height, EColorFormat format, bool createMipmaps)
+Texture::Texture(unsigned int width, unsigned int height, ColorFormat format, bool createMipmaps)
 {
     // Init texture with data
     if (!init({}, width, height, format, createMipmaps))
@@ -55,19 +53,19 @@ Texture::~Texture()
 }
 
 bool Texture::init(const std::vector<unsigned char> &image, unsigned int width,
-                    unsigned int height, EColorFormat format, bool createMipmaps)
+                    unsigned int height, ColorFormat format, bool createMipmaps)
 {
     // Set format
     GLint internalFormat;
     switch (format)
     {
-    case EColorFormat::GreyScale8:
+    case ColorFormat::GreyScale8:
         internalFormat = GL_R8;
         break;
-    case EColorFormat::RGB24:
+    case ColorFormat::RGB24:
         internalFormat = GL_RGB8;
         break;
-    case EColorFormat::RGBA32:
+    case ColorFormat::RGBA32:
         internalFormat = GL_RGBA8;
         break;
     default:
@@ -237,13 +235,6 @@ bool Texture::init(const std::vector<unsigned char> &image, unsigned int width,
 
     // Unbind
     glBindTexture(GL_TEXTURE_2D, 0);
-
-    std::string error;
-    if (hasGLError(error))
-    {
-        loge("GL Error: {}", error.c_str());
-        return false;
-    }
 
     // Clean up previously created id
     if (m_textureId != 0)

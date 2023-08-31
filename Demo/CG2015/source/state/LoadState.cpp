@@ -19,8 +19,8 @@ LoadState::~LoadState()
     // Empty
 }
 
-bool LoadState::init(IGraphicsSystem *graphicsSystem, IInputProvider *inputProvider,
-                      IResourceManager *resourceManager)
+bool LoadState::init(IGraphicsSystem *graphicsSystem, IInputProvider *inputProvider, IResourceManager *resourceManager,
+                     SoundSystem *soundSystem)
 {
     m_graphicsSystem = graphicsSystem;
     m_resourceManager = resourceManager;
@@ -45,6 +45,11 @@ bool LoadState::init(IGraphicsSystem *graphicsSystem, IInputProvider *inputProvi
         loge("Failed to load scene file {}.", m_sceneFile.c_str());
         return false;
     }
+
+    // Load sound
+    soundSystem->getManager()->registerSound("loadbgm", "bgm/sion_-_ambients_-_stars_at_night.mp3");
+    m_bgmSound = soundSystem->getManager()->getSound("loadbgm");
+    m_bgmEmitter = soundSystem->createEmitter();
     return true;
 }
 
@@ -53,6 +58,7 @@ void LoadState::onEnter()
     m_timeLeft = m_transitionTime;
     m_graphicsSystem->setActiveCamera(m_camera.get());
     m_graphicsSystem->setActiveScene(m_scene);
+    m_bgmEmitter->play(m_bgmSound);
 }
 
 bool LoadState::update(float dtime)
@@ -73,7 +79,7 @@ bool LoadState::update(float dtime)
 
 void LoadState::onExit()
 {
-    // Nothing
+    m_bgmEmitter->stop();
 }
 
 const std::string &LoadState::getNextState() const { return titleStr; }

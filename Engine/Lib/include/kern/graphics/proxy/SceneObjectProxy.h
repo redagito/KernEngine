@@ -32,8 +32,8 @@ class SceneObjectProxy
     void getUpdate() const;
     void sendUpdate();
 
-    mutable ResourceId m_mesh = invalidResource;
-    mutable ResourceId m_material = invalidResource;
+    mutable ResourceId m_mesh = InvalidResource;
+    mutable ResourceId m_material = InvalidResource;
     mutable glm::vec3 m_position;
     mutable glm::quat m_rotation;
     mutable glm::vec3 m_scale;

@@ -7,7 +7,7 @@
 #include "kern/graphics/IScene.h"
 
 #include "kern/graphics/input/IInputProvider.h"
-#include "kern/graphics/resource/IResourceManager.h"
+#include "kern/resource/IResourceManager.h"
 
 #include "kern/game/GameSystem.h"
 #include "kern/game/IGameState.h"
@@ -21,8 +21,8 @@ class LoseState : public IGameState
     LoseState(const std::string &sceneFile);
     ~LoseState();
 
-    bool init(IGraphicsSystem *graphicsSystem, IInputProvider *inputProvider,
-              IResourceManager *resourceManager);
+    bool init(IGraphicsSystem *graphicsSystem, IInputProvider *inputProvider, IResourceManager *resourceManager,
+              SoundSystem *soundSystem);
 
     void onEnter();
     bool update(float dtime);

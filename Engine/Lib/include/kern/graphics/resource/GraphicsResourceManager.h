@@ -6,14 +6,15 @@
 #include <unordered_map>
 
 #include "kern/graphics/IGraphicsResourceManager.h"
-#include "kern/graphics/resource/IResourceListener.h"
-
 #include "kern/graphics/resource/Material.h"
 #include "kern/graphics/resource/Mesh.h"
 #include "kern/graphics/resource/Model.h"
 #include "kern/graphics/resource/ShaderProgram.h"
-#include "kern/graphics/resource/Texture.h"
 #include "kern/graphics/resource/TShaderObject.h"
+#include "kern/graphics/resource/Texture.h"
+#include "kern/resource/IResourceListener.h"
+#include "kern/resource/ResourceEvent.h"
+#include "kern/resource/ResourceType.h"
 
 class GraphicsResourceManager : public IGraphicsResourceManager, public IResourceListener
 {
@@ -49,8 +50,7 @@ class GraphicsResourceManager : public IGraphicsResourceManager, public IResourc
      * The function resolves the resource type and forwards the call to specialized
      * functions.
      */
-    void notify(EResourceType type, ResourceId, EListenerEvent event,
-                IResourceManager *resourceManager);
+    void notify(ResourceType type, ResourceId, ResourceEvent event, IResourceManager *resourceManager);
 
     /**
      * \brief Maps id to internal mesh object.
@@ -146,27 +146,27 @@ class GraphicsResourceManager : public IGraphicsResourceManager, public IResourc
     /**
      * \brief Handles resource events for image resources.
      */
-    void handleImageEvent(ResourceId, EListenerEvent event, IResourceManager *resourceManager);
+    void handleImageEvent(ResourceId, ResourceEvent event, IResourceManager *resourceManager);
 
     /**
      * \brief Handles resource events for mesh resources.
      */
-    void handleMeshEvent(ResourceId, EListenerEvent event, IResourceManager *resourceManager);
+    void handleMeshEvent(ResourceId, ResourceEvent event, IResourceManager *resourceManager);
 
     /**
      * \brief Handles resource events for material resources.
      */
-    void handleMaterialEvent(ResourceId, EListenerEvent event, IResourceManager *resourceManager);
+    void handleMaterialEvent(ResourceId, ResourceEvent event, IResourceManager *resourceManager);
 
     /**
      * \brief Handles resource events for model resource.
      */
-    void handleModelEvent(ResourceId, EListenerEvent event, IResourceManager *resourceManager);
+    void handleModelEvent(ResourceId, ResourceEvent event, IResourceManager *resourceManager);
 
     /**
      * \brief Handles resource events for shader resources.
      */
-    void handleShaderEvent(ResourceId, EListenerEvent event, IResourceManager *resourceManager);
+    void handleShaderEvent(ResourceId, ResourceEvent event, IResourceManager *resourceManager);
 
     /**
      * \brief Handles resource events for string resources.
@@ -174,7 +174,7 @@ class GraphicsResourceManager : public IGraphicsResourceManager, public IResourc
      * TODO Consider hot reloading of shader source code and on-the-fly
      * recompiling of shader objects/programs
      */
-    void handleStringEvent(ResourceId, EListenerEvent event, IResourceManager *resourceManager);
+    void handleStringEvent(ResourceId, ResourceEvent event, IResourceManager *resourceManager);
 
     std::unordered_map<ResourceId, std::unique_ptr<Mesh>>
         m_meshes; /**< Maps mesh id from resource manager to GPU side mesh. */
@@ -184,9 +184,8 @@ class GraphicsResourceManager : public IGraphicsResourceManager, public IResourc
                                                                              manager to GPU
                                                                              side texture. */
 
-    std::unordered_map<ResourceId, std::unique_ptr<Material>>
-        m_materials; /**< Maps material id from resource manager to cached
-                        material. */
+    std::unordered_map<ResourceId, std::unique_ptr<Material>> m_materials; /**< Maps material id from resource manager
+                                                                              to cached material. */
 
     std::unordered_map<ResourceId, std::unique_ptr<Model>>
         m_models; /**< Maps model id from resource manager to cached model. */

@@ -7,6 +7,7 @@
 
 #include "kern/graphics/IGraphicsSystem.h"
 #include "kern/graphics/input/IInputProvider.h"
+#include "kern/audio/SoundSystem.h"
 
 #include "kern/game/IGameState.h"
 
@@ -37,7 +38,7 @@ class GameSystem
      * \brief Initialize game system with startup config file.
      */
     bool init(const std::string &initialState, IGraphicsSystem *graphicsSystem,
-              IInputProvider *inputProvider, IResourceManager *resourceManager);
+              IInputProvider *inputProvider, IResourceManager *resourceManager, SoundSystem* soundSystem);
 
     /**
      * \brief Add game state by name and initializes the state.

@@ -6,7 +6,7 @@
 #include <vector>
 
 #include "kern/graphics/renderer/TextureSemantic.h"
-#include "kern/graphics/renderer/core/RendererCoreConfig.h"
+#include "kern/graphics/renderer/RendererCoreConfig.h"
 
 class Texture;
 class RenderBuffer;

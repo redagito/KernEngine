@@ -13,8 +13,8 @@
 class Frustum
 {
    public:
-    Frustum();
-    ~Frustum();
+    Frustum() = default;
+    ~Frustum() = default;
 
     /**
      * \brief Calculates frustum planes from camera parameters.

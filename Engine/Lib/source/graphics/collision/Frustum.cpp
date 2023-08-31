@@ -8,10 +8,6 @@
 
 const float gradToRad = glm::pi<float>() / 180.0f;
 
-Frustum::Frustum() {}
-
-Frustum::~Frustum() {}
-
 void Frustum::setFromCameraParameters(float angle, float ratio, float nearD, float farD,
                                        glm::vec3 &pos, glm::vec3 &look, glm::vec3 &u)
 {

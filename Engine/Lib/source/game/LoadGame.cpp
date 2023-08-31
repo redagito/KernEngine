@@ -6,13 +6,11 @@
 #include <nlohmann/json.hpp>
 #include <string>
 
-#include "kern/graphics/resource/IResourceManager.h"
 #include "kern/foundation/JsonDeserialize.h"
 #include "kern/foundation/JsonUtil.h"
 #include "kern/game/GameSystem.h"
 #include "kern/game/IGameState.h"
-// #include "kern/graphics/game/state/TitleState.h"
-// #include "kern/graphics/game/state/GamePlayState.h"
+#include "kern/resource/IResourceManager.h"
 
 bool load(const std::string &file, IResourceManager &manager, GameSystem &system)
 {

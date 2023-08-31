@@ -1,6 +1,6 @@
 #include "kern/graphics/renderer/pass/ScreenQuadPass.h"
 
-#include "kern/graphics/renderer/core/RendererCoreConfig.h"
+#include "kern/graphics/renderer/RendererCoreConfig.h"
 
 ScreenQuadPass::ScreenQuadPass()
 {
@@ -8,14 +8,14 @@ ScreenQuadPass::ScreenQuadPass()
     std::vector<unsigned int> indices = {1};
     std::vector<float> normals = {0.f, 1.f, 0.f};
     std::vector<float> uvs = {0.f, 0.f, 0.f};
-    m_quad.reset(new Mesh(vertices, indices, normals, uvs, EPrimitiveType::Point));
+    m_quad.reset(new Mesh(vertices, indices, normals, uvs, PrimitiveType::Point));
 }
 
 bool ScreenQuadPass::init(IResourceManager &manager)
 {
     std::string screenQuadShaderFile = "data/shader/compose_screenquad.ini";
     m_shaderId = manager.loadShader(screenQuadShaderFile);
-    if (m_shaderId == invalidResource)
+    if (m_shaderId == InvalidResource)
     {
         loge("Failed to load screenquad shader {}.", screenQuadShaderFile.c_str());
         return false;

@@ -7,7 +7,6 @@
 #include "kern/graphics/IGraphicsSystem.h"
 #include "kern/graphics/IRenderer.h"
 #include "kern/graphics/IScene.h"
-#include "kern/graphics/system/GraphicsSettings.h"
 
 class GraphicsSystem : public IGraphicsSystem
 {

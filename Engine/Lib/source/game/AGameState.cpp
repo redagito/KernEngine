@@ -11,8 +11,8 @@ GameWorld &AGameState::getGameWorld() { return m_gameWorld; }
 
 const GameWorld &AGameState::getGameWorld() const { return m_gameWorld; }
 
-bool AGameState::init(IGraphicsSystem *graphicsSystem, IInputProvider *inputProvider,
-                      IResourceManager *resourceManager)
+bool AGameState::init(IGraphicsSystem *graphicsSystem, IInputProvider *inputProvider, IResourceManager *resourceManager,
+                      SoundSystem *soundSystem)
 {
     return true;
 }

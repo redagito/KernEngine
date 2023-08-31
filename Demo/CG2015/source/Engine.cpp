@@ -3,6 +3,7 @@
 #define GLFW_INCLUDE_NONE
 #include <GLFW/glfw3.h>
 #include <fmtlog/fmtlog.h>
+#include <kern/audio/SoundSystem.h>
 #include <kern/foundation/IniFile.h>
 #include <kern/foundation/JsonUtil.h>
 #include <kern/foundation/StringUtil.h>
@@ -10,18 +11,16 @@
 #include <kern/game/GameSystem.h>
 #include <kern/graphics/animation/AnimationWorld.h>
 #include <kern/graphics/camera/FirstPersonCamera.h>
-#include <kern/graphics/camera/FreeCamera.h>
 #include <kern/graphics/input/GlfwInputProvider.h>
 #include <kern/graphics/io/SceneLoader.h>
 #include <kern/graphics/renderer/DeferredRenderer.h>
 #include <kern/graphics/renderer/ForwardRenderer.h>
-#include <kern/graphics/renderer/core/RendererCoreConfig.h>
-#include <kern/graphics/renderer/debug/RendererDebug.h>
+#include <kern/graphics/renderer/RendererCoreConfig.h>
 #include <kern/graphics/resource/GraphicsResourceManager.h>
-#include <kern/graphics/resource/Resource.h>
 #include <kern/graphics/scene/Scene.h>
 #include <kern/graphics/system/GraphicsSystem.h>
 #include <kern/graphics/window/GlfwWindow.h>
+#include <kern/resource/ResourceManager.h>
 
 #include <cassert>
 #include <string>
@@ -48,18 +47,22 @@ bool Engine::init(const char *configFile)
         // TODO Return if no config exists?
     }
 
+    // Sound system
+    m_soundSystem = std::make_shared<SoundSystem>("data/audio/");
+
     // Create window for rendering
     if (!initWindow(m_engineConfig.m_windowWidth, m_engineConfig.m_windowHeight, m_engineConfig.m_windowTitle))
     {
         loge("Failed to initialize window.");
         return false;
     }
+
     // TODO GLFW handle not properly wrapped away, GFLW should not be used
     // directly
     m_inputProvider = std::make_shared<GlfwInputProvider>(m_window->getGlfwHandle());
 
     // Create central resource manager
-    m_resourceManager.reset(createResourceManager());
+    m_resourceManager = std::make_shared<ResourceManager>();
     if (m_resourceManager == nullptr)
     {
         loge("Failed to initialize resource manager.");
@@ -248,6 +251,9 @@ void Engine::run()
             running = false;
         }
 
+        // Sound update
+        m_soundSystem->update(timeDiff);
+
         // Draw active scene from active camera with active rendering device
         m_graphicsSystem->draw(*m_window);
 
@@ -305,7 +311,7 @@ bool Engine::initGameSystem(const std::string &gameFile)
     m_gameSystem->addState("game", new GamePlayState());
     m_gameSystem->addState("lose", new LoseState("data/world/lose.json"));
     m_gameSystem->addState("win", new WinState("data/world/win.json"));
-    if (!m_gameSystem->init("load", m_graphicsSystem.get(), m_inputProvider.get(), m_resourceManager.get()))
+    if (!m_gameSystem->init("load", m_graphicsSystem.get(), m_inputProvider.get(), m_resourceManager.get(), m_soundSystem.get()))
     {
         loge("Failed to initialize game system.");
         return false;
@@ -321,7 +327,7 @@ bool Engine::initDemo(const std::string &sceneFile)
 
     // Create demo state from with scene file
     m_gameSystem->addState("demo", new DemoState(sceneFile));
-    if (!m_gameSystem->init("demo", m_graphicsSystem.get(), m_inputProvider.get(), m_resourceManager.get()))
+    if (!m_gameSystem->init("demo", m_graphicsSystem.get(), m_inputProvider.get(), m_resourceManager.get(), m_soundSystem.get()))
     {
         loge("Failed to initialize game system.");
         return false;

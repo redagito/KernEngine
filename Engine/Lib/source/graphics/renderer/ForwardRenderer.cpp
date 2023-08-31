@@ -12,14 +12,13 @@
 #include "kern/graphics/IScene.h"
 #include "kern/graphics/IWindow.h"
 #include "kern/graphics/renderer/Draw.h"
-#include "kern/graphics/renderer/core/RendererCoreConfig.h"
-#include "kern/graphics/renderer/debug/RendererDebug.h"
+#include "kern/graphics/renderer/RendererCoreConfig.h"
 #include "kern/graphics/resource/Material.h"
 #include "kern/graphics/resource/Mesh.h"
 #include "kern/graphics/resource/ShaderProgram.h"
 #include "kern/graphics/resource/Texture.h"
-#include "kern/graphics/resource/IResourceManager.h"
 #include "kern/graphics/scene/SceneQuery.h"
+#include "kern/resource/IResourceManager.h"
 
 // Shader sources
 #include "graphics/renderer/shader/ShaderForwardRenderer.h"
@@ -47,20 +46,12 @@ bool ForwardRenderer::init(IResourceManager &manager)
     // Winding order, standard is counter-clockwise
     glFrontFace(GL_CCW);
 
-    // Error check
-    std::string error;
-    if (hasGLError(error))
-    {
-        loge("GL Error: {}", error.c_str());
-        return false;
-    }
-
     // Load and init default shaders
     return initShaders(manager);
 }
 
 void ForwardRenderer::draw(const IScene &scene, const ICamera &camera, const IWindow &window,
-                            const IGraphicsResourceManager &manager)
+                           const IGraphicsResourceManager &manager)
 {
     // Draw init
     window.setActive();
@@ -126,13 +117,6 @@ void ForwardRenderer::draw(const IScene &scene, const ICamera &camera, const IWi
                  transformer.getScaleMatrix(), material, manager);
         }
     }
-
-    // Post draw error check
-    std::string error;
-    if (hasGLError(error))
-    {
-        loge("GL Error: {}", error.c_str());
-    }
 }
 
 ForwardRenderer *ForwardRenderer::create(IResourceManager &manager)
@@ -147,8 +131,8 @@ ForwardRenderer *ForwardRenderer::create(IResourceManager &manager)
     return renderer;
 }
 
-void ForwardRenderer::draw(Mesh *mesh, const glm::mat4 &translation, const glm::mat4 &rotation,
-                            const glm::mat4 &scale, Material *material, const IGraphicsResourceManager &manager)
+void ForwardRenderer::draw(Mesh *mesh, const glm::mat4 &translation, const glm::mat4 &rotation, const glm::mat4 &scale,
+                           Material *material, const IGraphicsResourceManager &manager)
 {
     // Transformation matrices
     m_forwardShader->setUniform(translationMatrixUniformName, translation);
@@ -228,10 +212,10 @@ bool ForwardRenderer::initShaders(IResourceManager &manager)
     auto vertexShaderId = manager.createString(getForwardRendererVertexShader());
     auto fragmentShaderId = manager.createString(getForwardRendererFragmentShader());
     m_forwardShaderId =
-        manager.createShader(vertexShaderId, invalidResource, invalidResource, invalidResource, fragmentShaderId);
+        manager.createShader(vertexShaderId, InvalidResource, InvalidResource, InvalidResource, fragmentShaderId);
 
     // Check if ok
-    if (m_forwardShaderId == invalidResource)
+    if (m_forwardShaderId == InvalidResource)
     {
         loge("Failed to initialize the farward shader.");
         return false;

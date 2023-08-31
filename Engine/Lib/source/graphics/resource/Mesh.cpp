@@ -4,17 +4,16 @@
 
 #include <fmtlog/fmtlog.h>
 
-#include "kern/graphics/renderer/core/RendererCoreConfig.h"
-#include "kern/graphics/renderer/debug/RendererDebug.h"
+#include "kern/graphics/renderer/RendererCoreConfig.h"
 
 Mesh::Mesh(const std::vector<float> &vertices, const std::vector<unsigned int> &indices,
-             const std::vector<float> &normals, const std::vector<float> &uvs, EPrimitiveType type)
+             const std::vector<float> &normals, const std::vector<float> &uvs, PrimitiveType type)
     : m_vertices(nullptr),
       m_indices(nullptr),
       m_normals(nullptr),
       m_uvs(nullptr),
       m_vao(nullptr),
-      m_type(EPrimitiveType::Invalid)
+      m_type(PrimitiveType::Invalid)
 {
     init(vertices, indices, normals, uvs, type);
 }
@@ -23,9 +22,9 @@ Mesh::~Mesh() { return; }
 
 bool Mesh::init(const std::vector<float> &vertices, const std::vector<unsigned int> &indices,
                  const std::vector<float> &normals, const std::vector<float> &uvs,
-                 EPrimitiveType type)
+                 PrimitiveType type)
 {
-    if (vertices.empty() || type == EPrimitiveType::Invalid)
+    if (vertices.empty() || type == PrimitiveType::Invalid)
     {
         return false;
     }
@@ -99,13 +98,6 @@ bool Mesh::init(const std::vector<float> &vertices, const std::vector<unsigned i
     // Disable vao
     m_vao->setInactive();
 
-    // Error check
-    std::string error;
-    if (hasGLError(error))
-    {
-        loge("GL Error: {}", error.c_str());
-    }
-
     // Build bounding sphere
     m_boundingSphere = BoundingSphere::create(vertices);
 
@@ -122,7 +114,7 @@ const std::unique_ptr<VertexBuffer> &Mesh::getNormalBuffer() const { return m_no
 
 const std::unique_ptr<VertexBuffer> &Mesh::getUVBuffer() const { return m_uvs; }
 
-const EPrimitiveType Mesh::getPrimitiveType() const { return m_type; }
+const PrimitiveType Mesh::getPrimitiveType() const { return m_type; }
 
 const std::unique_ptr<VertexArrayObject> &Mesh::getVertexArray() const {
     return m_vao; 
@@ -130,17 +122,17 @@ const std::unique_ptr<VertexArrayObject> &Mesh::getVertexArray() const {
 
 const BoundingSphere &Mesh::getBoundingSphere() const { return m_boundingSphere; }
 
-GLenum Mesh::toGLPrimitive(EPrimitiveType type)
+GLenum Mesh::toGLPrimitive(PrimitiveType type)
 {
     switch (type)
     {
-    case EPrimitiveType::Point:
+    case PrimitiveType::Point:
         return GL_POINTS;
         break;
-    case EPrimitiveType::Line:
+    case PrimitiveType::Line:
         return GL_LINE;
         break;
-    case EPrimitiveType::Triangle:
+    case PrimitiveType::Triangle:
         return GL_TRIANGLES;
         break;
     default:
@@ -150,17 +142,17 @@ GLenum Mesh::toGLPrimitive(EPrimitiveType type)
     }
 }
 
-unsigned int Mesh::getPrimitiveSize(EPrimitiveType type)
+unsigned int Mesh::getPrimitiveSize(PrimitiveType type)
 {
     switch (type)
     {
-    case EPrimitiveType::Point:
+    case PrimitiveType::Point:
         return 1;
         break;
-    case EPrimitiveType::Line:
+    case PrimitiveType::Line:
         return 2;
         break;
-    case EPrimitiveType::Triangle:
+    case PrimitiveType::Triangle:
         return 3;
         break;
     default:

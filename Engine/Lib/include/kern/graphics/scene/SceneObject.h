@@ -4,7 +4,7 @@
 #include <glm/glm.hpp>
 
 #include "kern/graphics/collision/BoundingSphere.h"
-#include "kern/graphics/resource/ResourceConfig.h"
+#include "kern/resource/ResourceId.h"
 
 /**
  * \brief Scene object data struct.
@@ -21,9 +21,9 @@ struct SceneObject
 
     void updateBoundingSphere();
 
-    ResourceId m_mesh = invalidResource;
-    ResourceId m_material = invalidResource;
-    ResourceId m_model = invalidResource;
+    ResourceId m_mesh = InvalidResource;
+    ResourceId m_material = InvalidResource;
+    ResourceId m_model = InvalidResource;
     glm::vec3 m_position = glm::vec3(0.f);
     glm::quat m_rotation = glm::quat(0.f, 0.f, 0.f, 0.f);
     glm::vec3 m_scale = glm::vec3(1.f);

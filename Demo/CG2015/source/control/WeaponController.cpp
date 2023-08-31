@@ -54,7 +54,7 @@ void WeaponController::update(float dtime)
             std::vector<unsigned int> bulletIndices;
             std::vector<float> bulletNormals;
             std::vector<float> bulletUvs;
-            EPrimitiveType bulletType;
+            PrimitiveType bulletType;
             m_resourceManager->getMesh(m_mesh, bulletVertices, bulletIndices, bulletNormals, bulletUvs, bulletType);
             bullet->setCollidable(m_collisionSystem->add(AABBox::create(bulletVertices), m_collisionGroup));
             bullet->getCollidable()->setDamage(50.f);

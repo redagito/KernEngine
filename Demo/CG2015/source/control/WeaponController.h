@@ -2,7 +2,7 @@
 
 #include "kern/graphics/IScene.h"
 #include "kern/graphics/input/IInputProvider.h"
-#include "kern/graphics/resource/IResourceManager.h"
+#include "kern/resource/IResourceManager.h"
 
 // Collision
 #include "kern/graphics/collision/Collidable.h"
@@ -37,8 +37,8 @@ class WeaponController : public IGameObjectController
     GameWorld *m_gameWorld = nullptr;
     IResourceManager *m_resourceManager = nullptr;
     IScene *m_scene = nullptr;
-    ResourceId m_mesh = invalidResource;
-    ResourceId m_material = invalidResource;
+    ResourceId m_mesh = InvalidResource;
+    ResourceId m_material = InvalidResource;
     CollisionSystem *m_collisionSystem = nullptr;
 
     unsigned int m_collisionGroup; /**< Player collision group. */

@@ -1,21 +1,18 @@
 #include "kern/graphics/resource/ShaderProgram.h"
 
-#include <cassert>
-
-#include <glm/ext.hpp>
-
 #include <fmtlog/fmtlog.h>
 
-#include "kern/graphics/renderer/debug/RendererDebug.h"
+#include <cassert>
+#include <glm/ext.hpp>
+
 #include "kern/graphics/resource/Texture.h"
 
 GLuint ShaderProgram::s_activeShaderProgram = 0;
 
 ShaderProgram::ShaderProgram(TShaderObject<GL_VERTEX_SHADER> *vertex,
-                               TShaderObject<GL_TESS_CONTROL_SHADER> *tessControl,
-                               TShaderObject<GL_TESS_EVALUATION_SHADER> *tessEval,
-                               TShaderObject<GL_GEOMETRY_SHADER> *geometry,
-                               TShaderObject<GL_FRAGMENT_SHADER> *fragment)
+                             TShaderObject<GL_TESS_CONTROL_SHADER> *tessControl,
+                             TShaderObject<GL_TESS_EVALUATION_SHADER> *tessEval,
+                             TShaderObject<GL_GEOMETRY_SHADER> *geometry, TShaderObject<GL_FRAGMENT_SHADER> *fragment)
     : m_programId(0), m_valid(false)
 {
     init(vertex, tessControl, tessEval, geometry, fragment);
@@ -29,11 +26,9 @@ ShaderProgram::~ShaderProgram()
     }
 }
 
-bool ShaderProgram::init(TShaderObject<GL_VERTEX_SHADER> *vertex,
-                          TShaderObject<GL_TESS_CONTROL_SHADER> *tessControl,
-                          TShaderObject<GL_TESS_EVALUATION_SHADER> *tessEval,
-                          TShaderObject<GL_GEOMETRY_SHADER> *geometry,
-                          TShaderObject<GL_FRAGMENT_SHADER> *fragment)
+bool ShaderProgram::init(TShaderObject<GL_VERTEX_SHADER> *vertex, TShaderObject<GL_TESS_CONTROL_SHADER> *tessControl,
+                         TShaderObject<GL_TESS_EVALUATION_SHADER> *tessEval,
+                         TShaderObject<GL_GEOMETRY_SHADER> *geometry, TShaderObject<GL_FRAGMENT_SHADER> *fragment)
 {
     // Needs vertex shader
     if (vertex == nullptr || !vertex->isValid())
@@ -117,13 +112,6 @@ bool ShaderProgram::init(TShaderObject<GL_VERTEX_SHADER> *vertex,
     // Clear uniform location cache
     m_uniformLocations.clear();
 
-    // Error check
-    std::string error;
-    if (hasGLError(error))
-    {
-        loge("GL Error: {}", error.c_str());
-    }
-
     return true;
 }
 
@@ -163,8 +151,7 @@ GLint ShaderProgram::getUniformLocation(const std::string &uniformName) const
         // Invalid location, uniform name does not exist in shader
         if (location == -1)
         {
-            loge("Failed to retrieve uniform name {} from shader program.",
-                      uniformName.c_str());
+            loge("Failed to retrieve uniform name {} from shader program.", uniformName.c_str());
         }
         m_uniformLocations[uniformName] = location;
         return location;
@@ -189,10 +176,7 @@ bool ShaderProgram::setUniform(GLint location, int i)
     return true;
 }
 
-bool ShaderProgram::setUniform(const std::string &name, int i)
-{
-    return setUniform(getUniformLocation(name), i);
-}
+bool ShaderProgram::setUniform(const std::string &name, int i) { return setUniform(getUniformLocation(name), i); }
 
 bool ShaderProgram::setUniform(GLint location, float f)
 {
@@ -205,10 +189,7 @@ bool ShaderProgram::setUniform(GLint location, float f)
     return true;
 }
 
-bool ShaderProgram::setUniform(const std::string &name, float f)
-{
-    return setUniform(getUniformLocation(name), f);
-}
+bool ShaderProgram::setUniform(const std::string &name, float f) { return setUniform(getUniformLocation(name), f); }
 
 bool ShaderProgram::setUniform(GLint location, const glm::vec2 &v)
 {
@@ -306,8 +287,7 @@ bool ShaderProgram::setUniform(const std::string &name, const glm::mat4 &m)
     return setUniform(getUniformLocation(name), m);
 }
 
-bool ShaderProgram::setUniform(Texture &texture, const std::string &textureName,
-                                GLint textureUnit)
+bool ShaderProgram::setUniform(Texture &texture, const std::string &textureName, GLint textureUnit)
 {
     texture.setActive(textureUnit);
     return setUniform(textureName, textureUnit);

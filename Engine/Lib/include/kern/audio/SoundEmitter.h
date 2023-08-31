@@ -16,6 +16,7 @@ class SoundEmitter
     ~SoundEmitter();
 
     void play(const std::shared_ptr<Sound>& sound);
+    void stop();
     void reset();
 
     void setPosition(const glm::vec3& position);

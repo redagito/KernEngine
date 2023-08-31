@@ -15,17 +15,15 @@
 #include "CameraController.h"
 #include "kern/graphics/animation/AnimationWorld.h"
 #include "kern/graphics/camera/FirstPersonCamera.h"
-#include "kern/graphics/camera/FreeCamera.h"
 #include "kern/graphics/input/GlfwInputProvider.h"
 #include "kern/graphics/io/SceneLoader.h"
 #include "kern/graphics/renderer/DeferredRenderer.h"
 #include "kern/graphics/renderer/ForwardRenderer.h"
-#include "kern/graphics/renderer/core/RendererCoreConfig.h"
-#include "kern/graphics/renderer/debug/RendererDebug.h"
+#include "kern/graphics/renderer/RendererCoreConfig.h"
 #include "kern/graphics/resource/GraphicsResourceManager.h"
-#include "kern/graphics/resource/Resource.h"
 #include "kern/graphics/scene/Scene.h"
 #include "kern/graphics/window/GlfwWindow.h"
+#include "kern/resource/ResourceManager.h"
 
 RTRDemo::RTRDemo() {}
 
@@ -48,7 +46,7 @@ int RTRDemo::init(const std::string& configFile)
     m_inputProvider = std::make_shared<GlfwInputProvider>(m_window->getGlfwHandle());
 
     // Create resource manager
-    m_resourceManager.reset(createResourceManager());
+    m_resourceManager = std::make_shared<ResourceManager>();
     if (m_resourceManager == nullptr)
     {
         loge("Failed to initialize resource manager.");

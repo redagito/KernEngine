@@ -10,7 +10,7 @@
 
 #include "FreeFlightCameraController.h"
 
-#include "kern/graphics/resource/IResourceManager.h"
+#include "kern/resource/IResourceManager.h"
 
 /**
  * \brief Represents the demo state of the engine.
@@ -25,8 +25,8 @@ class DemoState : public IGameState
     DemoState(const std::string &sceneFile);
     ~DemoState();
 
-    bool init(IGraphicsSystem *graphicsSystem, IInputProvider *inputProvider,
-              IResourceManager *resourceManager);
+    bool init(IGraphicsSystem *graphicsSystem, IInputProvider *inputProvider, IResourceManager *resourceManager,
+              SoundSystem *soundSystem);
 
     void onEnter();
     bool update(float dtime);

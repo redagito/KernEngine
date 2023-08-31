@@ -1,6 +1,6 @@
 #pragma once
 
-#include "kern/graphics/renderer/core/RendererCoreConfig.h"
+#include "kern/graphics/renderer/RendererCoreConfig.h"
 
 /**
  * \brief Write-only render buffer target as frame buffer attachement.

@@ -8,7 +8,7 @@
 
 void draw(Mesh &mesh)
 {
-    if (mesh.getPrimitiveType() == EPrimitiveType::Invalid)
+    if (mesh.getPrimitiveType() == PrimitiveType::Invalid)
     {
         return;
     }

@@ -4,6 +4,9 @@
 
 int main(int argc, const char** argv)
 {
+#ifndef NDEBUG
+    fmtlog::setLogLevel(fmtlog::DBG);
+#endif
     fmtlog::startPollingThread();
 
     try

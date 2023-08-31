@@ -8,7 +8,7 @@
 #include "kern/graphics/resource/ShaderProgram.h"
 #include "kern/graphics/resource/Texture.h"
 
-#include "kern/graphics/resource/IResourceManager.h"
+#include "kern/resource/IResourceManager.h"
 
 /**
  * \brief Draws textured screen space quad.

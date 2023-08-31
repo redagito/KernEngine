@@ -14,8 +14,8 @@
 #include "app/TransformedQuad.h"
 
 // Lighting
-#include "app/LightCube.h"
 #include "app/BasicLighting.h"
+#include "app/LightCube.h"
 #include "app/SimpleMaterial.h"
 
 // Model loading
@@ -32,7 +32,6 @@
 
 // Other
 #include "app/ImguiDemo.h"
-
 
 enum class AppKind
 {
@@ -100,14 +99,16 @@ std::unique_ptr<RenderApplication> createApp(AppKind kind)
 
 int main(int argc, char** argv)
 {
+#ifndef NDEBUG
     fmtlog::setLogLevel(fmtlog::DBG);
+#endif
     fmtlog::startPollingThread();
 
     try
     {
         std::vector<AppKind> kinds;
         // Getting started
-        
+
         kinds.push_back(AppKind::HelloTriangle);
         kinds.push_back(AppKind::ColorTriangle);
         kinds.push_back(AppKind::TexturedTriangle);
@@ -119,16 +120,15 @@ int main(int argc, char** argv)
         kinds.push_back(AppKind::HelloCamera);
         kinds.push_back(AppKind::SimpleMoveCamera);
         kinds.push_back(AppKind::LookAroundCamera);
-        
-        // Lighting 
+
+        // Lighting
         kinds.push_back(AppKind::LightCube);
         kinds.push_back(AppKind::BasicLighting);
         kinds.push_back(AppKind::SimpleMaterial);
-        
 
         // Model loading
         kinds.push_back(AppKind::ModelLoad);
-        
+
         // In practice
         kinds.push_back(AppKind::RenderText);
         // Other

@@ -10,7 +10,7 @@
 #include "kern/graphics/IScene.h"
 
 #include "kern/graphics/input/IInputProvider.h"
-#include "kern/graphics/resource/IResourceManager.h"
+#include "kern/resource/IResourceManager.h"
 
 /**
  * \brief Title state, similar to demo state with static camera.
@@ -21,8 +21,8 @@ class TitleState : public IGameState
     TitleState(const std::string &sceneFile);
     ~TitleState();
 
-    bool init(IGraphicsSystem *graphicsSystem, IInputProvider *inputProvider,
-              IResourceManager *resourceManager);
+    bool init(IGraphicsSystem *graphicsSystem, IInputProvider *inputProvider, IResourceManager *resourceManager,
+              SoundSystem *soundSystem);
 
     void onEnter();
     bool update(float dtime);

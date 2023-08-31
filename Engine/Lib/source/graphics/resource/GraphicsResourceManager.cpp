@@ -5,7 +5,7 @@
 #include <cassert>
 #include <string>
 
-#include "kern/graphics/resource/IResourceManager.h"
+#include "kern/resource/IResourceManager.h"
 
 GraphicsResourceManager::GraphicsResourceManager()
 {
@@ -41,25 +41,25 @@ void GraphicsResourceManager::onDetach(IResourceManager *resourceManager)
     return;
 }
 
-void GraphicsResourceManager::notify(EResourceType type, ResourceId id, EListenerEvent event,
+void GraphicsResourceManager::notify(ResourceType type, ResourceId id, ResourceEvent event,
                                      IResourceManager *resourceManager)
 {
     // Resolve resource type
     switch (type)
     {
-    case EResourceType::Image:
+    case ResourceType::Image:
         handleImageEvent(id, event, resourceManager);
         break;
-    case EResourceType::Material:
+    case ResourceType::Material:
         handleMaterialEvent(id, event, resourceManager);
         break;
-    case EResourceType::Mesh:
+    case ResourceType::Mesh:
         handleMeshEvent(id, event, resourceManager);
         break;
-    case EResourceType::Shader:
+    case ResourceType::Shader:
         handleShaderEvent(id, event, resourceManager);
         break;
-    case EResourceType::String:
+    case ResourceType::String:
         handleStringEvent(id, event, resourceManager);
         break;
     default:
@@ -71,27 +71,27 @@ void GraphicsResourceManager::notify(EResourceType type, ResourceId id, EListene
 void GraphicsResourceManager::initDefaultTextures()
 {
     // Default diffuse texture is deep pink to signal errors/missing textures
-    m_defaultDiffuseTexture.reset(new Texture({238, 18, 137}, 1, 1, EColorFormat::RGB24, 0));
+    m_defaultDiffuseTexture.reset(new Texture({238, 18, 137}, 1, 1, ColorFormat::RGB24, 0));
 
     // Default normal texture with straight/non-perturbed normals
     // Discussion here:
     // http://www.gameartisans.org/forums/threads/1985-Normal-Map-RGB-127-127-255-or-128-128-255
-    m_defaultNormalTexture.reset(new Texture({128, 128, 255}, 1, 1, EColorFormat::RGB24, 0));
+    m_defaultNormalTexture.reset(new Texture({128, 128, 255}, 1, 1, ColorFormat::RGB24, 0));
 
     // Default specular texture is black (no specular highlights)
-    m_defaultSpecularTexture.reset(new Texture({0}, 1, 1, EColorFormat::GreyScale8));
+    m_defaultSpecularTexture.reset(new Texture({0}, 1, 1, ColorFormat::GreyScale8));
 
     // Default glow texture is black (no glow)
-    m_defaultGlowTexture.reset(new Texture({0}, 1, 1, EColorFormat::GreyScale8));
+    m_defaultGlowTexture.reset(new Texture({0}, 1, 1, ColorFormat::GreyScale8));
 
     // Default alpha texture is white (completely opaque)
-    m_defaultAlphaTexture.reset(new Texture({255}, 1, 1, EColorFormat::GreyScale8));
+    m_defaultAlphaTexture.reset(new Texture({255}, 1, 1, ColorFormat::GreyScale8));
 }
 
 Mesh *GraphicsResourceManager::getMesh(ResourceId id) const
 {
     // Invalid id
-    if (id == invalidResource)
+    if (id == InvalidResource)
     {
         return nullptr;
     }
@@ -107,7 +107,7 @@ Mesh *GraphicsResourceManager::getMesh(ResourceId id) const
 Material *GraphicsResourceManager::getMaterial(ResourceId id) const
 {
     // Invalid id
-    if (id == invalidResource)
+    if (id == InvalidResource)
     {
         return nullptr;
     }
@@ -123,7 +123,7 @@ Material *GraphicsResourceManager::getMaterial(ResourceId id) const
 Model *GraphicsResourceManager::getModel(ResourceId id) const
 {
     // Invalid id
-    if (id == invalidResource)
+    if (id == InvalidResource)
     {
         return nullptr;
     }
@@ -139,7 +139,7 @@ Model *GraphicsResourceManager::getModel(ResourceId id) const
 Texture *GraphicsResourceManager::getTexture(ResourceId id) const
 {
     // Invalid id
-    if (id == invalidResource)
+    if (id == InvalidResource)
     {
         return nullptr;
     }
@@ -155,7 +155,7 @@ Texture *GraphicsResourceManager::getTexture(ResourceId id) const
 ShaderProgram *GraphicsResourceManager::getShaderProgram(ResourceId id) const
 {
     // Invalid id
-    if (id == invalidResource)
+    if (id == InvalidResource)
     {
         return nullptr;
     }
@@ -185,7 +185,7 @@ Texture *GraphicsResourceManager::getDefaultAlphaTexture() const { return m_defa
 TShaderObject<GL_VERTEX_SHADER> *GraphicsResourceManager::getVertexShaderObject(ResourceId id) const
 {
     // Invalid id
-    if (id == invalidResource)
+    if (id == InvalidResource)
     {
         return nullptr;
     }
@@ -201,7 +201,7 @@ TShaderObject<GL_VERTEX_SHADER> *GraphicsResourceManager::getVertexShaderObject(
 TShaderObject<GL_TESS_CONTROL_SHADER> *GraphicsResourceManager::getTessControlShaderObject(ResourceId id) const
 {
     // Invalid id
-    if (id == invalidResource)
+    if (id == InvalidResource)
     {
         return nullptr;
     }
@@ -217,7 +217,7 @@ TShaderObject<GL_TESS_CONTROL_SHADER> *GraphicsResourceManager::getTessControlSh
 TShaderObject<GL_TESS_EVALUATION_SHADER> *GraphicsResourceManager::getTessEvalShaderObject(ResourceId id) const
 {
     // Invalid id
-    if (id == invalidResource)
+    if (id == InvalidResource)
     {
         return nullptr;
     }
@@ -233,7 +233,7 @@ TShaderObject<GL_TESS_EVALUATION_SHADER> *GraphicsResourceManager::getTessEvalSh
 TShaderObject<GL_GEOMETRY_SHADER> *GraphicsResourceManager::getGeometryShaderObject(ResourceId id) const
 {
     // Invalid id
-    if (id == invalidResource)
+    if (id == InvalidResource)
     {
         return nullptr;
     }
@@ -249,7 +249,7 @@ TShaderObject<GL_GEOMETRY_SHADER> *GraphicsResourceManager::getGeometryShaderObj
 TShaderObject<GL_FRAGMENT_SHADER> *GraphicsResourceManager::getFragmentShaderObject(ResourceId id) const
 {
     // Invalid id
-    if (id == invalidResource)
+    if (id == InvalidResource)
     {
         return nullptr;
     }
@@ -265,7 +265,7 @@ TShaderObject<GL_FRAGMENT_SHADER> *GraphicsResourceManager::getFragmentShaderObj
 bool GraphicsResourceManager::loadVertexShader(ResourceId id, IResourceManager *resourceManager)
 {
     // Unused id
-    if (id == invalidResource)
+    if (id == InvalidResource)
     {
         return true;
     }
@@ -296,7 +296,7 @@ bool GraphicsResourceManager::loadVertexShader(ResourceId id, IResourceManager *
 bool GraphicsResourceManager::loadTessControlShader(ResourceId id, IResourceManager *resourceManager)
 {
     // Unused id
-    if (id == invalidResource)
+    if (id == InvalidResource)
     {
         return true;
     }
@@ -327,7 +327,7 @@ bool GraphicsResourceManager::loadTessControlShader(ResourceId id, IResourceMana
 bool GraphicsResourceManager::loadTessEvalShader(ResourceId id, IResourceManager *resourceManager)
 {
     // Unused id
-    if (id == invalidResource)
+    if (id == InvalidResource)
     {
         return true;
     }
@@ -359,7 +359,7 @@ bool GraphicsResourceManager::loadTessEvalShader(ResourceId id, IResourceManager
 bool GraphicsResourceManager::loadGeometryShader(ResourceId id, IResourceManager *resourceManager)
 {
     // Unused id
-    if (id == invalidResource)
+    if (id == InvalidResource)
     {
         return true;
     }
@@ -390,7 +390,7 @@ bool GraphicsResourceManager::loadGeometryShader(ResourceId id, IResourceManager
 bool GraphicsResourceManager::loadFragmentShader(ResourceId id, IResourceManager *resourceManager)
 {
     // Unused id
-    if (id == invalidResource)
+    if (id == InvalidResource)
     {
         return true;
     }
@@ -418,16 +418,16 @@ bool GraphicsResourceManager::loadFragmentShader(ResourceId id, IResourceManager
     return true;
 }
 
-void GraphicsResourceManager::handleImageEvent(ResourceId id, EListenerEvent event, IResourceManager *resourceManager)
+void GraphicsResourceManager::handleImageEvent(ResourceId id, ResourceEvent event, IResourceManager *resourceManager)
 {
     std::vector<unsigned char> data;
     unsigned int width;
     unsigned int height;
-    EColorFormat format;
+    ColorFormat format;
 
     switch (event)
     {
-    case EListenerEvent::Create:
+    case ResourceEvent::Create:
         assert(m_textures.count(id) == 0 && "Texture id already exists");
 
         if (!resourceManager->getImage(id, data, width, height, format))
@@ -438,7 +438,7 @@ void GraphicsResourceManager::handleImageEvent(ResourceId id, EListenerEvent eve
         m_textures[id] = std::move(std::unique_ptr<Texture>(new Texture(data, width, height, format)));
         break;
 
-    case EListenerEvent::Change:
+    case ResourceEvent::Change:
         assert(m_textures.count(id) == 1 && "Texture id does not exist");
 
         if (!resourceManager->getImage(id, data, width, height, format))
@@ -449,7 +449,7 @@ void GraphicsResourceManager::handleImageEvent(ResourceId id, EListenerEvent eve
         m_textures.at(id)->init(data, width, height, format);
         break;
 
-    case EListenerEvent::Delete:
+    case ResourceEvent::Delete:
         // Keep texture?
         break;
 
@@ -458,17 +458,17 @@ void GraphicsResourceManager::handleImageEvent(ResourceId id, EListenerEvent eve
     }
 }
 
-void GraphicsResourceManager::handleMeshEvent(ResourceId id, EListenerEvent event, IResourceManager *resourceManager)
+void GraphicsResourceManager::handleMeshEvent(ResourceId id, ResourceEvent event, IResourceManager *resourceManager)
 {
     std::vector<float> vertices;
     std::vector<unsigned int> indices;
     std::vector<float> normals;
     std::vector<float> uvs;
-    EPrimitiveType type;
+    PrimitiveType type;
 
     switch (event)
     {
-    case EListenerEvent::Create:
+    case ResourceEvent::Create:
         assert(m_meshes.count(id) == 0 && "Mesh id already exists");
 
         if (!resourceManager->getMesh(id, vertices, indices, normals, uvs, type))
@@ -479,7 +479,7 @@ void GraphicsResourceManager::handleMeshEvent(ResourceId id, EListenerEvent even
         m_meshes[id] = std::move(std::unique_ptr<Mesh>(new Mesh(vertices, indices, normals, uvs, type)));
         break;
 
-    case EListenerEvent::Change:
+    case ResourceEvent::Change:
         assert(m_meshes.count(id) == 1 && "Mesh id does not exist");
 
         if (!resourceManager->getMesh(id, vertices, indices, normals, uvs, type))
@@ -490,7 +490,7 @@ void GraphicsResourceManager::handleMeshEvent(ResourceId id, EListenerEvent even
         m_meshes.at(id)->init(vertices, indices, normals, uvs, type);
         break;
 
-    case EListenerEvent::Delete:
+    case ResourceEvent::Delete:
         // Keep mesh?
         break;
 
@@ -499,7 +499,7 @@ void GraphicsResourceManager::handleMeshEvent(ResourceId id, EListenerEvent even
     }
 }
 
-void GraphicsResourceManager::handleMaterialEvent(ResourceId id, EListenerEvent event,
+void GraphicsResourceManager::handleMaterialEvent(ResourceId id, ResourceEvent event,
                                                   IResourceManager *resourceManager)
 {
     ResourceId diffuse;
@@ -510,7 +510,7 @@ void GraphicsResourceManager::handleMaterialEvent(ResourceId id, EListenerEvent 
 
     switch (event)
     {
-    case EListenerEvent::Create:
+    case ResourceEvent::Create:
         assert(m_materials.count(id) == 0 && "Material id already exists");
 
         if (!resourceManager->getMaterial(id, diffuse, normal, specular, glow, alpha))
@@ -524,7 +524,7 @@ void GraphicsResourceManager::handleMaterialEvent(ResourceId id, EListenerEvent 
             getTexture(diffuse), getTexture(normal), getTexture(specular), getTexture(glow), getTexture(alpha))));
         break;
 
-    case EListenerEvent::Change:
+    case ResourceEvent::Change:
         assert(m_materials.count(id) == 1 && "Material id does not exist");
 
         if (!resourceManager->getMaterial(id, diffuse, normal, specular, glow, alpha))
@@ -538,7 +538,7 @@ void GraphicsResourceManager::handleMaterialEvent(ResourceId id, EListenerEvent 
                                  getTexture(alpha));
         break;
 
-    case EListenerEvent::Delete:
+    case ResourceEvent::Delete:
         // Keep material?
         break;
 
@@ -547,14 +547,14 @@ void GraphicsResourceManager::handleMaterialEvent(ResourceId id, EListenerEvent 
     }
 }
 
-void GraphicsResourceManager::handleModelEvent(ResourceId id, EListenerEvent event, IResourceManager *resourceManager)
+void GraphicsResourceManager::handleModelEvent(ResourceId id, ResourceEvent event, IResourceManager *resourceManager)
 {
     ResourceId mesh;
     ResourceId material;
 
     switch (event)
     {
-    case EListenerEvent::Create:
+    case ResourceEvent::Create:
         assert(m_models.count(id) == 0 && "Model id already exists");
 
         if (!resourceManager->getModel(id, mesh, material))
@@ -567,7 +567,7 @@ void GraphicsResourceManager::handleModelEvent(ResourceId id, EListenerEvent eve
         m_models[id] = std::move(std::unique_ptr<Model>(new Model(getMesh(mesh), getMaterial(material))));
         break;
 
-    case EListenerEvent::Change:
+    case ResourceEvent::Change:
         assert(m_models.count(id) == 1 && "Model id does not exist");
 
         if (!resourceManager->getModel(id, mesh, material))
@@ -580,7 +580,7 @@ void GraphicsResourceManager::handleModelEvent(ResourceId id, EListenerEvent eve
         m_models.at(id)->init(getMesh(mesh), getMaterial(material));
         break;
 
-    case EListenerEvent::Delete:
+    case ResourceEvent::Delete:
         // Keep model?
         break;
 
@@ -589,7 +589,7 @@ void GraphicsResourceManager::handleModelEvent(ResourceId id, EListenerEvent eve
     }
 }
 
-void GraphicsResourceManager::handleShaderEvent(ResourceId id, EListenerEvent event, IResourceManager *resourceManager)
+void GraphicsResourceManager::handleShaderEvent(ResourceId id, ResourceEvent event, IResourceManager *resourceManager)
 {
     ResourceId vertex;
     ResourceId tessControl;
@@ -599,7 +599,7 @@ void GraphicsResourceManager::handleShaderEvent(ResourceId id, EListenerEvent ev
 
     switch (event)
     {
-    case EListenerEvent::Create:
+    case ResourceEvent::Create:
         // TODO Replace assert with log statement and global error handler
         assert(m_shaderPrograms.count(id) == 0 && "Shader id already exists");
 
@@ -626,10 +626,10 @@ void GraphicsResourceManager::handleShaderEvent(ResourceId id, EListenerEvent ev
 
         break;
 
-    case EListenerEvent::Change:
+    case ResourceEvent::Change:
         // TODO Implement
 
-    case EListenerEvent::Delete:
+    case ResourceEvent::Delete:
         // TODO Keep shader?
         break;
 
@@ -639,7 +639,7 @@ void GraphicsResourceManager::handleShaderEvent(ResourceId id, EListenerEvent ev
     }
 }
 
-void GraphicsResourceManager::handleStringEvent(ResourceId id, EListenerEvent event, IResourceManager *resourceManager)
+void GraphicsResourceManager::handleStringEvent(ResourceId id, ResourceEvent event, IResourceManager *resourceManager)
 {
     // Does not need processing, shader events handle source loading
 }

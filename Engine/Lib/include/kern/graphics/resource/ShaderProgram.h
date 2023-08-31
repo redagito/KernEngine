@@ -4,7 +4,7 @@
 
 #include <glm/glm.hpp>
 
-#include "kern/graphics/renderer/core/RendererCoreConfig.h"
+#include "kern/graphics/renderer/RendererCoreConfig.h"
 #include "kern/graphics/resource/TShaderObject.h"
 
 class Texture;

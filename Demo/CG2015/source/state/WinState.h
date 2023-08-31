@@ -8,7 +8,7 @@
 #include "kern/graphics/IGraphicsSystem.h"
 #include "kern/graphics/IScene.h"
 #include "kern/graphics/input/IInputProvider.h"
-#include "kern/graphics/resource/IResourceManager.h"
+#include "kern/resource/IResourceManager.h"
 
 /**
  * \brief Lose state, similar to demo state with static camera.
@@ -19,8 +19,8 @@ class WinState : public IGameState
     WinState(const std::string &sceneFile);
     ~WinState();
 
-    bool init(IGraphicsSystem *graphicsSystem, IInputProvider *inputProvider,
-              IResourceManager *resourceManager);
+    bool init(IGraphicsSystem *graphicsSystem, IInputProvider *inputProvider, IResourceManager *resourceManager,
+              SoundSystem *soundSystem);
 
     void onEnter();
     bool update(float dtime);

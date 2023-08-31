@@ -13,7 +13,7 @@
 #include "kern/graphics/animation/MovementController.h"
 #include "kern/graphics/animation/RotationController.h"
 #include "kern/graphics/animation/SineTranslationController.h"
-#include "kern/graphics/resource/IResourceManager.h"
+#include "kern/resource/IResourceManager.h"
 
 SceneLoader::SceneLoader(IResourceManager &resourceManager) : m_resourceManager(resourceManager) { return; }
 

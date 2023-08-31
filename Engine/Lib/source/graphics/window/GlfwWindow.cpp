@@ -8,7 +8,7 @@
 #define GLFW_INCLUDE_NONE
 #include <GLFW/glfw3.h>
 
-#include "kern/graphics/renderer/core/RendererCoreConfig.h"
+#include "kern/graphics/renderer/RendererCoreConfig.h"
 
 static void APIENTRY glDebugOutput(GLenum source, GLenum type, GLuint id, GLenum severity, GLsizei length,
                                    const GLchar *message, const void *userParam)
@@ -152,7 +152,8 @@ bool GlfwWindow::init(unsigned int width, unsigned int height, const std::string
 
     glfwMakeContextCurrent(m_window);
     glfwSetInputMode(m_window, GLFW_STICKY_KEYS, GL_FALSE);
-    glfwSwapInterval(0);
+    // Vsync ON
+    glfwSwapInterval(1);
 
 // Load OpenGL extensions
 #ifndef __APPLE__

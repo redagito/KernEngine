@@ -5,6 +5,7 @@
 class IGraphicsSystem;
 class IInputProvider;
 class IResourceManager;
+class SoundSystem;
 
 /**
  * \brief Game state interface class.
@@ -23,8 +24,8 @@ class IGameState
     /**
      * \brief Explicit initialization.
      */
-    virtual bool init(IGraphicsSystem *graphicsSystem, IInputProvider *inputProvider,
-                      IResourceManager *resourceManager) = 0;
+    virtual bool init(IGraphicsSystem *graphicsSystem, IInputProvider *inputProvider, IResourceManager *resourceManager,
+                      SoundSystem *soundSystem) = 0;
 
     /**
      * \brief Called on entering state.

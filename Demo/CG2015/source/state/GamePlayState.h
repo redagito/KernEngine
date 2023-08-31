@@ -6,7 +6,7 @@
 #include "kern/graphics/IScene.h"
 #include "kern/graphics/camera/IControllableCamera.h"
 
-#include "kern/graphics/resource/IResourceManager.h"
+#include "kern/resource/IResourceManager.h"
 
 #include "kern/graphics/input/IInputProvider.h"
 
@@ -23,8 +23,8 @@ class GamePlayState : public AGameState
     GamePlayState();
     ~GamePlayState();
 
-    bool init(IGraphicsSystem *graphicsSystem, IInputProvider *inputProvider,
-              IResourceManager *resourceManager);
+    bool init(IGraphicsSystem *graphicsSystem, IInputProvider *inputProvider, IResourceManager *resourceManager,
+              SoundSystem *soundSystem);
     void onEnter();
     bool update(float dtime);
     void onExit();
@@ -52,12 +52,12 @@ class GamePlayState : public AGameState
     unsigned int m_playerGroup = 0; /**< Player collision group. */
     unsigned int m_enemyGroup = 0;  /**< Enemy collision group. */
 
-    ResourceId enemyShip = invalidResource;
-    ResourceId enemyShipMaterial = invalidResource;
-    ResourceId bossShip = invalidResource;
-    ResourceId bossShipMaterial = invalidResource;
-    ResourceId bossRing = invalidResource;
-    ResourceId bossRingMaterial = invalidResource;
+    ResourceId enemyShip = InvalidResource;
+    ResourceId enemyShipMaterial = InvalidResource;
+    ResourceId bossShip = InvalidResource;
+    ResourceId bossShipMaterial = InvalidResource;
+    ResourceId bossRing = InvalidResource;
+    ResourceId bossRingMaterial = InvalidResource;
 
     int m_winCounter = 0;
 };

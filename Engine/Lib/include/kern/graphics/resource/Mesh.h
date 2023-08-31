@@ -4,11 +4,11 @@
 #include <vector>
 
 #include "kern/graphics/collision/BoundingSphere.h"
-#include "kern/graphics/resource/ResourceConfig.h"
-
-#include "kern/graphics/renderer/core/IndexBuffer.h"
-#include "kern/graphics/renderer/core/VertexArrayObject.h"
-#include "kern/graphics/renderer/core/VertexBuffer.h"
+#include "kern/graphics/renderer/IndexBuffer.h"
+#include "kern/graphics/renderer/VertexArrayObject.h"
+#include "kern/graphics/renderer/VertexBuffer.h"
+#include "kern/resource/PrimitiveType.h"
+#include "kern/resource/ResourceId.h"
 
 /**
  * \brief Contains mesh data (vertices, faces, normals and uv data).
@@ -21,7 +21,7 @@ class Mesh
 {
    public:
     Mesh(const std::vector<float> &vertices, const std::vector<unsigned int> &indices,
-          const std::vector<float> &normals, const std::vector<float> &uvs, EPrimitiveType type);
+         const std::vector<float> &normals, const std::vector<float> &uvs, PrimitiveType type);
 
     Mesh(const Mesh &) = delete;
     Mesh &operator=(const Mesh &) = delete;
@@ -35,8 +35,7 @@ class Mesh
      * \brief Initializes mesh with data.
      */
     bool init(const std::vector<float> &vertices, const std::vector<unsigned int> &indices,
-              const std::vector<float> &normals, const std::vector<float> &uvs,
-              EPrimitiveType type);
+              const std::vector<float> &normals, const std::vector<float> &uvs, PrimitiveType type);
 
     /**
      * \brief Returns whether or not an index buffer has been set.
@@ -66,7 +65,7 @@ class Mesh
     /**
      * \brief Returns primitive type of the mesh.
      */
-    const EPrimitiveType getPrimitiveType() const;
+    const PrimitiveType getPrimitiveType() const;
 
     /**
      * \brief Returns vertex array object.
@@ -80,15 +79,15 @@ class Mesh
 
     /**
      * \brief Maps primitive type to GL type.
-     * Example: Maps EPrimitiveType::Triangle to GL_TRIANGLES.
+     * Example: Maps PrimitiveType::Triangle to GL_TRIANGLES.
      */
-    static GLenum toGLPrimitive(EPrimitiveType type);
+    static GLenum toGLPrimitive(PrimitiveType type);
 
     /**
      * \brief Returns primitive size for the type.
-     * Example: Returns value 3 for EPrimitiveType::Triangle.
+     * Example: Returns value 3 for PrimitiveType::Triangle.
      */
-    static unsigned int getPrimitiveSize(EPrimitiveType type);
+    static unsigned int getPrimitiveSize(PrimitiveType type);
 
    private:
     std::unique_ptr<VertexBuffer> m_vertices; /**< Mesh vertices. */
@@ -96,7 +95,7 @@ class Mesh
     std::unique_ptr<VertexBuffer> m_normals;  /**< Per vertex normals. */
     std::unique_ptr<VertexBuffer> m_uvs;      /**< Texture coordinates. */
     std::unique_ptr<VertexArrayObject> m_vao; /**< Vertex array object. */
-    EPrimitiveType m_type;                     /**< Mesh primitive type. */
+    PrimitiveType m_type;                     /**< Mesh primitive type. */
     // For frustum culling
     // TODO Should be stored separately?
     BoundingSphere m_boundingSphere; /**< Bounding sphere calculated from vertices. */

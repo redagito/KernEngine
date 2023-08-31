@@ -37,8 +37,8 @@ bool GameSystem::update(float dtime)
     return true;
 }
 
-bool GameSystem::init(const std::string &initialState, IGraphicsSystem *graphicsSystem,
-                       IInputProvider *inputProvider, IResourceManager *resourceManager)
+bool GameSystem::init(const std::string &initialState, IGraphicsSystem *graphicsSystem, IInputProvider *inputProvider,
+                      IResourceManager *resourceManager, SoundSystem *soundSystem)
 {
     logd("Initializing game system.");
     logd("Game system initial state set to {}.", initialState.c_str());
@@ -46,7 +46,7 @@ bool GameSystem::init(const std::string &initialState, IGraphicsSystem *graphics
     // Initialize game states
     for (auto &entry : m_gameStates)
     {
-        if (!entry.second->init(graphicsSystem, inputProvider, resourceManager))
+        if (!entry.second->init(graphicsSystem, inputProvider, resourceManager, soundSystem))
         {
             loge("Failed to initialize game state {}.", entry.first.c_str());
             return false;

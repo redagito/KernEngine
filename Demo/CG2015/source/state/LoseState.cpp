@@ -17,8 +17,8 @@ LoseState::~LoseState()
     // Empty
 }
 
-bool LoseState::init(IGraphicsSystem *graphicsSystem, IInputProvider *inputProvider,
-                      IResourceManager *resourceManager)
+bool LoseState::init(IGraphicsSystem *graphicsSystem, IInputProvider *inputProvider, IResourceManager *resourceManager,
+                     SoundSystem *soundSystem)
 {
     m_graphicsSystem = graphicsSystem;
     m_inputProvider = inputProvider;

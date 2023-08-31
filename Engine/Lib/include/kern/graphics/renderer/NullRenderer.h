@@ -5,6 +5,8 @@
 class NullRenderer : public IRenderer
 {
    public:
+    ~NullRenderer() = default;
+
     /**
      * \brief Performs no actual drawing operations.
      *
@@ -12,9 +14,4 @@ class NullRenderer : public IRenderer
      */
     void draw(const IScene &scene, const ICamera &camera, const IWindow &window,
               const IGraphicsResourceManager &manager);
-
-    /**
-     * \brief Creates and initializes null renderer.
-     */
-    static NullRenderer *create();
 };

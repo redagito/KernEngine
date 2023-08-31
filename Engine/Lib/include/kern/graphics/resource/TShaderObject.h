@@ -1,12 +1,11 @@
 #pragma once
 
+#include <fmtlog/fmtlog.h>
+
 #include <string>
 #include <vector>
 
-#include <fmtlog/fmtlog.h>
-
-#include "kern/graphics/renderer/core/RendererCoreConfig.h"
-#include "kern/graphics/renderer/debug/RendererDebug.h"
+#include "kern/graphics/renderer/RendererCoreConfig.h"
 
 /**
  * \brief Represents a compiled shader object.
@@ -112,13 +111,6 @@ bool TShaderObject<ShaderType>::init(const std::string &source)
     m_objectId = objectId;
     // Set validity flag
     m_valid = true;
-
-    // Error check
-    std::string error;
-    if (hasGLError(error))
-    {
-        loge("GL Error: {}", error.c_str());
-    }
 
     return true;
 }
