@@ -10,7 +10,7 @@
 #include "kern/graphics/ICamera.h"
 #include "kern/graphics/IGraphicsResourceManager.h"
 #include "kern/graphics/IScene.h"
-#include "kern/graphics/IWindow.h"
+#include "kern/graphics/Window.h"
 #include "kern/graphics/renderer/Draw.h"
 #include "kern/graphics/renderer/RendererCoreConfig.h"
 #include "kern/graphics/resource/Material.h"
@@ -50,7 +50,7 @@ bool ForwardRenderer::init(IResourceManager &manager)
     return initShaders(manager);
 }
 
-void ForwardRenderer::draw(const IScene &scene, const ICamera &camera, const IWindow &window,
+void ForwardRenderer::draw(const IScene &scene, const ICamera &camera, const Window &window,
                            const IGraphicsResourceManager &manager)
 {
     // Draw init

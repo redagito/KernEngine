@@ -12,6 +12,6 @@ class NullRenderer : public IRenderer
      *
      * Clears screen to black.
      */
-    void draw(const IScene &scene, const ICamera &camera, const IWindow &window,
+    void draw(const IScene &scene, const ICamera &camera, const Window &window,
               const IGraphicsResourceManager &manager);
 };

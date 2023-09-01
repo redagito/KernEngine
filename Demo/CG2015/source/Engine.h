@@ -4,7 +4,6 @@
 #include <string>
 #include <vector>
 
-#include "IEngine.h"
 #include "EngineConfig.h"
 
 // Resource
@@ -15,7 +14,7 @@ class GameSystem;
 
 // Graphics
 class IGraphicsSystem;
-class GlfwWindow;
+class Window;
 
 // Input
 class IInputProvider;
@@ -24,7 +23,7 @@ class SoundSystem;
 /**
  * \brief Demo application class.
  */
-class Engine : public IEngine
+class Engine
 {
    public:
     Engine();
@@ -66,7 +65,7 @@ class Engine : public IEngine
     std::shared_ptr<IResourceManager> m_resourceManager; /**< Resource loader and manager. */
 
     // TODO Should use interface instead of concrete class
-    std::shared_ptr<GlfwWindow> m_window;           /**< Application window. */
+    std::shared_ptr<Window> m_window;           /**< Application window. */
     std::shared_ptr<IInputProvider> m_inputProvider; /**< User input provider. */
     std::shared_ptr<SoundSystem> m_soundSystem;
 };

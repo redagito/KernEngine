@@ -28,7 +28,7 @@ class GraphicsSystem : public IGraphicsSystem
     void toggleWireframeMode();
     void toggleViewFrustumCulling();
 
-    void draw(IWindow &window);
+    void draw(Window &window);
 
    private:
     bool m_wireframeMode = false; /**< Wireframe mode flag. */

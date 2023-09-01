@@ -121,7 +121,7 @@ void GraphicsSystem::toggleViewFrustumCulling()
     }
 }
 
-void GraphicsSystem::draw(IWindow &window)
+void GraphicsSystem::draw(Window &window)
 {
     // Current calling time
     double callTime = getTime();

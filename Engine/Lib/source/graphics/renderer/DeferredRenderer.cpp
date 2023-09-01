@@ -9,7 +9,7 @@
 #include "kern/graphics/ICamera.h"
 #include "kern/graphics/IGraphicsResourceManager.h"
 #include "kern/graphics/IScene.h"
-#include "kern/graphics/IWindow.h"
+#include "kern/graphics/Window.h"
 #include "kern/graphics/camera/StaticCamera.h"
 #include "kern/graphics/renderer/Draw.h"
 #include "kern/graphics/renderer/RenderBuffer.h"
@@ -101,7 +101,7 @@ bool DeferredRenderer::init(IResourceManager &manager)
     return true;
 }
 
-void DeferredRenderer::draw(const IScene &scene, const ICamera &camera, const IWindow &window,
+void DeferredRenderer::draw(const IScene &scene, const ICamera &camera, const Window &window,
                             const IGraphicsResourceManager &manager)
 {
     // Draw init
@@ -161,7 +161,7 @@ DeferredRenderer *DeferredRenderer::create(IResourceManager &manager)
     return renderer;
 }
 
-void DeferredRenderer::geometryPass(const IScene &scene, const ICamera &camera, const IWindow &window,
+void DeferredRenderer::geometryPass(const IScene &scene, const ICamera &camera, const Window &window,
                                     const IGraphicsResourceManager &manager, ISceneQuery &query)
 {
     // Set framebuffer
@@ -250,7 +250,7 @@ void DeferredRenderer::geometryPass(const IScene &scene, const ICamera &camera, 
     m_geometryBuffer.setInactive(GL_FRAMEBUFFER);
 }
 
-void DeferredRenderer::shadowMapPass(const IScene &scene, const ICamera &camera, const IWindow &window,
+void DeferredRenderer::shadowMapPass(const IScene &scene, const ICamera &camera, const Window &window,
                                      const IGraphicsResourceManager &manager)
 {
     ShaderProgram *shadowMapPassShader = manager.getShaderProgram(m_shadowMapPassShaderId);
@@ -350,7 +350,7 @@ CameraDirection g_cameraDirections[6] = {
     {GL_TEXTURE_CUBE_MAP_POSITIVE_Z, glm::vec3(0.0f, 0.0f, 1.0f), glm::vec3(0.0f, -1.0f, 0.0f)},
     {GL_TEXTURE_CUBE_MAP_NEGATIVE_Z, glm::vec3(0.0f, 0.0f, -1.0f), glm::vec3(0.0f, -1.0f, 0.0f)}};
 
-void DeferredRenderer::shadowCubePass(const IScene &scene, const ICamera &camera, const IWindow &window,
+void DeferredRenderer::shadowCubePass(const IScene &scene, const ICamera &camera, const Window &window,
                                       const IGraphicsResourceManager &manager)
 {
     ShaderProgram *shadowCubePassShader = manager.getShaderProgram(m_shadowCubePassShaderId);
@@ -446,7 +446,7 @@ void DeferredRenderer::shadowCubePass(const IScene &scene, const ICamera &camera
     glCullFace(GL_BACK);
 }
 
-void DeferredRenderer::lightPass(const IScene &scene, const ICamera &camera, const IWindow &window,
+void DeferredRenderer::lightPass(const IScene &scene, const ICamera &camera, const Window &window,
                                  const IGraphicsResourceManager &manager, ISceneQuery &query)
 {
     // Prepare light pass frame buffer
@@ -482,7 +482,7 @@ void DeferredRenderer::lightPass(const IScene &scene, const ICamera &camera, con
     m_lightPassFrameBuffer.setInactive(GL_FRAMEBUFFER);
 }
 
-void DeferredRenderer::pointLightPass(const IScene &scene, const ICamera &camera, const IWindow &window,
+void DeferredRenderer::pointLightPass(const IScene &scene, const ICamera &camera, const Window &window,
                                       const IGraphicsResourceManager &manager, ISceneQuery &query)
 {
     // Point light pass
@@ -588,7 +588,7 @@ void DeferredRenderer::pointLightPass(const IScene &scene, const ICamera &camera
     return;
 }
 
-void DeferredRenderer::directionalLightPass(const IScene &scene, const ICamera &camera, const IWindow &window,
+void DeferredRenderer::directionalLightPass(const IScene &scene, const ICamera &camera, const Window &window,
                                             const IGraphicsResourceManager &manager, ISceneQuery &query)
 {
     // Restrieve shader
@@ -690,7 +690,7 @@ void DeferredRenderer::directionalLightPass(const IScene &scene, const ICamera &
     return;
 }
 
-void DeferredRenderer::illuminationPass(const IScene &scene, const ICamera &camera, const IWindow &window,
+void DeferredRenderer::illuminationPass(const IScene &scene, const ICamera &camera, const Window &window,
                                         const IGraphicsResourceManager &manager, ISceneQuery &query)
 {
     // Reset viewport
@@ -737,7 +737,7 @@ void DeferredRenderer::illuminationPass(const IScene &scene, const ICamera &came
     m_illumationPassFrameBuffer.setInactive(GL_FRAMEBUFFER);
 }
 
-void DeferredRenderer::postProcessPass(const ICamera &camera, const IWindow &window,
+void DeferredRenderer::postProcessPass(const ICamera &camera, const Window &window,
                                        const IGraphicsResourceManager &manager, const std::shared_ptr<Texture> &texture)
 {
     // Reset viewport
@@ -881,7 +881,7 @@ void DeferredRenderer::postProcessPass(const ICamera &camera, const IWindow &win
     return;
 }
 
-void DeferredRenderer::fxaaPass(const IWindow &window, const IGraphicsResourceManager &manager,
+void DeferredRenderer::fxaaPass(const Window &window, const IGraphicsResourceManager &manager,
                                 const std::shared_ptr<Texture> &texture)
 {
     // Get fxaa shader
@@ -911,7 +911,7 @@ void DeferredRenderer::fxaaPass(const IWindow &window, const IGraphicsResourceMa
     ::draw(*quadMesh);
 }
 
-void DeferredRenderer::fogPass(const ICamera &camera, const IWindow &window, const IGraphicsResourceManager &manager,
+void DeferredRenderer::fogPass(const ICamera &camera, const Window &window, const IGraphicsResourceManager &manager,
                                const std::shared_ptr<Texture> &texture)
 {
     // Get fog shader
@@ -964,7 +964,7 @@ void DeferredRenderer::fogPass(const ICamera &camera, const IWindow &window, con
     ::draw(*quadMesh);
 }
 
-void DeferredRenderer::gaussBlurVerticalPass(const IWindow &window, const IGraphicsResourceManager &manager,
+void DeferredRenderer::gaussBlurVerticalPass(const Window &window, const IGraphicsResourceManager &manager,
                                              const std::shared_ptr<Texture> &texture)
 {
     // Get gauss shader
@@ -998,7 +998,7 @@ void DeferredRenderer::gaussBlurVerticalPass(const IWindow &window, const IGraph
     ::draw(*quadMesh);
 }
 
-void DeferredRenderer::gaussBlurHorizontalPass(const IWindow &window, const IGraphicsResourceManager &manager,
+void DeferredRenderer::gaussBlurHorizontalPass(const Window &window, const IGraphicsResourceManager &manager,
                                                const std::shared_ptr<Texture> &texture)
 {
     // Get gauss shader
@@ -1034,7 +1034,7 @@ void DeferredRenderer::gaussBlurHorizontalPass(const IWindow &window, const IGra
     ::draw(*quadMesh);
 }
 
-void DeferredRenderer::depthOfFieldPass(const ICamera &camera, const IWindow &window,
+void DeferredRenderer::depthOfFieldPass(const ICamera &camera, const Window &window,
                                         const IGraphicsResourceManager &manager,
                                         const std::shared_ptr<Texture> &sceneTexture,
                                         const std::shared_ptr<Texture> &blurTexture)
@@ -1087,7 +1087,7 @@ void DeferredRenderer::depthOfFieldPass(const ICamera &camera, const IWindow &wi
     ::draw(*quadMesh);
 }
 
-void DeferredRenderer::displayPass(const IWindow &window, const IGraphicsResourceManager &manager,
+void DeferredRenderer::displayPass(const Window &window, const IGraphicsResourceManager &manager,
                                    const std::shared_ptr<Texture> &texture)
 {
     // Set main FBO active
@@ -1095,7 +1095,7 @@ void DeferredRenderer::displayPass(const IWindow &window, const IGraphicsResourc
     passthroughPass(window, manager, texture);
 }
 
-void DeferredRenderer::passthroughPass(const IWindow &window, const IGraphicsResourceManager &manager,
+void DeferredRenderer::passthroughPass(const Window &window, const IGraphicsResourceManager &manager,
                                        const std::shared_ptr<Texture> &texture)
 {
     // Reset viewport
@@ -1128,7 +1128,7 @@ void DeferredRenderer::passthroughPass(const IWindow &window, const IGraphicsRes
     ::draw(*quadMesh);
 }
 
-void DeferredRenderer::godRayPass1(const IWindow &window, const IGraphicsResourceManager &manager,
+void DeferredRenderer::godRayPass1(const Window &window, const IGraphicsResourceManager &manager,
                                    const std::shared_ptr<Texture> &texture)
 {
     // Get shader
@@ -1169,7 +1169,7 @@ void DeferredRenderer::godRayPass1(const IWindow &window, const IGraphicsResourc
     ::draw(*quadMesh);
 }
 
-void DeferredRenderer::godRayPass2(const IWindow &window, const IGraphicsResourceManager &manager,
+void DeferredRenderer::godRayPass2(const Window &window, const IGraphicsResourceManager &manager,
                                    const std::shared_ptr<Texture> &sceneTexture,
                                    const std::shared_ptr<Texture> &godrayTexture)
 {
@@ -1205,7 +1205,7 @@ void DeferredRenderer::godRayPass2(const IWindow &window, const IGraphicsResourc
     ::draw(*quadMesh);
 }
 
-void DeferredRenderer::visualizeDepthPass(const ICamera &camera, const IWindow &window,
+void DeferredRenderer::visualizeDepthPass(const ICamera &camera, const Window &window,
                                           const IGraphicsResourceManager &manager)
 {
     // Get shader
@@ -1241,7 +1241,7 @@ void DeferredRenderer::visualizeDepthPass(const ICamera &camera, const IWindow &
     ::draw(*quadMesh);
 }
 
-void DeferredRenderer::vignetteBlurPass(const IWindow &window, const IGraphicsResourceManager &manager,
+void DeferredRenderer::vignetteBlurPass(const Window &window, const IGraphicsResourceManager &manager,
                                         const std::shared_ptr<Texture> &texture)
 {
     // Get distortion shader
@@ -1271,7 +1271,7 @@ void DeferredRenderer::vignetteBlurPass(const IWindow &window, const IGraphicsRe
     ::draw(*quadMesh);
 }
 
-void DeferredRenderer::bloomPass1(const IWindow &window, const IGraphicsResourceManager &manager,
+void DeferredRenderer::bloomPass1(const Window &window, const IGraphicsResourceManager &manager,
                                   const std::shared_ptr<Texture> &texture)
 {
     // Get bloom pass 1 shader
@@ -1301,7 +1301,7 @@ void DeferredRenderer::bloomPass1(const IWindow &window, const IGraphicsResource
     ::draw(*quadMesh);
 }
 
-void DeferredRenderer::bloomPass2(const IWindow &window, const IGraphicsResourceManager &manager,
+void DeferredRenderer::bloomPass2(const Window &window, const IGraphicsResourceManager &manager,
                                   const std::shared_ptr<Texture> &sceneTexture,
                                   const std::shared_ptr<Texture> &bloomTexture)
 {
@@ -1338,7 +1338,7 @@ void DeferredRenderer::bloomPass2(const IWindow &window, const IGraphicsResource
     ::draw(*quadMesh);
 }
 
-void DeferredRenderer::lensFlarePass(const IWindow &window, const IGraphicsResourceManager &manager,
+void DeferredRenderer::lensFlarePass(const Window &window, const IGraphicsResourceManager &manager,
                                      const std::shared_ptr<Texture> &sceneTexture)
 {
     ShaderProgram *shader = manager.getShaderProgram(m_lensFlarePassShaderId);
@@ -1368,7 +1368,7 @@ void DeferredRenderer::lensFlarePass(const IWindow &window, const IGraphicsResou
     ::draw(*quadMesh);
 }
 
-void DeferredRenderer::lensFlarePass2(const IWindow &window, const IGraphicsResourceManager &manager,
+void DeferredRenderer::lensFlarePass2(const Window &window, const IGraphicsResourceManager &manager,
                                       const std::shared_ptr<Texture> &sceneTexture)
 {
     ShaderProgram *shader = manager.getShaderProgram(m_lensFlarePass2ShaderId);
@@ -1398,7 +1398,7 @@ void DeferredRenderer::lensFlarePass2(const IWindow &window, const IGraphicsReso
     ::draw(*quadMesh);
 }
 
-void DeferredRenderer::lensFlarePass3(const IWindow &window, const IGraphicsResourceManager &manager,
+void DeferredRenderer::lensFlarePass3(const Window &window, const IGraphicsResourceManager &manager,
                                       const std::shared_ptr<Texture> &sceneTexture,
                                       const std::shared_ptr<Texture> &lensTexture)
 {
@@ -1433,7 +1433,7 @@ void DeferredRenderer::lensFlarePass3(const IWindow &window, const IGraphicsReso
     ::draw(*quadMesh);
 }
 
-void DeferredRenderer::celPass(const IWindow &window, const IGraphicsResourceManager &manager,
+void DeferredRenderer::celPass(const Window &window, const IGraphicsResourceManager &manager,
                                const std::shared_ptr<Texture> &sceneTexture)
 {
     ShaderProgram *shader = manager.getShaderProgram(m_celPassShaderId);
@@ -1463,7 +1463,7 @@ void DeferredRenderer::celPass(const IWindow &window, const IGraphicsResourceMan
     ::draw(*quadMesh);
 }
 
-void DeferredRenderer::toneMapPass(const IWindow &window, const IGraphicsResourceManager &manager,
+void DeferredRenderer::toneMapPass(const Window &window, const IGraphicsResourceManager &manager,
                                    const std::shared_ptr<Texture> &texture)
 {
     // Get tone map shader

@@ -5,14 +5,14 @@
 
 #include <glm/glm.hpp>
 
-#include "kern/graphics/window/GlfwWindow.h"
+#include "kern/graphics/Window.h"
 
 #include "kern/graphics/input/IInputListener.h"
 
 class IControllableCamera;
 class IInputProvider;
 
-class FreeFlightCameraController : public IInputListener, public IGlfwWindowListener
+class FreeFlightCameraController : public IInputListener, public IWindowListener
 {
    public:
     FreeFlightCameraController();

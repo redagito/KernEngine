@@ -3,7 +3,7 @@
 #include <string>
 
 class IScene;
-class IWindow;
+class Window;
 class IResourceManager;
 class ICamera;
 
@@ -62,5 +62,5 @@ class IGraphicsSystem
     /**
      * \brief Draws active scene.
      */
-    virtual void draw(IWindow &window) = 0;
+    virtual void draw(Window &window) = 0;
 };

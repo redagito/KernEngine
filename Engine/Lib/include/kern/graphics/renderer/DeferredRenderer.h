@@ -27,7 +27,7 @@ class DeferredRenderer : public IRenderer
 
     bool init(IResourceManager &manager);
 
-    void draw(const IScene &scene, const ICamera &camera, const IWindow &window,
+    void draw(const IScene &scene, const ICamera &camera, const Window &window,
               const IGraphicsResourceManager &manager);
 
     static DeferredRenderer *create(IResourceManager &manager);
@@ -36,74 +36,74 @@ class DeferredRenderer : public IRenderer
     /**
      * \brief Writes geometry data into g-buffer.
      */
-    void geometryPass(const IScene &scene, const ICamera &camera, const IWindow &window,
+    void geometryPass(const IScene &scene, const ICamera &camera, const Window &window,
                       const IGraphicsResourceManager &manager, ISceneQuery &query);
 
     /**
      * \brief Performs shadow map calculation.
      */
-    void shadowMapPass(const IScene &scene, const ICamera &camera, const IWindow &window,
+    void shadowMapPass(const IScene &scene, const ICamera &camera, const Window &window,
                        const IGraphicsResourceManager &manager);
 
     /**
      * \brief Performs shadow cube calculation.
      */
-    void shadowCubePass(const IScene &scene, const ICamera &camera, const IWindow &window,
+    void shadowCubePass(const IScene &scene, const ICamera &camera, const Window &window,
                         const IGraphicsResourceManager &manager);
 
     /**
      * \brief Writes light data into l-buffer.
      */
-    void lightPass(const IScene &scene, const ICamera &camera, const IWindow &window,
+    void lightPass(const IScene &scene, const ICamera &camera, const Window &window,
                    const IGraphicsResourceManager &manager, ISceneQuery &query);
 
     /**
      * \brief Writes point light data to l-buffer.
      */
-    void pointLightPass(const IScene &scene, const ICamera &camera, const IWindow &window,
+    void pointLightPass(const IScene &scene, const ICamera &camera, const Window &window,
                         const IGraphicsResourceManager &manager, ISceneQuery &query);
 
     /**
      * \brief Writes directional light data to l-buffer.
      */
-    void directionalLightPass(const IScene &scene, const ICamera &camera, const IWindow &window,
+    void directionalLightPass(const IScene &scene, const ICamera &camera, const Window &window,
                               const IGraphicsResourceManager &manager, ISceneQuery &query);
 
     /**
      * \brief Performs scene illumination and tone mapping.
      */
-    void illuminationPass(const IScene &scene, const ICamera &camera, const IWindow &window,
+    void illuminationPass(const IScene &scene, const ICamera &camera, const Window &window,
                           const IGraphicsResourceManager &manager, ISceneQuery &query);
 
     /**
      * \brief Performs post processing of lit scene.
      */
-    void postProcessPass(const ICamera &camera, const IWindow &window,
+    void postProcessPass(const ICamera &camera, const Window &window,
                          const IGraphicsResourceManager &manager,
                          const std::shared_ptr<Texture> &texture);
 
-    void fogPass(const ICamera &camera, const IWindow &, const IGraphicsResourceManager &manager,
+    void fogPass(const ICamera &camera, const Window &, const IGraphicsResourceManager &manager,
                  const std::shared_ptr<Texture> &texture);
 
     /**
      * \brief FXAA Pass.
      */
-    void fxaaPass(const IWindow &window, const IGraphicsResourceManager &manager,
+    void fxaaPass(const Window &window, const IGraphicsResourceManager &manager,
                   const std::shared_ptr<Texture> &texture);
 
     /**
      * \brief Vertical gauss blur pass.
      */
-    void gaussBlurVerticalPass(const IWindow &window, const IGraphicsResourceManager &manager,
+    void gaussBlurVerticalPass(const Window &window, const IGraphicsResourceManager &manager,
                                const std::shared_ptr<Texture> &texture);
 
     /**
      * \brief Horizontal gauss blur pass.
      */
-    void gaussBlurHorizontalPass(const IWindow &window, const IGraphicsResourceManager &manager,
+    void gaussBlurHorizontalPass(const Window &window, const IGraphicsResourceManager &manager,
                                  const std::shared_ptr<Texture> &texture);
 
-    void depthOfFieldPass(const ICamera &camera, const IWindow &window,
+    void depthOfFieldPass(const ICamera &camera, const Window &window,
                           const IGraphicsResourceManager &manager,
                           const std::shared_ptr<Texture> &sceneTexture,
                           const std::shared_ptr<Texture> &blurTexture);
@@ -111,16 +111,16 @@ class DeferredRenderer : public IRenderer
     /**
      * \brief Draws scene texture to main FBO.
      */
-    void displayPass(const IWindow &window, const IGraphicsResourceManager &manager,
+    void displayPass(const Window &window, const IGraphicsResourceManager &manager,
                      const std::shared_ptr<Texture> &texture);
 
-    void passthroughPass(const IWindow &window, const IGraphicsResourceManager &manager,
+    void passthroughPass(const Window &window, const IGraphicsResourceManager &manager,
                          const std::shared_ptr<Texture> &texture);
 
-    void godRayPass1(const IWindow &window, const IGraphicsResourceManager &manager,
+    void godRayPass1(const Window &window, const IGraphicsResourceManager &manager,
                      const std::shared_ptr<Texture> &texture);
 
-    void godRayPass2(const IWindow &window, const IGraphicsResourceManager &manager,
+    void godRayPass2(const Window &window, const IGraphicsResourceManager &manager,
                      const std::shared_ptr<Texture> &texture,
                      const std::shared_ptr<Texture> &godrayTexture);
 
@@ -129,45 +129,45 @@ class DeferredRenderer : public IRenderer
      *
      * For debugging.
      */
-    void visualizeDepthPass(const ICamera &camera, const IWindow &window,
+    void visualizeDepthPass(const ICamera &camera, const Window &window,
                             const IGraphicsResourceManager &manager);
 
     /**
      * \brief Vignette blur pass.
      */
-    void vignetteBlurPass(const IWindow &window, const IGraphicsResourceManager &manager,
+    void vignetteBlurPass(const Window &window, const IGraphicsResourceManager &manager,
                           const std::shared_ptr<Texture> &texture);
 
     /**
      * \brief Bloom pass 1, writes blooom texture.
      */
-    void bloomPass1(const IWindow &window, const IGraphicsResourceManager &manager,
+    void bloomPass1(const Window &window, const IGraphicsResourceManager &manager,
                     const std::shared_ptr<Texture> &texture);
 
     /**
      * \brief Bloom pass 2, blends bloom texture on scene texture.
      */
-    void bloomPass2(const IWindow &window, const IGraphicsResourceManager &manager,
+    void bloomPass2(const Window &window, const IGraphicsResourceManager &manager,
                     const std::shared_ptr<Texture> &texture,
                     const std::shared_ptr<Texture> &bloomTexture);
 
     /**
      * \brief Lens flare pass, blends lens flare texture on scene texture.
      */
-    void lensFlarePass(const IWindow &window, const IGraphicsResourceManager &manager,
+    void lensFlarePass(const Window &window, const IGraphicsResourceManager &manager,
                        const std::shared_ptr<Texture> &texture);
 
-    void lensFlarePass2(const IWindow &window, const IGraphicsResourceManager &manager,
+    void lensFlarePass2(const Window &window, const IGraphicsResourceManager &manager,
                         const std::shared_ptr<Texture> &texture);
 
-    void lensFlarePass3(const IWindow &window, const IGraphicsResourceManager &manager,
+    void lensFlarePass3(const Window &window, const IGraphicsResourceManager &manager,
                         const std::shared_ptr<Texture> &texture,
                         const std::shared_ptr<Texture> &lensTexture);
 
     /**
      * \brief Cel pass, blends Cel texture on scene texture.
      */
-    void celPass(const IWindow &window, const IGraphicsResourceManager &manager,
+    void celPass(const Window &window, const IGraphicsResourceManager &manager,
                  const std::shared_ptr<Texture> &texture);
 
     /**
@@ -175,7 +175,7 @@ class DeferredRenderer : public IRenderer
      *
      * This pass should be done at the end of the post porcessing pipeline.
      */
-    void toneMapPass(const IWindow &window, const IGraphicsResourceManager &manager,
+    void toneMapPass(const Window &window, const IGraphicsResourceManager &manager,
                      const std::shared_ptr<Texture> &texture);
 
     /**

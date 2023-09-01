@@ -18,7 +18,7 @@
 #include <kern/graphics/resource/GraphicsResourceManager.h>
 #include <kern/graphics/scene/Scene.h>
 #include <kern/graphics/system/GraphicsSystem.h>
-#include <kern/graphics/window/GlfwWindow.h>
+#include <kern/graphics/Window.h>
 #include <kern/resource/ResourceManager.h>
 
 #include <cassert>
@@ -286,7 +286,7 @@ bool Engine::initWindow(unsigned int width, unsigned int height, const std::stri
     logi("Window title: {}.", title.c_str());
 
     // Create window
-    GlfwWindow *window = new GlfwWindow;
+    Window *window = new Window;
     if (!window->init(width, height, title))
     {
         loge("Failed to initialize GLFW window wrapper.");

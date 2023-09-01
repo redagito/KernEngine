@@ -6,7 +6,7 @@
 #include <string>
 #include <vector>
 
-class GlfwWindow;
+class Window;
 class IRenderer;
 class IScene;
 class IResourceManager;
@@ -48,7 +48,7 @@ class RTRDemo
     std::shared_ptr<IGraphicsResourceManager> m_graphicsResourceManager =
         nullptr; /**< Resource manager for graphics resources. */
 
-    std::shared_ptr<GlfwWindow> m_window = nullptr;
+    std::shared_ptr<Window> m_window = nullptr;
     std::shared_ptr<IInputProvider> m_inputProvider = nullptr;
 
     std::shared_ptr<IRenderer> m_renderer = nullptr;                /**< Active renderer. */

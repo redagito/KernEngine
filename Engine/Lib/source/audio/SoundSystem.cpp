@@ -26,6 +26,7 @@ SoundSystem::SoundSystem(const std::string& directory) : manager(std::make_share
 SoundSystem::~SoundSystem()
 {
     // Cleanup in order
+    bgmEmitter = nullptr;
     emitters.clear();
     manager = nullptr;
     alcMakeContextCurrent(nullptr);

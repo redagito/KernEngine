@@ -1,4 +1,4 @@
-#include "kern/graphics/window/GlfwWindow.h"
+#include "kern/graphics/Window.h"
 
 #include <cassert>
 #include <iostream>
@@ -94,20 +94,20 @@ static void APIENTRY glDebugOutput(GLenum source, GLenum type, GLuint id, GLenum
     std::cout << std::endl;
 }
 
-std::unordered_map<GLFWwindow *, GlfwWindow *> GlfwWindow::s_windows; /**< Window mapping. */
+std::unordered_map<GLFWwindow *, Window *> Window::s_windows; /**< Window mapping. */
 
-GlfwWindow::GlfwWindow() : m_window(nullptr), m_width(0), m_height(0), m_mouseCaptured(false)
+Window::Window() : m_window(nullptr), m_width(0), m_height(0), m_mouseCaptured(false)
 {
     return;
 }
 
-GlfwWindow::~GlfwWindow()
+Window::~Window()
 {
     // Remove mapping
     s_windows.erase(m_window);
 }
 
-bool GlfwWindow::init(unsigned int width, unsigned int height, const std::string &name)
+bool Window::init(unsigned int width, unsigned int height, const std::string &name)
 {
     if (glfwInit() != GLFW_TRUE)
     {
@@ -169,7 +169,7 @@ bool GlfwWindow::init(unsigned int width, unsigned int height, const std::string
     s_windows[m_window] = this;
 
     // Set window resize callback
-    glfwSetFramebufferSizeCallback(m_window, &GlfwWindow::resizeCallback);
+    glfwSetFramebufferSizeCallback(m_window, &Window::resizeCallback);
 
 #ifndef NDEBUG
     // Setup debug vallback
@@ -182,23 +182,23 @@ bool GlfwWindow::init(unsigned int width, unsigned int height, const std::string
     return true;
 }
 
-void GlfwWindow::setWidth(unsigned int width) { m_width = width; }
+void Window::setWidth(unsigned int width) { m_width = width; }
 
-void GlfwWindow::setHeight(unsigned int height) { m_height = height; }
+void Window::setHeight(unsigned int height) { m_height = height; }
 
-unsigned int GlfwWindow::getWidth() const { return m_width; }
+unsigned int Window::getWidth() const { return m_width; }
 
-unsigned int GlfwWindow::getHeight() const { return m_height; }
+unsigned int Window::getHeight() const { return m_height; }
 
-void GlfwWindow::setActive() const { glfwMakeContextCurrent(m_window); }
+void Window::setActive() const { glfwMakeContextCurrent(m_window); }
 
-bool GlfwWindow::isOpen() const { return !glfwWindowShouldClose(m_window); }
+bool Window::isOpen() const { return !glfwWindowShouldClose(m_window); }
 
-void GlfwWindow::swapBuffer() { glfwSwapBuffers(m_window); }
+void Window::swapBuffer() { glfwSwapBuffers(m_window); }
 
-void GlfwWindow::processEvents() { glfwPollEvents(); }
+void Window::processEvents() { glfwPollEvents(); }
 
-void GlfwWindow::toggleMouseCapture()
+void Window::toggleMouseCapture()
 {
     // Set capture mode
     if (m_mouseCaptured)
@@ -213,24 +213,24 @@ void GlfwWindow::toggleMouseCapture()
     m_mouseCaptured = !m_mouseCaptured;
 }
 
-GLFWwindow *GlfwWindow::getGlfwHandle() const { return m_window; }
+GLFWwindow *Window::getGlfwHandle() const { return m_window; }
 
-void GlfwWindow::addListener(IGlfwWindowListener *l) { m_listeners.insert(l); }
+void Window::addListener(IWindowListener *l) { m_listeners.insert(l); }
 
-void GlfwWindow::removeListener(IGlfwWindowListener *l) { m_listeners.erase(l); }
+void Window::removeListener(IWindowListener *l) { m_listeners.erase(l); }
 
-void GlfwWindow::resizeCallback(GLFWwindow *window, int width, int height)
+void Window::resizeCallback(GLFWwindow *window, int width, int height)
 {
     assert(width > 0);
     assert(height > 0);
     if (s_windows.count(window) != 0)
     {
-        GlfwWindow *win = s_windows.at(window);
+        Window *win = s_windows.at(window);
         win->handleResize(width, height);
     }
 }
 
-void GlfwWindow::handleResize(int width, int height)
+void Window::handleResize(int width, int height)
 {
     setWidth(width);
     setHeight(height);

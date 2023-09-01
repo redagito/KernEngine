@@ -7,6 +7,7 @@
 #define GLFW_INCLUDE_NONE
 #include <GLFW/glfw3.h>
 #include <kern/audio/SoundSystem.h>
+#include <kern/graphics/Window.h>
 #include <kern/graphics/animation/AnimationWorld.h>
 #include <kern/graphics/camera/FirstPersonCamera.h>
 #include <kern/graphics/input/GlfwInputProvider.h>
@@ -16,13 +17,12 @@
 #include <kern/graphics/renderer/RendererCoreConfig.h>
 #include <kern/graphics/resource/GraphicsResourceManager.h>
 #include <kern/graphics/scene/Scene.h>
-#include <kern/graphics/window/GlfwWindow.h>
 #include <kern/resource/ResourceManager.h>
 
 #include "CameraController.h"
 
-RTRDemo::RTRDemo() 
-{ 
+RTRDemo::RTRDemo()
+{
     m_soundSystem = std::make_unique<SoundSystem>("data/audio");
     m_bgMusic = m_soundSystem->createEmitter();
     m_bgSfx = m_soundSystem->createEmitter();
@@ -90,7 +90,7 @@ int RTRDemo::init(const std::string& configFile)
     m_bgMusic->setSound(soundBgm);
     m_bgMusic->setVolume(0.8);
     m_bgMusic->setLooping(true);
-    
+
     m_soundSystem->getManager()->registerSound("demosfx", "electric-windmill-74468.mp3");
     auto soundSfx = m_soundSystem->getManager()->getSound("demosfx");
     m_bgSfx->setSound(soundSfx);
@@ -213,7 +213,7 @@ bool RTRDemo::initWindow()
     logi("Window title: {}.", title);
 
     // Create window
-    GlfwWindow* window = new GlfwWindow;
+    Window* window = new Window;
     if (!window->init(width, height, title))
     {
         loge("Failed to initialize GLFW window wrapper.");

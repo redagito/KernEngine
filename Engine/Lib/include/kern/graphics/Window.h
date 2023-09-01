@@ -2,15 +2,14 @@
 
 #include <list>
 #include <set>
-#include <unordered_map>
 #include <string>
+#include <unordered_map>
 
-#include "kern/graphics/IWindow.h"
 #include "kern/graphics/input/IInputProvider.h"
 
 struct GLFWwindow;
 
-class IGlfwWindowListener
+class IWindowListener
 {
    public:
     virtual void handleResizeEvent(int width, int height) = 0;
@@ -19,11 +18,11 @@ class IGlfwWindowListener
 /**
  * \brief GLFW based implementation of the window interface.
  */
-class GlfwWindow : public IWindow
+class Window
 {
    public:
-    GlfwWindow();
-    ~GlfwWindow();
+    Window();
+    ~Window();
 
     bool init(unsigned int width, unsigned int height, const std::string &name);
 
@@ -33,6 +32,11 @@ class GlfwWindow : public IWindow
     unsigned int getWidth() const;
     unsigned int getHeight() const;
 
+    /**
+     * \brief Sets window active for rendering.
+     * Must set the context as current.
+     * TODO Should this be const or provide renderer with non const reference?
+     */
     void setActive() const;
 
     bool isOpen() const;
@@ -52,20 +56,19 @@ class GlfwWindow : public IWindow
 
     GLFWwindow *getGlfwHandle() const;
 
-    void addListener(IGlfwWindowListener *l);
-    void removeListener(IGlfwWindowListener *l);
+    void addListener(IWindowListener *l);
+    void removeListener(IWindowListener *l);
 
    private:
     static void resizeCallback(GLFWwindow *window, int width, int height);
     void handleResize(int width, int height);
 
-    static std::unordered_map<GLFWwindow *, GlfwWindow *>
-        s_windows; /**< GLFW window to window object mapping. */
+    static std::unordered_map<GLFWwindow *, Window *> s_windows; /**< GLFW window to window object mapping. */
 
     GLFWwindow *m_window = nullptr; /**< Window resource. */
     unsigned int m_width = 0;       /**< Current window width. */
     unsigned int m_height = 0;      /**< Current window height. */
 
     bool m_mouseCaptured = false; /**< Current mouse capture state. */
-    std::set<IGlfwWindowListener *> m_listeners;
+    std::set<IWindowListener *> m_listeners;
 };

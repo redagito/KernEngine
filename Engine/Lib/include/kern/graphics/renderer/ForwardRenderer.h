@@ -32,7 +32,7 @@ class ForwardRenderer : public IRenderer
      * This function implements the highlevel drawing logic for the scene,
      * selects rendering targets and manages render passes.
      */
-    void draw(const IScene &scene, const ICamera &camera, const IWindow &window,
+    void draw(const IScene &scene, const ICamera &camera, const Window &window,
               const IGraphicsResourceManager &manager);
 
     /**

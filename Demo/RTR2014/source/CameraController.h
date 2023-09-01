@@ -1,17 +1,16 @@
 #pragma once
 
-#include <memory>
-#include <vector>
+#include <kern/graphics/Window.h>
+#include <kern/graphics/input/IInputListener.h>
 
 #include <glm/glm.hpp>
-
-#include "kern/graphics/window/GlfwWindow.h"
-#include "kern/graphics/input/IInputListener.h"
+#include <memory>
+#include <vector>
 
 class IControllableCamera;
 class IInputProvider;
 
-class CameraController : public IInputListener, public IGlfwWindowListener
+class CameraController : public IInputListener, public IWindowListener
 {
    public:
     CameraController();

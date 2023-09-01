@@ -1,7 +1,7 @@
 #pragma once
 
 class IScene;
-class IWindow;
+class Window;
 class ICamera;
 class IGraphicsResourceManager;
 
@@ -19,6 +19,6 @@ class IRenderer
     /**
      * \brief Draw scene viewed from camera into window.
      */
-    virtual void draw(const IScene &scene, const ICamera &camera, const IWindow &window,
+    virtual void draw(const IScene &scene, const ICamera &camera, const Window &window,
                       const IGraphicsResourceManager &manager) = 0;
 };
