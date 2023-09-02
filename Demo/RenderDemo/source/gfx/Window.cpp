@@ -88,6 +88,7 @@ static void APIENTRY glDebugOutput(GLenum source, GLenum type, GLuint id, GLenum
         break;
     }
     loge("{}", ss.str());
+    throw std::runtime_error(ss.str());
 }
 
 Window* Window::s_window = nullptr;

@@ -14,12 +14,12 @@
 #include "kern/graphics/renderer/Draw.h"
 #include "kern/graphics/renderer/RenderBuffer.h"
 #include "kern/graphics/renderer/RendererCoreConfig.h"
-#include "kern/resource/IResourceManager.h"
 #include "kern/graphics/resource/Material.h"
 #include "kern/graphics/resource/Mesh.h"
 #include "kern/graphics/resource/ShaderProgram.h"
 #include "kern/graphics/resource/Texture.h"
 #include "kern/graphics/scene/SceneQuery.h"
+#include "kern/resource/IResourceManager.h"
 
 DeferredRenderer::DeferredRenderer() { return; }
 
@@ -1586,7 +1586,7 @@ bool DeferredRenderer::initGeometryPass(IResourceManager &manager)
     // Init gbuffer
     // Diffuse texture, stores base color and glow mask.
     m_diffuseGlowTexture = std::make_shared<Texture>();
-    m_diffuseGlowTexture->init(800, 600, GL_RGBA);
+    m_diffuseGlowTexture->init(800, 600, GL_RGBA8);
 
     // Normal texture, store x and y, z normals and specularity.
     m_normalSpecularTexture = std::make_shared<Texture>();

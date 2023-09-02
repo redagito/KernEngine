@@ -4,17 +4,16 @@
 #include <string>
 
 #define STB_IMAGE_WRITE_IMPLEMENTATION
-#include <stb_image_write.h>
-
 #include <fmtlog/fmtlog.h>
+#include <stb_image_write.h>
 
 Texture::Texture()
 {
     // empty
 }
 
-Texture::Texture(const std::vector<unsigned char> &image, unsigned int width, unsigned int height,
-                   ColorFormat format, bool createMipmaps)
+Texture::Texture(const std::vector<unsigned char> &image, unsigned int width, unsigned int height, ColorFormat format,
+                 bool createMipmaps)
 {
     // Init texture with data
     if (!init(image, width, height, format, createMipmaps))
@@ -32,8 +31,8 @@ Texture::Texture(unsigned int width, unsigned int height, ColorFormat format, bo
     }
 }
 
-Texture::Texture(GLint id, bool hasMipmaps, unsigned int width, unsigned int height, GLint format,
-                   GLenum externalFormat)
+Texture::Texture(GLuint id, bool hasMipmaps, unsigned int width, unsigned int height, GLint format,
+                 GLenum externalFormat)
 {
     m_valid = true;
     m_hasMipmaps = hasMipmaps;
@@ -52,8 +51,8 @@ Texture::~Texture()
     }
 }
 
-bool Texture::init(const std::vector<unsigned char> &image, unsigned int width,
-                    unsigned int height, ColorFormat format, bool createMipmaps)
+bool Texture::init(const std::vector<unsigned char> &image, unsigned int width, unsigned int height, ColorFormat format,
+                   bool createMipmaps)
 {
     // Set format
     GLint internalFormat;
@@ -82,14 +81,14 @@ bool Texture::init(unsigned int width, unsigned int height, GLint format)
 
 void Texture::resize(unsigned int width, unsigned int height)
 {
+    // TODO Remove resizing functionality
     if (m_width == width && m_height == height)
     {
         return;
     }
     logd("Texture resize from {}, {} to {}, {}.", m_width, m_height, width, height);
     glBindTexture(GL_TEXTURE_2D, m_textureId);
-    glTexImage2D(GL_TEXTURE_2D, 0, m_format, width, height, 0, m_externalFormat, GL_UNSIGNED_BYTE,
-                 nullptr);
+    glTexImage2D(GL_TEXTURE_2D, 0, m_format, width, height, 0, m_externalFormat, GL_UNSIGNED_BYTE, nullptr);
     m_width = width;
     m_height = height;
 }
@@ -101,25 +100,23 @@ bool Texture::isValid() const { return m_valid; }
 void Texture::setActive(GLint textureUnit) const
 {
     assert(isValid());
-    glActiveTexture(GL_TEXTURE0 + textureUnit);
-    glBindTexture(GL_TEXTURE_2D, m_textureId);
+    glBindTextureUnit(textureUnit, m_textureId);
 }
 
 void Texture::saveAsPng(const std::string &file)
 {
     std::vector<unsigned char> image;
     image.resize(m_width * m_height * 3);
-    glBindTexture(GL_TEXTURE_2D, m_textureId);
-    glGetTexImage(GL_TEXTURE_2D, 0, GL_RGB, GL_UNSIGNED_BYTE, image.data());
-	
+    glGetTextureImage(m_textureId, 0, GL_RGB, GL_UNSIGNED_BYTE, image.size(), image.data());
+
     if (stbi_write_png(file.c_str(), m_width, m_height, 3, image.data(), m_width * 3) != 1)
     {
         loge("Failed to save png");
     }
 }
 
-bool Texture::init(const std::vector<unsigned char> &image, unsigned int width,
-                    unsigned int height, GLint format, bool createMipmaps)
+bool Texture::init(const std::vector<unsigned char> &image, unsigned int width, unsigned int height, GLint format,
+                   bool createMipmaps)
 {
     // Sanity checks
     if (width == 0 || height == 0)
@@ -179,61 +176,65 @@ bool Texture::init(const std::vector<unsigned char> &image, unsigned int width,
     }
 
     // Create id
-    GLuint textureId;
-    glGenTextures(1, &textureId);
-    glBindTexture(GL_TEXTURE_2D, textureId);
+    GLuint textureId = 0;
+    glCreateTextures(GL_TEXTURE_2D, 1, &textureId);
 
     // TODO Filter should be based on arguments and mip map level
     // Set filters
     if (width == 1 && height == 1)
     {
         // Special case 1x1 texture
-        // Needs nearest filtering otherwise texture is black?
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+        // NOTE Needs nearest filtering otherwise texture is black?
+        glTextureParameteri(textureId, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+        glTextureParameteri(textureId, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
     }
     else
     {
         if (m_hasMipmaps)
         {
             // Bilinear filtering
-            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_NEAREST);
+            glTextureParameteri(textureId, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+            glTextureParameteri(textureId, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_NEAREST);
         }
         else
         {
             // Default value is linear filtering
-            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+            glTextureParameteri(textureId, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+            glTextureParameteri(textureId, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
         }
     }
 
     // Set wrap mode
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_R, GL_MIRRORED_REPEAT);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_MIRRORED_REPEAT);
+    glTextureParameteri(textureId, GL_TEXTURE_WRAP_R, GL_MIRRORED_REPEAT);
+    glTextureParameteri(textureId, GL_TEXTURE_WRAP_S, GL_MIRRORED_REPEAT);
 
-    // Load data
+    int levels = 1;
+    if (createMipmaps)
+    {
+        levels = (int)std::floor(std::log2(std::min(width, height))) + 1;
+    }
+
+    // Use glTexImage for mutable storage for resizing later
+    // TODO Disallow resizing of textures / create completely new texture on resize
+    // NOTE Actually disallowing and forcing a new texture to be created would be better?
+    // TODO For FBO resize, the FBO would need to be recreated completely
+    glBindTexture(GL_TEXTURE_2D, textureId);
+    //  Load data
     if (image.empty())
     {
-        // No image data, only allocate texture space
-        // TODO As of OpenGL 4.3, glTexStorage should be used for this.
         glTexImage2D(GL_TEXTURE_2D, 0, format, width, height, 0, m_externalFormat, type, nullptr);
     }
     else
     {
         // Load image data
-        glTexImage2D(GL_TEXTURE_2D, 0, format, width, height, 0, m_externalFormat, type,
-                     image.data());
+        glTexImage2D(GL_TEXTURE_2D, 0, format, width, height, 0, m_externalFormat, type, image.data());
     }
 
     // Mipmaps
-    // Do not generate for 1x1 images
-    if (width != 1 && height != 1 && createMipmaps)
+    if (levels > 1)
     {
-        glGenerateMipmap(GL_TEXTURE_2D);
+        glGenerateTextureMipmap(textureId);
     }
-
-    // Unbind
     glBindTexture(GL_TEXTURE_2D, 0);
 
     // Clean up previously created id
@@ -252,6 +253,5 @@ bool Texture::init(const std::vector<unsigned char> &image, unsigned int width,
 
 void Texture::setParameter(GLenum parameterName, GLint value)
 {
-    glBindTexture(GL_TEXTURE_2D, m_textureId);
-    glTexParameteri(GL_TEXTURE_2D, parameterName, value);
+    glTextureParameteri(m_textureId, parameterName, value);
 }

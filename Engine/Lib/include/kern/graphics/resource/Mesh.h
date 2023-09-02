@@ -96,6 +96,7 @@ class Mesh
     std::unique_ptr<VertexBuffer> m_uvs;      /**< Texture coordinates. */
     std::unique_ptr<VertexArrayObject> m_vao; /**< Vertex array object. */
     PrimitiveType m_type;                     /**< Mesh primitive type. */
+
     // For frustum culling
     // TODO Should be stored separately?
     BoundingSphere m_boundingSphere; /**< Bounding sphere calculated from vertices. */

@@ -91,6 +91,7 @@ void FrameBuffer::resize(unsigned int width, unsigned int height)
     {
         entry.second->resize(width, height);
     }
+
     for (auto &entry : m_renderBuffers)
     {
         // Need renderbuffer connot be resized

@@ -108,7 +108,7 @@ int main(int argc, char** argv)
     {
         std::vector<AppKind> kinds;
         // Getting started
-
+        /*
         kinds.push_back(AppKind::HelloTriangle);
         kinds.push_back(AppKind::ColorTriangle);
         kinds.push_back(AppKind::TexturedTriangle);
@@ -128,7 +128,7 @@ int main(int argc, char** argv)
 
         // Model loading
         kinds.push_back(AppKind::ModelLoad);
-
+        */
         // In practice
         kinds.push_back(AppKind::RenderText);
         // Other

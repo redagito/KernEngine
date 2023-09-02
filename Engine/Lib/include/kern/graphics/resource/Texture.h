@@ -29,7 +29,7 @@ class Texture
     // TODO remove this and introduce ability to create cubetextures (necessary
     // for point light
     // shadows)
-    Texture(GLint id, bool hasMipmaps, unsigned int width, unsigned int height, GLint format,
+    Texture(GLuint id, bool hasMipmaps, unsigned int width, unsigned int height, GLint format,
              GLenum externalFormat);
 
     ~Texture();
