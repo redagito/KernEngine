@@ -79,9 +79,10 @@ void Shader::set(const std::string& name, const glm::mat4& value, bool required)
     glUniformMatrix4fv(loc, 1, GL_FALSE, glm::value_ptr(value));
 }
 
-void Shader::setTexture(const std::string& name, const Texture& texture, bool required)
+void Shader::setTexture(const std::string& name, const Texture& texture, int unit, bool required)
 {
-    set(name, texture.id, required);
+    glBindTextureUnit(unit, texture.id);
+    set(name, unit, required);
 }
 
 

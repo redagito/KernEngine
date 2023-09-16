@@ -16,7 +16,7 @@ Development is done with
 
 Conan install for debug and release build types
 ```
-conan install . --output-folder=build --build=missing --settings=build_type=Debug && conan install . --output-folder=build --build=missing --settings=build_type=Release
+conan install . --build=missing --settings=build_type=Debug && conan install . --build=missing --settings=build_type=Release
 ```
 
 CMake project generation

@@ -53,7 +53,7 @@ GLuint textureIdFromFile(const std::string& fileName, const std::string& directo
     if (image == nullptr)
     {
         loge(stbi_failure_reason());
-        return 0;
+        throw std::runtime_error("Failed to load the texture " + fileName);
     }
 
     GLuint id = 0;

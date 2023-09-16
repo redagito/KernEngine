@@ -30,7 +30,6 @@ lua/5.4.6
 
 # Logging
 fmtlog/2.2.1
-sol2/3.3.1
 
 # Testing
 catch2/3.4.0
@@ -44,3 +43,6 @@ glad/*:no_loader=False
 [generators]
 CMakeDeps
 CMakeToolchain
+
+[layout]
+cmake_layout

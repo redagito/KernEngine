@@ -17,6 +17,7 @@
 #include "app/BasicLighting.h"
 #include "app/LightCube.h"
 #include "app/SimpleMaterial.h"
+#include "app/LightingMaps.h"
 
 // Model loading
 #include "app/ModelLoad.h"
@@ -35,6 +36,7 @@
 
 enum class AppKind
 {
+    // Getting started
     HelloTriangle,
     ColorTriangle,
     TexturedTriangle,
@@ -47,11 +49,18 @@ enum class AppKind
     SimpleMoveCamera,
     LookAroundCamera,
     LightCube,
+    // Lighting
     BasicLighting,
     SimpleMaterial,
+    LightingMaps,
+
+    // Model loading
     ModelLoad,
 
+    // In practice
     RenderText,
+
+    // Other
     ImguiDemo
 };
 
@@ -87,6 +96,8 @@ std::unique_ptr<RenderApplication> createApp(AppKind kind)
         return std::make_unique<BasicLighting>();
     case AppKind::SimpleMaterial:
         return std::make_unique<SimpleMaterial>();
+    case AppKind::LightingMaps:
+        return std::make_unique<LightingMaps>();
     case AppKind::RenderText:
         return std::make_unique<RenderText>();
     case AppKind::ModelLoad:
@@ -107,8 +118,8 @@ int main(int argc, char** argv)
     try
     {
         std::vector<AppKind> kinds;
-        // Getting started
         /*
+        // Getting started
         kinds.push_back(AppKind::HelloTriangle);
         kinds.push_back(AppKind::ColorTriangle);
         kinds.push_back(AppKind::TexturedTriangle);
@@ -125,15 +136,18 @@ int main(int argc, char** argv)
         kinds.push_back(AppKind::LightCube);
         kinds.push_back(AppKind::BasicLighting);
         kinds.push_back(AppKind::SimpleMaterial);
+        */
+        kinds.push_back(AppKind::LightingMaps);
 
+        /*
         // Model loading
         kinds.push_back(AppKind::ModelLoad);
-        */
+        
         // In practice
         kinds.push_back(AppKind::RenderText);
         // Other
         kinds.push_back(AppKind::ImguiDemo);
-
+        */
         for (auto kind : kinds)
         {
             createApp(kind)->run();

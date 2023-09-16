@@ -41,7 +41,6 @@ find_package(minimp3 REQUIRED)
 
 # Scripting
 find_package(lua REQUIRED)
-find_package(sol2 REQUIRED)
 
 # Engine
 add_subdirectory(Engine)

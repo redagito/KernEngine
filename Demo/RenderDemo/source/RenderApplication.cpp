@@ -41,6 +41,7 @@ RenderApplication::RenderApplication()
 
 RenderApplication::~RenderApplication()
 {
+    clearTextureCache();
     m_backgroundSoundEmitter = nullptr;
     m_soundSystem = nullptr;
     m_window = nullptr;

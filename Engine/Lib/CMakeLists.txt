@@ -38,7 +38,6 @@ target_link_libraries(${PROJECT_NAME}
 	PUBLIC Freetype::Freetype
     
 	PUBLIC lua::lua
-	PUBLIC sol2::sol2
 )
 
 target_include_directories(${PROJECT_NAME} 
