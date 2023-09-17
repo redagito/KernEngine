@@ -14,5 +14,5 @@ class DirectionalLight
     glm::vec3 diffuse = glm::vec3(1.f);
     glm::vec3 specular = glm::vec3(1.f);
 
-    void set(Shader& shader) const;
+    void set(Shader& shader, const std::string& prefix) const;
 };

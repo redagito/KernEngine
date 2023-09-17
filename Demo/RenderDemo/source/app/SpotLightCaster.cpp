@@ -45,7 +45,7 @@ struct Material
     float shininess;
 };
 
-// Point light
+// Spot light
 struct Light
 {
     vec3 position;
@@ -222,7 +222,7 @@ void SpotLightCaster::render()
     m_modelShader->set("material.shininess", 64.f);
 
     // Light
-    m_spotLight.set(*m_modelShader);
+    m_spotLight.set(*m_modelShader, "light");
 
     // Camera
     m_modelShader->set("viewPos", getCamera().getPosition());

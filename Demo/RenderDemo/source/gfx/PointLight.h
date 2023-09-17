@@ -17,5 +17,5 @@ class PointLight
     float linear = 0.09f;
     float quadratic = 0.032f;
 
-    void set(Shader& shader) const;
+    void set(Shader& shader, const std::string& prefix) const;
 };

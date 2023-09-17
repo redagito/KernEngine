@@ -24,5 +24,5 @@ class SpotLight
     float innerCutOff = 12.5f;
     float outerCutOff = 15.f;
 
-    void set(Shader& shader) const;
+    void set(Shader& shader, const std::string& prefix) const;
 };

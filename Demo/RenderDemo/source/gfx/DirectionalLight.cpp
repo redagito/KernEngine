@@ -1,10 +1,10 @@
 #include "gfx/DirectionalLight.h"
 
-void DirectionalLight::set(Shader& shader) const
+void DirectionalLight::set(Shader& shader, const std::string& prefix) const
 {
     shader.setActive();
-    shader.set("light.direction", direction);
-    shader.set("light.ambient", ambient);
-    shader.set("light.diffuse", diffuse);
-    shader.set("light.specular", specular);
+    shader.set(prefix + ".direction", direction);
+    shader.set(prefix + ".ambient", ambient);
+    shader.set(prefix + ".diffuse", diffuse);
+    shader.set(prefix + ".specular", specular);
 }

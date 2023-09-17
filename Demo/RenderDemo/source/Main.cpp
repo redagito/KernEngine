@@ -21,6 +21,7 @@
 #include "app/DirectionalLightCaster.h"
 #include "app/PointLightCaster.h"
 #include "app/SpotLightCaster.h"
+#include "app/MultipleLights.h"
 
 // Model loading
 #include "app/ModelLoad.h"
@@ -52,6 +53,7 @@ enum class AppKind
     SimpleMoveCamera,
     LookAroundCamera,
     LightCube,
+
     // Lighting
     BasicLighting,
     SimpleMaterial,
@@ -60,6 +62,7 @@ enum class AppKind
     DirectionalLightCaster,
     PointLightCaster,
     SpotLightCaster,
+    MultipleLights,
 
     // Model loading
     ModelLoad,
@@ -111,6 +114,8 @@ std::unique_ptr<RenderApplication> createApp(AppKind kind)
         return std::make_unique<PointLightCaster>();
     case AppKind::SpotLightCaster:
         return std::make_unique<SpotLightCaster>();
+    case AppKind::MultipleLights:
+        return std::make_unique<MultipleLights>();
     case AppKind::RenderText:
         return std::make_unique<RenderText>();
     case AppKind::ModelLoad:
@@ -155,8 +160,9 @@ int main(int argc, char** argv)
         kinds.push_back(AppKind::LightingMaps);
         kinds.push_back(AppKind::DirectionalLightCaster);
         kinds.push_back(AppKind::PointLightCaster);
-        */
         kinds.push_back(AppKind::SpotLightCaster);
+        */
+        kinds.push_back(AppKind::MultipleLights);
 
         // Model loading
         // TODO Not working
