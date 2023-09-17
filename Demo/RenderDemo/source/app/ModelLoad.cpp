@@ -1,6 +1,9 @@
 #include "app/ModelLoad.h"
+
 #include <glm/ext/matrix_clip_space.hpp>
 #include <glm/ext/matrix_transform.hpp>
+
+#include "gfx/BasicMeshes.h"
 
 bool ModelLoad::setup()
 {
@@ -29,19 +32,19 @@ out vec4 FragColor;
 
 in vec2 TexCoords;
 
-uniform sampler2D texture_diffuse1;
+uniform sampler2D texture_diffuse;
+//uniform sampler2D texture_specular;
 
 void main()
 {    
-    //FragColor = texture(texture_diffuse1, TexCoords);
-    FragColor = vec4(1.0, 0.0, 0.0, 1);
+    FragColor = texture(texture_diffuse, TexCoords);
 }
 	)##";
 
     models.push_back(Model{"data/backpack/backpack.obj"});
     shader = std::make_unique<Shader>(vertexCode, fragmentCode);
 
-    glClearColor(0.2f, 0.0f, 0.0f, 0.f);
+    glClearColor(0.9f, 0.9f, 0.9f, 1.f);
     glEnable(GL_DEPTH_TEST);
     return true;
 }
@@ -54,8 +57,8 @@ void ModelLoad::render()
     shader->setActive();
 
     glm::mat4 model = glm::mat4(1.0f);
-    model = glm::translate(model, glm::vec3(1.0f, 1.0f, 1.0f));  // translate it down so it's at the center of the scene
-    model = glm::scale(model, glm::vec3(1.0f, 1.0f, 1.0f));      // it's a bit too big for our scene, so scale it down
+    model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.0f));
+    model = glm::scale(model, glm::vec3(1.0f, 1.0f, 1.0f));
     shader->set("model", model);
 
     glm::mat4 view = getCamera().getView();
@@ -63,11 +66,9 @@ void ModelLoad::render()
 
     glm::mat4 projection = getWindow().getProjection(45.f, 0.1f, 100.f);
     shader->set("projection", projection);
-    
-    // render the loaded model
 
-    for (const auto& model : models)
+    for (const auto& m : models)
     {
-        model.draw(*shader);
+        m.draw(*shader);
     }
 }

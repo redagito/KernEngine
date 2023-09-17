@@ -1,6 +1,7 @@
 #include "gfx/Model.h"
 
 #include <stdexcept>
+#include <fmtlog/fmtlog.h>
 
 #include "gfx/Texture.h"
 
@@ -19,7 +20,7 @@ void Model::draw(Shader& shader) const
 void Model::loadModel(const std::string& path)
 {
     Assimp::Importer importer;
-    auto scene = importer.ReadFile(path, aiProcess_FlipUVs | aiProcess_Triangulate);
+    auto scene = importer.ReadFile(path, aiProcess_Triangulate | aiProcess_FlipUVs);
     // Check error
     if (scene == nullptr || scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || scene->mRootNode == nullptr)
     {
@@ -59,8 +60,6 @@ std::shared_ptr<Mesh> Model::processMesh(aiMesh* mesh, const aiScene* scene)
     vertices.reserve(mesh->mNumVertices);
 
     std::vector<GLuint> indices;
-    std::vector<std::shared_ptr<Texture>> textures;
-    textures.reserve(10);
 
     if (mesh->mNormals == nullptr)
         throw std::runtime_error{"Mesh is missing normal data"};
@@ -98,25 +97,23 @@ std::shared_ptr<Mesh> Model::processMesh(aiMesh* mesh, const aiScene* scene)
     }
 
     // Material
+    std::vector<std::shared_ptr<Texture>> diffuseTextures;
+    std::vector<std::shared_ptr<Texture>> specularTextures;
     if (mesh->mMaterialIndex >= 0)
     {
         auto material = scene->mMaterials[mesh->mMaterialIndex];
-        auto diffuseMaps = loadMaterialTextures(material, aiTextureType_DIFFUSE, "texture_diffuse");
-        auto specularMaps = loadMaterialTextures(material, aiTextureType_SPECULAR, "texture_specular");
-
-        // Insert into textures
-        textures.insert(textures.end(), diffuseMaps.begin(), diffuseMaps.end());
-        textures.insert(textures.end(), specularMaps.begin(), specularMaps.end());
+        diffuseTextures = loadMaterialTextures(material, aiTextureType_DIFFUSE, "texture_diffuse");
+        specularTextures = loadMaterialTextures(material, aiTextureType_SPECULAR, "texture_specular");
     }
 
-    return std::make_shared<Mesh>(vertices, indices, textures);
+    return std::make_shared<Mesh>(vertices, indices, diffuseTextures, specularTextures);
 }
 
 std::vector<std::shared_ptr<Texture>> Model::loadMaterialTextures(aiMaterial* material, aiTextureType type,
                                                                   const std::string& typeName)
 {
     std::vector<std::shared_ptr<Texture>> textures;
-
+    logi("Loading {} material textures.", material->GetTextureCount(type));
     for (unsigned int i = 0; i < material->GetTextureCount(type); ++i)
     {
         // Path to the texture

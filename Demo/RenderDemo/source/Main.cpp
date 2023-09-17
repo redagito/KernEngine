@@ -161,12 +161,11 @@ int main(int argc, char** argv)
         kinds.push_back(AppKind::DirectionalLightCaster);
         kinds.push_back(AppKind::PointLightCaster);
         kinds.push_back(AppKind::SpotLightCaster);
-        */
         kinds.push_back(AppKind::MultipleLights);
+        */
 
         // Model loading
-        // TODO Not working
-        // kinds.push_back(AppKind::ModelLoad);
+        kinds.push_back(AppKind::ModelLoad);
         
         // In practice
         kinds.push_back(AppKind::RenderText);

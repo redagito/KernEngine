@@ -22,10 +22,13 @@ class Mesh
    public:
     std::vector<Vertex> m_vertices;
     std::vector<GLuint> m_indices;
-    std::vector<std::shared_ptr<Texture>> m_textures;
+    // Textures
+    std::vector<std::shared_ptr<Texture>> m_diffuseTextures;
+    std::vector<std::shared_ptr<Texture>> m_specularTextures;
 
     Mesh(const std::vector<Vertex>& vertices, const std::vector<GLuint>& indices,
-         const std::vector<std::shared_ptr<Texture>>& textures);
+         const std::vector<std::shared_ptr<Texture>>& diffuseTextures,
+         const std::vector<std::shared_ptr<Texture>>& specularTextures);
     ~Mesh();
 
     void draw(Shader& shader) const;

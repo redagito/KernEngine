@@ -1,8 +1,9 @@
 #include "Mesh.h"
 
+#include <fmtlog/fmtlog.h>
+
 #include <cstddef>
 #include <stdexcept>
-#include <fmtlog/fmtlog.h>
 
 // |x y z u  v| x  y  z  u  v |x  y  z  u  v
 //  1 2 3 4  5  6  7  8  9  10 11 12 13 14 15
@@ -14,9 +15,22 @@
 // Example: attribute uv, index 2 position in buffer = 12 + 20 * 2 = 48 bytes from start
 
 Mesh::Mesh(const std::vector<Vertex>& vertices, const std::vector<GLuint>& indices,
-           const std::vector<std::shared_ptr<Texture>>& textures)
-    : m_vertices(vertices), m_indices(indices), m_textures(textures)
+           const std::vector<std::shared_ptr<Texture>>& diffuseTexs,
+           const std::vector<std::shared_ptr<Texture>>& specularTexs)
+    : m_vertices(vertices), m_indices(indices), m_diffuseTextures(diffuseTexs), m_specularTextures(specularTexs)
 {
+    if (m_diffuseTextures.empty())
+        throw std::runtime_error("Missing diffuse textures");
+
+    if (m_specularTextures.empty())
+        throw std::runtime_error("Missing specular textures");
+
+    if (m_diffuseTextures.size() > 1)
+        logw("Multiple diffuse textures are provided but only the first will be used");
+
+    if (m_specularTextures.size() > 1)
+        logw("Multiple specular textures are provided but only the first will be used");
+
     logi("Creating mesh with {} vertices and {} indices", m_vertices.size(), m_indices.size());
 
     // VAO Stores buffer states
@@ -35,7 +49,7 @@ Mesh::Mesh(const std::vector<Vertex>& vertices, const std::vector<GLuint>& indic
                  GL_STATIC_DRAW);
 
     // Indices
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_vbo);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_ebo);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, m_indices.size() * sizeof(decltype(m_indices)::value_type), m_indices.data(),
                  GL_STATIC_DRAW);
 
@@ -68,44 +82,7 @@ Mesh::~Mesh()
 
 void Mesh::draw(Shader& shader) const
 {
-    GLuint diffuseNr = 1;
-    GLuint specularNr = 1;
-
-    // Bind all textures in the mesh to the shader
-    for (GLint i = 0; i < m_textures.size(); ++i)
-    {
-        // Activate texture unit
-        glActiveTexture(GL_TEXTURE0 + i);
-        std::string number;
-        std::string name = m_textures.at(i)->type;
-
-        // Texture type
-        if (name == "texture_diffuse")
-        {
-            number = std::to_string(diffuseNr);
-            ++diffuseNr;
-        }
-        else if (name == "texture_specular")
-        {
-            number = std::to_string(specularNr);
-            ++specularNr;
-        }
-        else
-        {
-            throw std::runtime_error{"Invalid texture type"};
-        }
-
-        // Bind textures to shader
-        // Set sampler to texture unit
-        auto uniformName = /*"material." +*/ name + number;
-
-        shader.set(uniformName, i);
-        // Bind texture to index
-        glBindTexture(GL_TEXTURE_2D, m_textures.at(i)->id);
-    }
-
-    // Reset active texture unit
-    glActiveTexture(GL_TEXTURE0);
+    shader.setTexture("texture_diffuse", *m_diffuseTextures.at(0), 0);
 
     // Draw mesh
     glBindVertexArray(m_vao);
