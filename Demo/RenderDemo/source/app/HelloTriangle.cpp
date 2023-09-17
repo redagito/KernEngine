@@ -9,22 +9,19 @@ bool HelloTriangle::setup()
 
 layout(location = 0) in vec2 vpos_ndc;
 
-in vec3 base_color;
-out vec3 fragmentColor;
-
 void main(){
     gl_Position = vec4(vpos_ndc, 0.f, 1.f);
-    fragmentColor = base_color;
 }
 	)##";
 
     const char* fragmentCode = R"##(
 #version 460 core
 
+uniform vec3 base_color;
 out vec3 color;
 
 void main(){
-    color = vec3(1.f, 0.f, 0.f);
+    color = base_color;
 }
 	)##";
 

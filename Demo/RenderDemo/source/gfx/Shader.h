@@ -26,12 +26,15 @@ class Shader
     void setTexture(const std::string& name, const Texture& texture, int unit, bool required = true);
 
    private:
+    bool isActive() const;
+    void ensureActive() const;
     int getUniformLocation(const std::string& name, bool required) const;
 
     // Shader id
     GLuint id = 0;
     // Cached uniform names with location ids
     mutable std::unordered_map<std::string, int> uniformLocations;
+    static GLuint activeShaderId;
 };
 
 GLuint createShaderObject(const std::string& code, GLenum shaderType);

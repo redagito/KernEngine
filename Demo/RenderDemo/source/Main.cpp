@@ -18,6 +18,9 @@
 #include "app/LightCube.h"
 #include "app/SimpleMaterial.h"
 #include "app/LightingMaps.h"
+#include "app/DirectionalLightCaster.h"
+#include "app/PointLightCaster.h"
+#include "app/SpotLightCaster.h"
 
 // Model loading
 #include "app/ModelLoad.h"
@@ -53,6 +56,10 @@ enum class AppKind
     BasicLighting,
     SimpleMaterial,
     LightingMaps,
+    // Lighting - light casters
+    DirectionalLightCaster,
+    PointLightCaster,
+    SpotLightCaster,
 
     // Model loading
     ModelLoad,
@@ -98,6 +105,12 @@ std::unique_ptr<RenderApplication> createApp(AppKind kind)
         return std::make_unique<SimpleMaterial>();
     case AppKind::LightingMaps:
         return std::make_unique<LightingMaps>();
+    case AppKind::DirectionalLightCaster:
+        return std::make_unique<DirectionalLightCaster>();
+    case AppKind::PointLightCaster:
+        return std::make_unique<PointLightCaster>();
+    case AppKind::SpotLightCaster:
+        return std::make_unique<SpotLightCaster>();
     case AppKind::RenderText:
         return std::make_unique<RenderText>();
     case AppKind::ModelLoad:
@@ -118,8 +131,9 @@ int main(int argc, char** argv)
     try
     {
         std::vector<AppKind> kinds;
-        /*
+        
         // Getting started
+        /*
         kinds.push_back(AppKind::HelloTriangle);
         kinds.push_back(AppKind::ColorTriangle);
         kinds.push_back(AppKind::TexturedTriangle);
@@ -131,23 +145,28 @@ int main(int argc, char** argv)
         kinds.push_back(AppKind::HelloCamera);
         kinds.push_back(AppKind::SimpleMoveCamera);
         kinds.push_back(AppKind::LookAroundCamera);
+        */
 
         // Lighting
+        /*
         kinds.push_back(AppKind::LightCube);
         kinds.push_back(AppKind::BasicLighting);
         kinds.push_back(AppKind::SimpleMaterial);
-        */
         kinds.push_back(AppKind::LightingMaps);
+        kinds.push_back(AppKind::DirectionalLightCaster);
+        kinds.push_back(AppKind::PointLightCaster);
+        */
+        kinds.push_back(AppKind::SpotLightCaster);
 
-        /*
         // Model loading
-        kinds.push_back(AppKind::ModelLoad);
+        // TODO Not working
+        // kinds.push_back(AppKind::ModelLoad);
         
         // In practice
         kinds.push_back(AppKind::RenderText);
         // Other
         kinds.push_back(AppKind::ImguiDemo);
-        */
+        
         for (auto kind : kinds)
         {
             createApp(kind)->run();

@@ -1,9 +1,11 @@
 #include "gfx/Shader.h"
 
-#include <vector>
+#include <fmtlog/fmtlog.h>
 
 #include <glm/gtc/type_ptr.hpp>
-#include <fmtlog/fmtlog.h>
+#include <vector>
+
+GLuint Shader::activeShaderId = 0;
 
 Shader::Shader(const std::string& vertexShaderCode, const std::string& fragmentShaderCode)
 {
@@ -14,17 +16,28 @@ Shader::~Shader()
 {
     if (id == 0)
         return;
+    if (isActive())
+    {
+        glUseProgram(0);
+        activeShaderId = 0;
+    }
     glDeleteProgram(id);
 }
 
-void Shader::setActive() const { 
+void Shader::setActive() const
+{
     if (id == 0)
         throw std::runtime_error("Shader id is null");
-    glUseProgram(id); 
+    if (isActive())
+        return;
+
+    glUseProgram(id);
+    activeShaderId = id;
 }
 
 void Shader::set(const std::string& name, const int value, bool required)
 {
+    ensureActive();
     auto loc = getUniformLocation(name, required);
     if (loc < 0)
         return;
@@ -33,6 +46,7 @@ void Shader::set(const std::string& name, const int value, bool required)
 
 void Shader::set(const std::string& name, const unsigned int value, bool required)
 {
+    ensureActive();
     auto loc = getUniformLocation(name, required);
     if (loc < 0)
         return;
@@ -41,6 +55,7 @@ void Shader::set(const std::string& name, const unsigned int value, bool require
 
 void Shader::set(const std::string& name, const float value, bool required)
 {
+    ensureActive();
     auto loc = getUniformLocation(name, required);
     if (loc < 0)
         return;
@@ -49,6 +64,7 @@ void Shader::set(const std::string& name, const float value, bool required)
 
 void Shader::set(const std::string& name, const glm::vec2& value, bool required)
 {
+    ensureActive();
     auto loc = getUniformLocation(name, required);
     if (loc < 0)
         return;
@@ -57,6 +73,7 @@ void Shader::set(const std::string& name, const glm::vec2& value, bool required)
 
 void Shader::set(const std::string& name, const glm::vec3& value, bool required)
 {
+    ensureActive();
     auto loc = getUniformLocation(name, required);
     if (loc < 0)
         return;
@@ -65,6 +82,7 @@ void Shader::set(const std::string& name, const glm::vec3& value, bool required)
 
 void Shader::set(const std::string& name, const glm::vec4& value, bool required)
 {
+    ensureActive();
     auto loc = getUniformLocation(name, required);
     if (loc < 0)
         return;
@@ -73,6 +91,7 @@ void Shader::set(const std::string& name, const glm::vec4& value, bool required)
 
 void Shader::set(const std::string& name, const glm::mat4& value, bool required)
 {
+    ensureActive();
     auto loc = getUniformLocation(name, required);
     if (loc < 0)
         return;
@@ -81,10 +100,18 @@ void Shader::set(const std::string& name, const glm::mat4& value, bool required)
 
 void Shader::setTexture(const std::string& name, const Texture& texture, int unit, bool required)
 {
+    ensureActive();
     glBindTextureUnit(unit, texture.id);
     set(name, unit, required);
 }
 
+bool Shader::isActive() const { return activeShaderId == id; }
+
+void Shader::ensureActive() const
+{
+    if (!isActive())
+        throw std::runtime_error("Shader is not active");
+}
 
 int Shader::getUniformLocation(const std::string& name, bool required) const
 {
