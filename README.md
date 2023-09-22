@@ -2,6 +2,7 @@
 
 ![Screenshot cg15 2](./doc/screenshot_cg2015_2.jpg)
 > The GL in OpenGL stands for "Good Luck" because you are going to need it.
+
 ![Screenshot rtr14 2](./doc/screenshot_rtr2014_2.jpg)
 KernEngine is a Game Engine/Framework for realtime 3d rendering and game development.
 Extracted from 2 projects for university courses.
