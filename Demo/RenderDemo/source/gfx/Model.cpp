@@ -99,14 +99,16 @@ std::shared_ptr<Mesh> Model::processMesh(aiMesh* mesh, const aiScene* scene)
     // Material
     std::vector<std::shared_ptr<Texture>> diffuseTextures;
     std::vector<std::shared_ptr<Texture>> specularTextures;
+    std::vector<std::shared_ptr<Texture>> normalTextures;
     if (mesh->mMaterialIndex >= 0)
     {
         auto material = scene->mMaterials[mesh->mMaterialIndex];
         diffuseTextures = loadMaterialTextures(material, aiTextureType_DIFFUSE, "texture_diffuse");
         specularTextures = loadMaterialTextures(material, aiTextureType_SPECULAR, "texture_specular");
+        normalTextures = loadMaterialTextures(material, aiTextureType_NORMALS, "texture_normal");
     }
 
-    return std::make_shared<Mesh>(vertices, indices, diffuseTextures, specularTextures);
+    return std::make_shared<Mesh>(vertices, indices, diffuseTextures, specularTextures, normalTextures);
 }
 
 std::vector<std::shared_ptr<Texture>> Model::loadMaterialTextures(aiMaterial* material, aiTextureType type,

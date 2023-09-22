@@ -16,8 +16,13 @@
 
 Mesh::Mesh(const std::vector<Vertex>& vertices, const std::vector<GLuint>& indices,
            const std::vector<std::shared_ptr<Texture>>& diffuseTexs,
-           const std::vector<std::shared_ptr<Texture>>& specularTexs)
-    : m_vertices(vertices), m_indices(indices), m_diffuseTextures(diffuseTexs), m_specularTextures(specularTexs)
+           const std::vector<std::shared_ptr<Texture>>& specularTexs,
+           const std::vector<std::shared_ptr<Texture>>& normalTexs)
+    : m_vertices(vertices),
+      m_indices(indices),
+      m_diffuseTextures(diffuseTexs),
+      m_specularTextures(specularTexs),
+      m_normalTextures(normalTexs)
 {
     if (m_diffuseTextures.empty())
         throw std::runtime_error("Missing diffuse textures");
@@ -25,11 +30,17 @@ Mesh::Mesh(const std::vector<Vertex>& vertices, const std::vector<GLuint>& indic
     if (m_specularTextures.empty())
         throw std::runtime_error("Missing specular textures");
 
+    if (m_normalTextures.empty())
+        logi("No normal texture was provided for the mesh");
+
     if (m_diffuseTextures.size() > 1)
         logw("Multiple diffuse textures are provided but only the first will be used");
 
     if (m_specularTextures.size() > 1)
         logw("Multiple specular textures are provided but only the first will be used");
+
+    if (m_normalTextures.size() > 1)
+        logw("Multiple normal textures are provided but only the first will be used");
 
     logi("Creating mesh with {} vertices and {} indices", m_vertices.size(), m_indices.size());
 
