@@ -15,20 +15,30 @@ Development is done with
 
 ## Building
 
-Conan install for debug and release build types
+Conan install for debug and release builds
 ```
-conan install . --build=missing --settings=build_type=Debug && conan install . --build=missing --settings=build_type=Release
+conan install . --build=missing --settings=build_type=Debug
+conan install . --build=missing --settings=build_type=Release
 ```
 
 CMake project generation
+
+On Windows
 ```
 cmake --preset conan-default
 ```
 
-Build in release mode
+On Linux
 ```
-cd build
-cmake --build . --config Release
+cmake --preset conan-debug
+cmake --preset conan-release
+```
+
+On Windows, open the generated solution file in the build folder.
+On Linux use
+```
+cmake --build build/Debug
+cmake --build build/Release
 ```
 
 ## Literature

@@ -27,6 +27,7 @@ openal/1.22.2
 
 # Scripting
 lua/5.4.6
+angelscript/2.36.1
 
 # Logging
 fmtlog/2.2.1

@@ -36,8 +36,6 @@ target_link_libraries(${PROJECT_NAME}
 	PUBLIC assimp::assimp
 	PUBLIC tinyobjloader::tinyobjloader
 	PUBLIC Freetype::Freetype
-    
-	PUBLIC lua::lua
 )
 
 target_include_directories(${PROJECT_NAME} 

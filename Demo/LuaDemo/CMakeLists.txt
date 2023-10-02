@@ -1,4 +1,4 @@
-project(ScriptingDemo)
+project(LuaDemo)
 
 file (GLOB_RECURSE SOURCE_FILES CONFIGURE_DEPENDS 
 	${CMAKE_CURRENT_SOURCE_DIR}/source/*.cpp
@@ -16,7 +16,7 @@ set_target_properties (${PROJECT_NAME} PROPERTIES
 )
 
 target_link_libraries (${PROJECT_NAME} 
-	PRIVATE EngineLib
+	PRIVATE lua::lua
 )
 
 target_include_directories (${PROJECT_NAME}
